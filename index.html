@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>JovenLaburo Bolivia — Tu primer empleo te espera</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --verde:#1a9e5c;
+  --verde-claro:#22c46e;
+  --verde-neon:#2dffa0;
+  --amarillo:#f5c518;
+  --rojo:#e05252;
+  --crema:#13161d;
+  --fondo:#0e1117;
+  --fondo2:#181c26;
+  --fondo3:#1e2330;
+  --card:#1f2537;
+  --card2:#252c3d;
+  --borde:#2a3145;
+  --gris:#8899b5;
+  --gris-claro:#2a3145;
+  --negro:#0e1117;
+  --blanco:#e8edf7;
+  --texto:#c8d4ea;
+  --sombra:0 4px 28px rgba(0,0,0,0.45);
+  --sombra-verde:0 4px 24px rgba(26,158,92,0.22);
+}
+html{scroll-behavior:smooth}
+body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto);line-height:1.6;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--fondo2)}
+::-webkit-scrollbar-thumb{background:var(--verde);border-radius:99px}
+
+/* ─── AUTH ─── */
+#authScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 30% 40%,#0d2a1a 0%,#0e1117 60%,#131825 100%);overflow:hidden}
+#authScreen::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231a9e5c' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='8'/%3E%3C/g%3E%3C/svg%3E")}
+.auth-card{position:relative;background:var(--card);border:1px solid var(--borde);border-radius:1.75rem;width:min(460px,94vw);padding:2.25rem;box-shadow:0 32px 72px rgba(0,0,0,0.6);animation:slideUp .5s cubic-bezier(.16,1,.3,1);max-height:95vh;overflow-y:auto}
+@keyframes slideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+.auth-logo{text-align:center;margin-bottom:.6rem;font-family:'Sora',sans-serif;font-size:1.8rem;font-weight:800;color:var(--verde);letter-spacing:-1px}
+.auth-logo span{color:var(--amarillo)}
+.auth-subtitle{text-align:center;color:var(--gris);font-size:.85rem;margin-bottom:1.25rem}
+.tab-row{display:flex;background:var(--fondo2);border-radius:.75rem;padding:.3rem;margin-bottom:1.25rem;gap:.3rem}
+.tab-btn{flex:1;padding:.55rem;border:none;background:transparent;border-radius:.5rem;font-family:'Sora',sans-serif;font-weight:600;font-size:.85rem;cursor:pointer;color:var(--gris);transition:.2s}
+.tab-btn.active{background:var(--card2);color:var(--verde);box-shadow:0 2px 10px rgba(0,0,0,.3)}
+.field{margin-bottom:.85rem}
+.field label{display:block;font-size:.78rem;font-weight:600;color:var(--blanco);margin-bottom:.3rem;letter-spacing:.02em}
+.field input,.field select,.field textarea{width:100%;padding:.75rem 1rem;border:1.5px solid var(--borde);border-radius:.7rem;font-family:'DM Sans',sans-serif;font-size:.92rem;background:var(--fondo2);color:var(--blanco);transition:.2s;outline:none}
+.field input:focus,.field select:focus{border-color:var(--verde);box-shadow:0 0 0 3px rgba(26,158,92,.18)}
+.field select option{background:var(--fondo2);color:var(--blanco)}
+.field-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.btn-auth{width:100%;padding:.85rem;border:none;border-radius:.75rem;background:linear-gradient(135deg,var(--verde),var(--verde-claro));color:#fff;font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer;transition:.2s;margin-top:.5rem;box-shadow:0 4px 16px rgba(26,158,92,.35)}
+.btn-auth:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(26,158,92,.45)}
+.auth-msg{font-size:.82rem;text-align:center;margin-top:.7rem;min-height:1.4em;padding:.4rem .6rem;border-radius:.5rem}
+.auth-msg.error{color:#ff8080;background:rgba(220,60,60,.1)}
+.auth-msg.info{color:#7dd3a8;background:rgba(26,158,92,.12);font-weight:600}
+.auth-switch{text-align:center;margin-top:.85rem;font-size:.85rem;color:var(--gris)}
+.auth-switch a{color:var(--verde);font-weight:600;cursor:pointer;text-decoration:none}
+
+/* ─── APP ─── */
+#appWrapper{display:none}
+.navbar{position:sticky;top:0;z-index:100;background:rgba(14,17,23,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--borde);padding:.8rem 1.5rem}
+.nav-inner{max-width:1340px;margin:0 auto;display:flex;align-items:center;gap:1rem}
+.nav-logo{font-family:'Sora',sans-serif;font-weight:800;font-size:1.35rem;color:var(--verde);letter-spacing:-.5px;white-space:nowrap}
+.nav-logo span{color:var(--amarillo)}
+.nav-tabs{display:flex;gap:.2rem;flex:1;overflow-x:auto;scrollbar-width:none}
+.nav-tabs::-webkit-scrollbar{display:none}
+.nav-tab{padding:.45rem .95rem;border:none;background:transparent;font-family:'DM Sans',sans-serif;font-weight:500;font-size:.85rem;color:var(--gris);cursor:pointer;border-radius:.5rem;white-space:nowrap;transition:.2s}
+.nav-tab.active,.nav-tab:hover{background:rgba(26,158,92,.12);color:var(--verde)}
+.nav-right{display:flex;align-items:center;gap:.6rem;margin-left:auto}
+.user-pill{display:flex;align-items:center;gap:.4rem;background:rgba(26,158,92,.12);padding:.35rem .8rem;border-radius:99px;font-size:.82rem;color:var(--verde);font-weight:600;border:1px solid rgba(26,158,92,.25)}
+.btn-logout{padding:.4rem .9rem;border-radius:99px;border:1.5px solid var(--borde);background:transparent;font-size:.82rem;cursor:pointer;color:var(--gris);transition:.2s;font-family:'DM Sans',sans-serif}
+.btn-logout:hover{border-color:var(--rojo);color:var(--rojo)}
+
+.page{display:none;max-width:1340px;margin:0 auto;padding:1.75rem 1.5rem}
+.page.active{display:block}
+
+/* ─── HERO ─── */
+.hero-band{background:linear-gradient(135deg,#0d1f14 0%,#111827 50%,#1a2030 100%);border:1px solid var(--borde);color:var(--blanco);border-radius:1.75rem;padding:3rem 2.5rem;margin-bottom:2rem;position:relative;overflow:hidden}
+.hero-band::after{content:'';position:absolute;top:-40px;right:-40px;width:300px;height:300px;background:radial-gradient(circle,rgba(26,158,92,.18) 0%,transparent 70%);border-radius:50%}
+.hero-band::before{content:'🇧🇴';position:absolute;right:2rem;top:50%;transform:translateY(-50%);font-size:9rem;opacity:.07;line-height:1;z-index:0}
+.hero-band>*{position:relative;z-index:1}
+.hero-tag{display:inline-block;background:var(--amarillo);color:#0e1117;font-weight:700;font-size:.72rem;padding:.28rem .75rem;border-radius:99px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:.85rem}
+.hero-band h1{font-family:'Sora',sans-serif;font-size:clamp(1.7rem,3.5vw,2.8rem);font-weight:800;line-height:1.15;margin-bottom:.85rem;letter-spacing:-1px;color:#e8edf7}
+.hero-band h1 em{color:var(--verde-neon);font-style:normal}
+.hero-band p{color:var(--gris);max-width:500px;margin-bottom:1.25rem;font-size:.95rem}
+.btn-hero{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,var(--verde),var(--verde-claro));color:#fff;padding:.8rem 1.75rem;border-radius:99px;font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;border:none;cursor:pointer;box-shadow:var(--sombra-verde);transition:.2s}
+.btn-hero:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(34,196,110,.4)}
+
+/* ─── STATS ─── */
+.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:.9rem;margin-bottom:2rem}
+.stat-box{background:var(--card);border-radius:1.1rem;padding:1.25rem;text-align:center;border:1px solid var(--borde);box-shadow:var(--sombra)}
+.stat-num{font-family:'Sora',sans-serif;font-size:1.9rem;font-weight:800;color:var(--verde)}
+.stat-lbl{font-size:.78rem;color:var(--gris);margin-top:.2rem}
+
+/* ─── FUENTES ─── */
+.fuentes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.9rem;margin-bottom:1.75rem}
+.fuente-card{background:var(--card);border-radius:1.1rem;padding:1.1rem;border:1px solid var(--borde);display:flex;flex-direction:column;gap:.4rem;transition:.2s;cursor:pointer}
+.fuente-card:hover,.fuente-card.active{border-color:var(--verde);background:rgba(26,158,92,.06);transform:translateY(-2px);box-shadow:var(--sombra-verde)}
+.fuente-name{font-family:'Sora',sans-serif;font-weight:700;font-size:.92rem;color:var(--blanco)}
+.fuente-url{font-size:.72rem;color:var(--gris)}
+.fuente-stats{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.25rem}
+.fuente-stat-chip{background:rgba(26,158,92,.12);color:var(--verde);font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:99px;border:1px solid rgba(26,158,92,.2)}
+.fuente-total{font-size:.78rem;font-weight:700;color:var(--verde-claro)}
+
+/* ─── CATS ─── */
+.cats-home{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.75rem;margin-bottom:1.75rem}
+.cat-home-card{background:var(--card);border-radius:1.1rem;padding:1rem;border:1px solid var(--borde);cursor:pointer;transition:.2s;text-align:center}
+.cat-home-card:hover{border-color:var(--verde);box-shadow:var(--sombra-verde);transform:translateY(-2px);background:rgba(26,158,92,.05)}
+.cat-home-icon{font-size:1.5rem;margin-bottom:.35rem}
+.cat-home-name{font-family:'Sora',sans-serif;font-weight:700;font-size:.85rem;margin-bottom:.2rem;color:var(--blanco)}
+.cat-home-count{font-size:.78rem;color:var(--gris)}
+.cat-home-fuentes{display:flex;flex-wrap:wrap;gap:.25rem;justify-content:center;margin-top:.35rem}
+.cat-fuente-dot{font-size:.65rem;padding:.12rem .4rem;border-radius:99px;font-weight:600}
+
+/* ─── FILTERS ─── */
+.filter-bar{background:var(--card);border-radius:1.1rem;padding:1.1rem 1.35rem;border:1px solid var(--borde);margin-bottom:1.25rem;display:flex;flex-wrap:wrap;gap:.65rem;align-items:flex-end}
+.filter-group{display:flex;flex-direction:column;gap:.3rem;min-width:140px;flex:1}
+.filter-group label{font-size:.72rem;font-weight:600;color:var(--gris);letter-spacing:.04em;text-transform:uppercase}
+.filter-group input,.filter-group select{padding:.6rem .85rem;border:1.5px solid var(--borde);border-radius:.65rem;font-family:'DM Sans',sans-serif;font-size:.88rem;background:var(--fondo2);color:var(--blanco);outline:none;transition:.2s}
+.filter-group input:focus,.filter-group select:focus{border-color:var(--verde)}
+.filter-group select option{background:var(--fondo2)}
+.btn-buscar{padding:.6rem 1.35rem;background:var(--verde);color:#fff;border:none;border-radius:.65rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:.2s;align-self:flex-end;font-size:.9rem}
+.btn-buscar:hover{background:var(--verde-claro)}
+
+/* ─── CAT CHIPS ─── */
+.cats-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.25rem}
+.cat-chip{padding:.4rem .9rem;border-radius:99px;border:1.5px solid var(--borde);background:var(--card);font-size:.82rem;cursor:pointer;transition:.2s;font-weight:500;color:var(--texto)}
+.cat-chip:hover,.cat-chip.active{background:var(--verde);color:#fff;border-color:var(--verde)}
+
+/* ─── JOB CARDS ─── */
+.jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(315px,1fr));gap:1.1rem}
+.job-card{background:var(--card);border-radius:1.1rem;padding:1.35rem;border:1px solid var(--borde);transition:.25s;cursor:pointer;position:relative;overflow:hidden}
+.job-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--verde),var(--verde-neon));opacity:0;transition:.2s}
+.job-card:hover{border-color:var(--verde);box-shadow:var(--sombra-verde);transform:translateY(-3px)}
+.job-card:hover::before{opacity:1}
+.job-source-badge{display:inline-flex;align-items:center;gap:.3rem;font-size:.68rem;font-weight:700;padding:.2rem .6rem;border-radius:99px;margin-bottom:.65rem;letter-spacing:.04em;text-transform:uppercase;border:1px solid currentColor}
+.badge-trabajando{color:#60b8e8;background:rgba(96,184,232,.08)}
+.badge-trabajopolis{color:#5fcf87;background:rgba(95,207,135,.08)}
+.badge-trabajito{color:#f5a642;background:rgba(245,166,66,.08)}
+.badge-eldeber{color:#f07070;background:rgba(240,112,112,.08)}
+.job-title{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;margin-bottom:.2rem;line-height:1.3;color:var(--blanco)}
+.job-company{color:var(--verde-claro);font-weight:500;font-size:.87rem;margin-bottom:.45rem}
+.job-meta{display:flex;flex-wrap:wrap;gap:.4rem;margin-bottom:.65rem}
+.meta-tag{display:inline-flex;align-items:center;gap:.2rem;background:var(--gris-claro);color:var(--gris);font-size:.75rem;padding:.2rem .6rem;border-radius:.4rem;border:1px solid var(--borde)}
+.job-desc{font-size:.84rem;color:var(--gris);line-height:1.5;margin-bottom:.85rem;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.job-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.4rem}
+.job-salary{font-family:'Sora',sans-serif;font-weight:700;color:var(--verde-claro);font-size:.9rem}
+.btn-postular{padding:.4rem 1rem;border:none;border-radius:99px;background:linear-gradient(135deg,var(--verde),var(--verde-claro));color:#fff;font-weight:600;font-size:.82rem;cursor:pointer;transition:.2s}
+.btn-postular:hover{opacity:.9;transform:scale(1.02)}
+.btn-ver{padding:.4rem 1rem;border:1.5px solid rgba(26,158,92,.4);border-radius:99px;background:transparent;color:var(--verde-claro);font-weight:600;font-size:.82rem;cursor:pointer;transition:.2s}
+.btn-ver:hover{background:var(--verde);color:#fff;border-color:var(--verde)}
+
+/* ─── SKELETON ─── */
+.skeleton{background:linear-gradient(90deg,var(--fondo2) 25%,var(--card2) 50%,var(--fondo2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:.9rem;height:190px}
+@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.no-results{grid-column:1/-1;text-align:center;padding:3.5rem 2rem;color:var(--gris)}
+.no-results .icon{font-size:2.5rem;margin-bottom:.75rem}
+
+/* ─── FUENTES STATUS ─── */
+.fuentes-status{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.25rem;background:var(--card);padding:.85rem 1.1rem;border-radius:.9rem;border:1px solid var(--borde);align-items:center}
+.source-dot{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--gris)}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--borde)}
+.dot.verde{background:var(--verde)}
+
+/* ─── SECTION HEADER ─── */
+.sec-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.65rem;margin-bottom:1.1rem}
+.sec-head h2{font-family:'Sora',sans-serif;font-size:1.25rem;font-weight:700;color:var(--blanco)}
+.sec-head .count{color:var(--gris);font-size:.85rem}
+
+/* ─── MODAL ─── */
+.overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--borde);border-radius:1.75rem;width:min(520px,100%);max-height:90vh;overflow-y:auto;padding:1.75rem;animation:slideUp .3s cubic-bezier(.16,1,.3,1);position:relative}
+.modal-close{position:absolute;top:.9rem;right:.9rem;width:30px;height:30px;border:none;background:var(--gris-claro);border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:.2s;color:var(--texto)}
+.modal-close:hover{background:var(--rojo);color:#fff}
+.modal-title{font-family:'Sora',sans-serif;font-weight:800;font-size:1.2rem;margin-bottom:1.25rem;color:var(--verde)}
+.success-banner{background:rgba(26,158,92,.12);border:1px solid rgba(26,158,92,.3);border-radius:.9rem;padding:1.1rem;text-align:center;display:none}
+.success-banner .icon{font-size:2.2rem;margin-bottom:.4rem}
+.success-banner p{color:var(--verde-claro);font-weight:600;font-size:.92rem}
+
+/* ─── CV PAGE ─── */
+.cv-page-hero{background:linear-gradient(135deg,#0d1f14,#111827);border:1px solid var(--borde);border-radius:1.75rem;padding:2.25rem;margin-bottom:1.5rem;color:var(--blanco);position:relative;overflow:hidden}
+.cv-page-hero::before{content:'📄';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:6rem;opacity:.06}
+.cv-page-hero h2{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:.5rem}
+.cv-page-hero p{color:var(--gris);font-size:.9rem}
+.cv-upload-zone{border:2.5px dashed var(--borde);border-radius:1.1rem;padding:2rem;text-align:center;cursor:pointer;transition:.3s;background:var(--fondo2);margin-bottom:1.25rem}
+.cv-upload-zone:hover,.cv-upload-zone.drag-over{border-color:var(--verde);background:rgba(26,158,92,.06)}
+.cv-upload-zone input[type=file]{display:none}
+.cv-upload-icon{font-size:2.5rem;margin-bottom:.65rem}
+.cv-upload-label{font-size:.9rem;color:var(--gris);line-height:1.6}
+.cv-current{background:var(--card);border-radius:1.1rem;padding:1.25rem;border:1px solid rgba(26,158,92,.25);margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.75rem}
+.cv-current-info{display:flex;align-items:center;gap:.75rem}
+.cv-icon-big{font-size:2rem;background:rgba(26,158,92,.12);border-radius:.65rem;padding:.5rem .65rem}
+.cv-file-name{font-weight:600;font-size:.92rem;color:var(--blanco)}
+.cv-file-meta{font-size:.78rem;color:var(--gris);margin-top:.15rem}
+.btn-cv-remove{padding:.4rem .9rem;border:1.5px solid rgba(224,82,82,.5);border-radius:99px;background:transparent;color:var(--rojo);font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s}
+.btn-cv-remove:hover{background:var(--rojo);color:#fff}
+.cv-analysis-card{background:var(--card);border-radius:1.1rem;padding:1.5rem;border:1px solid var(--borde);margin-bottom:1.25rem}
+.cv-analysis-header{display:flex;align-items:center;gap:.65rem;margin-bottom:1rem}
+.cv-analysis-icon{font-size:1.5rem}
+.cv-analysis-title{font-family:'Sora',sans-serif;font-weight:700;font-size:1rem;color:var(--blanco)}
+.cv-suggestion-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:1rem}
+.cv-chip{padding:.4rem .9rem;border-radius:99px;border:1.5px solid rgba(26,158,92,.35);background:rgba(26,158,92,.06);color:var(--verde-claro);font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s}
+.cv-chip:hover,.cv-chip.active{background:var(--verde);color:#fff;border-color:var(--verde)}
+.cv-jobs-preview{display:flex;flex-direction:column;gap:.65rem}
+.cv-job-row{background:var(--fondo2);border-radius:.8rem;padding:.85rem 1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.5rem;cursor:pointer;transition:.2s;border:1px solid var(--borde)}
+.cv-job-row:hover{border-color:var(--verde);background:rgba(26,158,92,.07)}
+.cv-job-title{font-weight:600;font-size:.87rem;color:var(--blanco)}
+.cv-job-meta{font-size:.75rem;color:var(--gris);margin-top:.15rem}
+.match-badge{padding:.25rem .65rem;border-radius:99px;font-size:.72rem;font-weight:700;white-space:nowrap}
+
+/* ─── PROFILE ─── */
+.profile-card{background:var(--card);border-radius:1.35rem;padding:1.75rem;border:1px solid var(--borde);margin-bottom:1.25rem}
+.profile-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--verde-claro));display:flex;align-items:center;justify-content:center;font-size:1.75rem;margin-bottom:.85rem;box-shadow:0 4px 16px rgba(26,158,92,.3)}
+.profile-name{font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:.2rem;color:var(--blanco)}
+.profile-email{color:var(--gris);font-size:.88rem;margin-bottom:1.25rem}
+.cv-status-inline{display:inline-flex;align-items:center;gap:.45rem;background:rgba(26,158,92,.1);color:var(--verde-claro);padding:.45rem .9rem;border-radius:99px;font-weight:600;font-size:.82rem;margin-bottom:1.25rem;border:1px solid rgba(26,158,92,.2)}
+.mis-solicitudes-list{display:flex;flex-direction:column;gap:.65rem}
+.solicitud-row{background:var(--fondo2);border-radius:.9rem;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.45rem;border:1px solid var(--borde)}
+.sol-titulo{font-weight:600;font-size:.88rem;color:var(--blanco)}
+.sol-estado{padding:.25rem .65rem;border-radius:99px;font-size:.72rem;font-weight:700;background:rgba(245,197,24,.15);color:var(--amarillo);border:1px solid rgba(245,197,24,.25)}
+
+/* ─── REASON CARDS ─── */
+.reason-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.85rem}
+.reason-item{display:flex;gap:.65rem;align-items:flex-start;background:var(--card2);border-radius:.9rem;padding:.85rem;border:1px solid var(--borde)}
+.reason-item strong{font-size:.9rem;color:var(--blanco);display:block;margin-bottom:.2rem}
+.reason-item p{font-size:.8rem;color:var(--gris)}
+
+/* ─── IA LOADING ─── */
+.ia-loading{display:flex;align-items:center;gap:.75rem;padding:1rem;background:rgba(26,158,92,.07);border-radius:.9rem;border:1px solid rgba(26,158,92,.2);margin-bottom:1rem;font-size:.88rem;color:var(--verde-claro)}
+.ia-spinner{width:20px;height:20px;border:2px solid rgba(26,158,92,.3);border-top-color:var(--verde);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* ─── SECTION TITLE ─── */
+.section-title{font-family:'Sora',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.85rem;color:var(--blanco)}
+
+@media(max-width:640px){
+  .field-row{grid-template-columns:1fr}
+  .hero-band{padding:1.75rem 1.1rem}
+  .page{padding:.85rem}
+  .jobs-grid{grid-template-columns:1fr}
+  .cats-home{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .filter-bar{gap:.45rem}
+  .filter-group{min-width:100%}
+  .btn-buscar{width:100%}
+  .auth-card{padding:1.6rem}
+  .nav-inner{gap:.6rem}
+  .user-pill{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════ AUTH SCREEN ═══════════════════ -->
+<div id="authScreen">
+  <div class="auth-card">
+    <div class="auth-logo">Joven<span>Laburo</span> 🇧🇴</div>
+    <p class="auth-subtitle">La bolsa de trabajo para jóvenes bolivianos</p>
+    <div class="tab-row">
+      <button class="tab-btn active" data-form="registerPanel">Crear cuenta</button>
+      <button class="tab-btn" data-form="loginPanel">Ya tengo cuenta</button>
+    </div>
+
+    <div id="registerPanel">
+      <div class="field-row">
+        <div class="field"><label>Nombre completo</label><input type="text" id="rNombre" placeholder="Juan Mamani"></div>
+        <div class="field"><label>Teléfono / WhatsApp</label><input type="tel" id="rTelefono" placeholder="7XXXXXXX"></div>
+      </div>
+      <div class="field"><label>Correo electrónico</label><input type="email" id="rCorreo" placeholder="juan@email.com"></div>
+      <div class="field-row">
+        <div class="field"><label>Departamento</label>
+          <select id="rCiudad">
+            <option value="">Selecciona...</option>
+            <option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option>
+            <option>Oruro</option><option>Potosí</option><option>Sucre</option>
+            <option>Tarija</option><option>Beni</option><option>Pando</option>
+          </select>
+        </div>
+        <div class="field"><label>Tipo de empleo</label>
+          <select id="rInteres">
+            <option value="">Selecciona...</option>
+            <option>Tiempo completo</option><option>Medio tiempo</option>
+            <option>Prácticas / Pasantía</option><option>Remoto</option><option>Primera experiencia</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-auth" onclick="handleRegister()">Crear mi cuenta gratis →</button>
+      <div class="auth-msg" id="rMsg"></div>
+    </div>
+
+    <div id="loginPanel" style="display:none">
+      <div class="field"><label>Tu correo electrónico</label><input type="email" id="lCorreo" placeholder="juan@email.com"></div>
+      <button class="btn-auth" onclick="handleLogin()">Ingresar a mi cuenta →</button>
+      <div class="auth-msg" id="lMsg"></div>
+      <div class="auth-switch">¿No tienes cuenta? <a onclick="switchAuth('registerPanel')">Regístrate aquí</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ APP ═══════════════════ -->
+<div id="appWrapper">
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo">Joven<span>Laburo</span></div>
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="showPage('pageHome')">🏠 Inicio</button>
+        <button class="nav-tab" onclick="showPage('pageJobs')">🔍 Empleos</button>
+        <button class="nav-tab" onclick="showPage('pageCv')">📄 Mi CV</button>
+        <button class="nav-tab" onclick="showPage('pageProfile')">👤 Perfil</button>
+      </div>
+      <div class="nav-right">
+        <div class="user-pill">👋 <span id="userNameNav">Usuario</span></div>
+        <button class="btn-logout" onclick="logout()">Salir</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HOME -->
+  <div class="page active" id="pageHome">
+    <div class="hero-band">
+      <div class="hero-tag">🇧🇴 Empleo Joven Bolivia</div>
+      <h1>Encuentra tu<br><em>primer empleo</em><br>en Bolivia</h1>
+      <p>Consolidamos ofertas reales de 4 portales bolivianos. Busca por departamento, categoría o sube tu CV para ver empleos a tu medida.</p>
+      <button class="btn-hero" onclick="showPage('pageJobs')">🔍 Ver todos los empleos</button>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">Portales integrados</div></div>
+      <div class="stat-box"><div class="stat-num" id="statTotal">28</div><div class="stat-lbl">Vacantes activas</div></div>
+      <div class="stat-box"><div class="stat-num">9</div><div class="stat-lbl">Departamentos</div></div>
+      <div class="stat-box"><div class="stat-num">850+</div><div class="stat-lbl">Contrataciones exitosas</div></div>
+    </div>
+
+    <div class="section-title">📡 Portales de empleo integrados</div>
+    <div class="fuentes-grid" id="fuentesGrid">
+      <div class="fuente-card" onclick="filterBySource('trabajando')"><div class="fuente-name">Trabajando.com.bo</div><div class="fuente-url">trabajando.com.bo</div><div id="stats-fuente-trabajando" class="fuente-stats"></div><div class="fuente-total" id="total-trabajando"></div></div>
+      <div class="fuente-card" onclick="filterBySource('trabajopolis')"><div class="fuente-name">Trabajópolis.bo</div><div class="fuente-url">trabajopolis.bo</div><div id="stats-fuente-trabajopolis" class="fuente-stats"></div><div class="fuente-total" id="total-trabajopolis"></div></div>
+      <div class="fuente-card" onclick="filterBySource('trabajito')"><div class="fuente-name">Trabajito.com.bo</div><div class="fuente-url">trabajito.com.bo</div><div id="stats-fuente-trabajito" class="fuente-stats"></div><div class="fuente-total" id="total-trabajito"></div></div>
+      <div class="fuente-card" onclick="filterBySource('eldeber')"><div class="fuente-name">El Deber Clasificados</div><div class="fuente-url">clasificados.eldeber.com.bo</div><div id="stats-fuente-eldeber" class="fuente-stats"></div><div class="fuente-total" id="total-eldeber"></div></div>
+    </div>
+
+    <div class="section-title">📊 Empleos por categoría</div>
+    <div class="cats-home" id="catsHome"></div>
+
+    <div style="background:var(--card);border-radius:1.1rem;padding:1.35rem;border:1px solid var(--borde)">
+      <div class="section-title" style="margin-bottom:.85rem">¿Por qué JovenLaburo?</div>
+      <div class="reason-grid">
+        <div class="reason-item"><span style="font-size:1.3rem">⚡</span><div><strong>Todo en un lugar</strong><p>4 portales bolivianos en un solo sitio</p></div></div>
+        <div class="reason-item"><span style="font-size:1.3rem">📍</span><div><strong>Por departamento</strong><p>Filtra empleos en tu ciudad de Bolivia</p></div></div>
+        <div class="reason-item"><span style="font-size:1.3rem">🤖</span><div><strong>CV con IA</strong><p>Análisis real de tu hoja de vida para sugerencias precisas</p></div></div>
+        <div class="reason-item"><span style="font-size:1.3rem">🎯</span><div><strong>Por categoría</strong><p>Tecnología, salud, gastronomía y más</p></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JOBS -->
+  <div class="page" id="pageJobs">
+    <div class="sec-head">
+      <h2>🔍 Buscar empleos en Bolivia</h2>
+      <span class="count" id="resultCount">28 vacantes</span>
+    </div>
+    <div class="fuentes-status">
+      <span style="font-size:.78rem;font-weight:600;color:var(--blanco);margin-right:.4rem">Activo:</span>
+      <span class="source-dot"><span class="dot verde"></span>Trabajando.bo</span>
+      <span class="source-dot"><span class="dot verde"></span>Trabajópolis.bo</span>
+      <span class="source-dot"><span class="dot verde"></span>Trabajito.bo</span>
+      <span class="source-dot"><span class="dot verde"></span>El Deber</span>
+    </div>
+    <div class="filter-bar">
+      <div class="filter-group" style="flex:2;min-width:190px"><label>Buscar</label><input type="text" id="fSearch" placeholder="Puesto, empresa, habilidad..."></div>
+      <div class="filter-group"><label>Departamento</label>
+        <select id="fDepto">
+          <option value="">Nacional (todos)</option>
+          <option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option>
+          <option>Oruro</option><option>Potosí</option><option>Sucre</option>
+          <option>Tarija</option><option>Beni</option><option>Pando</option><option>Remoto</option>
+        </select>
+      </div>
+      <div class="filter-group"><label>Fuente</label>
+        <select id="fFuente">
+          <option value="">Todas las fuentes</option>
+          <option value="trabajando">Trabajando.bo</option>
+          <option value="trabajopolis">Trabajópolis.bo</option>
+          <option value="trabajito">Trabajito.bo</option>
+          <option value="eldeber">El Deber</option>
+        </select>
+      </div>
+      <div class="filter-group"><label>Modalidad</label>
+        <select id="fModalidad">
+          <option value="">Todas</option>
+          <option>Tiempo completo</option><option>Medio tiempo</option>
+          <option>Remoto</option><option>Prácticas</option>
+        </select>
+      </div>
+      <button class="btn-buscar" onclick="renderJobs()">Buscar</button>
+    </div>
+    <div class="cats-row" id="catsRow">
+      <button class="cat-chip active" onclick="filterCat(this,'')">Todas</button>
+      <button class="cat-chip" onclick="filterCat(this,'Tecnología')">💻 Tecnología</button>
+      <button class="cat-chip" onclick="filterCat(this,'Ventas')">🤝 Ventas</button>
+      <button class="cat-chip" onclick="filterCat(this,'Administración')">📋 Administración</button>
+      <button class="cat-chip" onclick="filterCat(this,'Marketing')">📣 Marketing</button>
+      <button class="cat-chip" onclick="filterCat(this,'Salud')">🏥 Salud</button>
+      <button class="cat-chip" onclick="filterCat(this,'Educación')">📚 Educación</button>
+      <button class="cat-chip" onclick="filterCat(this,'Gastronomía')">🍽 Gastronomía</button>
+      <button class="cat-chip" onclick="filterCat(this,'Logística')">🚚 Logística</button>
+      <button class="cat-chip" onclick="filterCat(this,'Diseño')">🎨 Diseño</button>
+      <button class="cat-chip" onclick="filterCat(this,'Finanzas')">💰 Finanzas</button>
+    </div>
+    <div class="jobs-grid" id="jobsGrid">
+      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    </div>
+  </div>
+
+  <!-- CV -->
+  <div class="page" id="pageCv">
+    <div class="cv-page-hero">
+      <h2>📄 Mi Hoja de Vida</h2>
+      <p>Sube tu CV y nuestra IA analizará tu perfil para recomendarte los empleos más adecuados. Funciona con PDF o Word.</p>
+    </div>
+
+    <div id="cvCurrentSection" style="display:none" class="cv-current">
+      <div class="cv-current-info">
+        <div class="cv-icon-big">📎</div>
+        <div>
+          <div class="cv-file-name" id="cvCurrentName">—</div>
+          <div class="cv-file-meta" id="cvCurrentMeta">Subido recientemente</div>
+        </div>
+      </div>
+      <button class="btn-cv-remove" onclick="removeCv()">🗑 Eliminar CV</button>
+    </div>
+
+    <div class="cv-upload-zone" id="cvZone"
+      onclick="document.getElementById('cvInput').click()"
+      ondragover="event.preventDefault();this.classList.add('drag-over')"
+      ondragleave="this.classList.remove('drag-over')"
+      ondrop="handleCvDrop(event)">
+      <div class="cv-upload-icon">☁️</div>
+      <div class="cv-upload-label">
+        <strong>Haz clic aquí o arrastra tu CV</strong><br>
+        Formatos: PDF o DOCX · Máximo 5MB<br>
+        <span style="color:var(--verde-claro);font-size:.8rem">La IA leerá tu CV y encontrará empleos afines</span>
+      </div>
+      <input type="file" id="cvInput" accept=".pdf,.doc,.docx" onchange="handleCvUpload(this)">
+    </div>
+
+    <!-- Loading IA -->
+    <div id="cvIaLoading" style="display:none" class="ia-loading">
+      <div class="ia-spinner"></div>
+      <span>Analizando tu CV con inteligencia artificial... esto toma unos segundos</span>
+    </div>
+
+    <div id="cvAnalysisSection" style="display:none">
+      <div class="cv-analysis-card">
+        <div class="cv-analysis-header">
+          <div class="cv-analysis-icon">🎯</div>
+          <div class="cv-analysis-title">Empleos sugeridos según tu CV</div>
+        </div>
+        <p style="font-size:.85rem;color:var(--gris);margin-bottom:1rem">La IA detectó estas categorías en tu CV. Selecciona las que te interesan:</p>
+        <div class="cv-suggestion-chips" id="cvSuggestionChips"></div>
+        <div style="font-size:.82rem;color:var(--gris);margin-bottom:.75rem" id="cvMatchCount"></div>
+        <div class="cv-jobs-preview" id="cvJobsPreview"></div>
+        <button class="btn-hero" style="margin-top:1rem;font-size:.85rem;padding:.65rem 1.4rem" onclick="showPage('pageJobs')">Ver todos los empleos →</button>
+      </div>
+      <div class="cv-analysis-card">
+        <div class="cv-analysis-header">
+          <div class="cv-analysis-icon">💡</div>
+          <div class="cv-analysis-title">Recomendaciones para tu búsqueda</div>
+        </div>
+        <div id="cvTips" style="display:flex;flex-direction:column;gap:.6rem"></div>
+      </div>
+    </div>
+
+    <div id="cvEmptyMsg" style="text-align:center;padding:2rem;color:var(--gris)">
+      <div style="font-size:3rem;margin-bottom:.75rem">📋</div>
+      <div style="font-size:.92rem">Sube tu CV para recibir sugerencias personalizadas con IA</div>
+    </div>
+  </div>
+
+  <!-- PROFILE -->
+  <div class="page" id="pageProfile">
+    <div class="profile-card">
+      <div class="profile-avatar">👤</div>
+      <div class="profile-name" id="profileName">—</div>
+      <div class="profile-email" id="profileEmail"></div>
+      <div id="cvStatusBadgeProfile" class="cv-status-inline" style="display:none">✅ CV: <span id="cvNameProfile"></span></div>
+      <div class="field-row" style="margin-bottom:.85rem">
+        <div class="field"><label>Departamento</label>
+          <select id="profileDepto">
+            <option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option>
+            <option>Oruro</option><option>Potosí</option><option>Sucre</option>
+            <option>Tarija</option><option>Beni</option><option>Pando</option>
+          </select>
+        </div>
+        <div class="field"><label>Tipo empleo preferido</label>
+          <select id="profileTipo">
+            <option>Tiempo completo</option><option>Medio tiempo</option>
+            <option>Prácticas / Pasantía</option><option>Remoto</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-auth" onclick="saveProfile()">Guardar cambios</button>
+    </div>
+    <div class="profile-card">
+      <div class="section-title">📋 Mis postulaciones</div>
+      <div class="mis-solicitudes-list" id="misSolicitudesList">
+        <div style="color:var(--gris);font-size:.88rem">Aún no has postulado a ninguna oferta.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="modalOverlay">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div class="modal-title">📤 Postular a vacante</div>
+    <div id="modalJobInfo" style="background:var(--fondo2);border-radius:.75rem;padding:.9rem;margin-bottom:1.25rem;font-size:.88rem;border:1px solid var(--borde)"></div>
+    <div id="successBanner" class="success-banner">
+      <div class="icon">🎉</div>
+      <p>¡Solicitud enviada!<br>El empleador recibirá tu información.</p>
+    </div>
+    <div id="modalForm">
+      <div class="field"><label>Nombre completo</label><input type="text" id="mNombre" placeholder="Juan Mamani"></div>
+      <div class="field-row">
+        <div class="field"><label>Teléfono</label><input type="tel" id="mTelefono"></div>
+        <div class="field"><label>Correo</label><input type="email" id="mCorreo"></div>
+      </div>
+      <div class="field"><label>Tipo de solicitud</label>
+        <select id="mTipo">
+          <option value="Postulación directa">Postulación directa</option>
+          <option value="Solicitar cita">Solicitar cita</option>
+          <option value="Más información">Pedir más información</option>
+        </select>
+      </div>
+      <div class="field"><label>Carta de presentación (opcional)</label>
+        <textarea id="mDetalle" rows="3" placeholder="Breve presentación..."></textarea>
+      </div>
+      <div id="cvModalStatus" style="margin-bottom:.85rem;font-size:.82rem;color:var(--verde-claro);display:none">✅ Se adjuntará tu CV</div>
+      <button class="btn-auth" onclick="submitPostulacion()">Enviar postulación</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+// CONFIG
+// ═══════════════════════════════════════════════════════
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyEAlLGrQvEGy_B8y_1P_d9y9fcPQXyQnxatql6Bov3KkTTP8YHWJwi1GVOSuD6TymErA/exec";
+const CLAUDE_API = "https://api.anthropic.com/v1/messages";
+
+// ═══════════════════════════════════════════════════════
+// DATOS DE EMPLEOS
+// ═══════════════════════════════════════════════════════
+const EMPLEOS = [
+  {id:'t1',fuente:'trabajando',titulo:'Desarrollador Web Full Stack',empresa:'Tech Bolivia S.R.L.',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Tecnología',salario:'Bs. 4.000 – 6.000',desc:'React, Node.js, bases de datos SQL/NoSQL. Trabajo presencial en Santa Cruz.',url:'https://trabajando.com.bo'},
+  {id:'t2',fuente:'trabajando',titulo:'Ejecutivo de Ventas',empresa:'Importadora Andina',depto:'La Paz',modalidad:'Tiempo completo',categoria:'Ventas',salario:'Bs. 2.800 + comisiones',desc:'Ventas B2B, visita a clientes, manejo de cartera.',url:'https://trabajando.com.bo'},
+  {id:'t3',fuente:'trabajando',titulo:'Asistente Administrativo',empresa:'Consultora Gestión Plus',depto:'Cochabamba',modalidad:'Tiempo completo',categoria:'Administración',salario:'Bs. 2.200 – 2.800',desc:'Documentación, atención al cliente, Microsoft Office.',url:'https://trabajando.com.bo'},
+  {id:'t4',fuente:'trabajando',titulo:'Community Manager',empresa:'Agencia Digital Cruceña',depto:'Santa Cruz',modalidad:'Medio tiempo',categoria:'Marketing',salario:'Bs. 1.800 – 2.400',desc:'Gestión de redes sociales, creación de contenido.',url:'https://trabajando.com.bo'},
+  {id:'t5',fuente:'trabajando',titulo:'Enfermero/a',empresa:'Clínica Los Andes',depto:'La Paz',modalidad:'Tiempo completo',categoria:'Salud',salario:'Bs. 3.200 – 4.000',desc:'Titulado/a, turnos rotativos.',url:'https://trabajando.com.bo'},
+  {id:'t6',fuente:'trabajando',titulo:'Soporte Técnico IT',empresa:'Soluciones TI Bolivia',depto:'Remoto',modalidad:'Remoto',categoria:'Tecnología',salario:'Bs. 2.500 – 3.000',desc:'Soporte nivel 1 y 2, atención a usuarios.',url:'https://trabajando.com.bo'},
+  {id:'t7',fuente:'trabajando',titulo:'Contador/a Junior',empresa:'Grupo Empresarial Camba',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Finanzas',salario:'Bs. 3.000 – 3.800',desc:'Contabilidad general, impuestos, facturación.',url:'https://trabajando.com.bo'},
+  {id:'p1',fuente:'trabajopolis',titulo:'Diseñador Gráfico',empresa:'Estudio Creativo Altiplano',depto:'La Paz',modalidad:'Medio tiempo',categoria:'Diseño',salario:'Bs. 2.000 – 2.800',desc:'Adobe Creative Suite, branding, redes sociales.',url:'https://www.trabajopolis.bo'},
+  {id:'p2',fuente:'trabajopolis',titulo:'Docente de Matemáticas',empresa:'Academia Horizonte',depto:'Cochabamba',modalidad:'Medio tiempo',categoria:'Educación',salario:'Bs. 1.500 – 2.200',desc:'Clases particulares y grupales.',url:'https://www.trabajopolis.bo'},
+  {id:'p3',fuente:'trabajopolis',titulo:'Motorizado / Delivery',empresa:'Distribuidora Norte',depto:'La Paz',modalidad:'Tiempo completo',categoria:'Logística',salario:'Bs. 2.000 + incentivos',desc:'Entregas, licencia de conducir.',url:'https://www.trabajopolis.bo'},
+  {id:'p4',fuente:'trabajopolis',titulo:'Analista de Marketing Digital',empresa:'MarketBolivia',depto:'Remoto',modalidad:'Remoto',categoria:'Marketing',salario:'Bs. 3.500 – 4.500',desc:'SEO, SEM, campañas Meta y Google Ads.',url:'https://www.trabajopolis.bo'},
+  {id:'p5',fuente:'trabajopolis',titulo:'Recepcionista Hotelera',empresa:'Hotel Plaza Oruro',depto:'Oruro',modalidad:'Tiempo completo',categoria:'Administración',salario:'Bs. 2.200 – 2.600',desc:'Check-in/out, atención al cliente.',url:'https://www.trabajopolis.bo'},
+  {id:'p6',fuente:'trabajopolis',titulo:'Pasante de Recursos Humanos',empresa:'Corporación Andina',depto:'Cochabamba',modalidad:'Prácticas',categoria:'Administración',salario:'Bs. 800 – 1.200',desc:'Selección de personal, onboarding.',url:'https://www.trabajopolis.bo'},
+  {id:'p7',fuente:'trabajopolis',titulo:'Programador Python / Data',empresa:'DataBolivia Ltda.',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Tecnología',salario:'Bs. 5.000 – 7.000',desc:'Análisis de datos, pandas, Machine Learning.',url:'https://www.trabajopolis.bo'},
+  {id:'w1',fuente:'trabajito',titulo:'Barista / Cajero/a',empresa:'Café Colonial Sucre',depto:'Sucre',modalidad:'Tiempo completo',categoria:'Gastronomía',salario:'Bs. 1.800 + propinas',desc:'Preparación de bebidas, atención al público.',url:'https://trabajito.com.bo'},
+  {id:'w2',fuente:'trabajito',titulo:'Vendedor/a Tienda de Ropa',empresa:'Moda Bolivia',depto:'La Paz',modalidad:'Tiempo completo',categoria:'Ventas',salario:'Bs. 1.700 + comisión 3%',desc:'Atención al cliente, caja, inventario.',url:'https://trabajito.com.bo'},
+  {id:'w3',fuente:'trabajito',titulo:'Auxiliar de Enfermería',empresa:'Centro Médico Tarija',depto:'Tarija',modalidad:'Tiempo completo',categoria:'Salud',salario:'Bs. 2.200 – 2.800',desc:'Cuidado de pacientes, administración de medicamentos.',url:'https://trabajito.com.bo'},
+  {id:'w4',fuente:'trabajito',titulo:'Editor de Video / Reels',empresa:'Productora Creativa BO',depto:'Remoto',modalidad:'Remoto',categoria:'Diseño',salario:'Bs. 2.500 – 4.000',desc:'Edición para redes sociales, Premiere o After Effects.',url:'https://trabajito.com.bo'},
+  {id:'w5',fuente:'trabajito',titulo:'Repartidor con Moto',empresa:'Rappi Bolivia',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Logística',salario:'Bs. 2.500 – 4.000',desc:'Entregas de comida y productos.',url:'https://trabajito.com.bo'},
+  {id:'w6',fuente:'trabajito',titulo:'Docente de Inglés',empresa:'Instituto Idiomas Beni',depto:'Beni',modalidad:'Medio tiempo',categoria:'Educación',salario:'Bs. 2.000 – 2.800',desc:'Clases de inglés nivel básico a avanzado.',url:'https://trabajito.com.bo'},
+  {id:'w7',fuente:'trabajito',titulo:'Asistente Contable',empresa:'Estudio Contable Pando',depto:'Pando',modalidad:'Tiempo completo',categoria:'Finanzas',salario:'Bs. 2.500 – 3.000',desc:'Registro de transacciones, declaraciones impositivas.',url:'https://trabajito.com.bo'},
+  {id:'d1',fuente:'eldeber',titulo:'Gerente de Ventas Regional',empresa:'Distribuidora Cruceña S.A.',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Ventas',salario:'Bs. 8.000 – 12.000',desc:'Gestión de equipo comercial, metas trimestrales.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
+  {id:'d2',fuente:'eldeber',titulo:'Arquitecto/a Junior',empresa:'Constructora Los Pinos',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Administración',salario:'Bs. 4.000 – 5.500',desc:'Diseño de planos, supervisión de obra, AutoCAD.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
+  {id:'d3',fuente:'eldeber',titulo:'Operador de Maquinaria Pesada',empresa:'Constructora Oriente',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Logística',salario:'Bs. 5.000 – 6.500',desc:'Excavadora y motoniveladora, licencia G.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
+  {id:'d4',fuente:'eldeber',titulo:'Nutricionista',empresa:'Clínica Nutrición Vital',depto:'Santa Cruz',modalidad:'Medio tiempo',categoria:'Salud',salario:'Bs. 3.000 – 4.000',desc:'Consultas, planes nutricionales, seguimiento.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
+  {id:'d5',fuente:'eldeber',titulo:'Técnico en Refrigeración',empresa:'Servicios Técnicos SCZ',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Tecnología',salario:'Bs. 3.500 – 4.500',desc:'Instalación y mantenimiento de equipos de refrigeración.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
+  {id:'d6',fuente:'eldeber',titulo:'Cocinero/a Restaurante 5★',empresa:'Hotel Camino Real',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Gastronomía',salario:'Bs. 3.000 – 4.500',desc:'Cocina internacional, preparación de menús.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
+  {id:'d7',fuente:'eldeber',titulo:'Especialista en E-commerce',empresa:'TiendaBolivia.com',depto:'Remoto',modalidad:'Remoto',categoria:'Marketing',salario:'Bs. 4.000 – 6.000',desc:'Gestión de tienda online, campañas de publicidad digital.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
+];
+
+const CAT_ICONS = {'Tecnología':'💻','Ventas':'🤝','Administración':'📋','Marketing':'📣','Salud':'🏥','Educación':'📚','Gastronomía':'🍽','Logística':'🚚','Diseño':'🎨','Finanzas':'💰'};
+const BADGE = {
+  trabajando:{cls:'badge-trabajando',name:'Trabajando.bo'},
+  trabajopolis:{cls:'badge-trabajopolis',name:'Trabajópolis.bo'},
+  trabajito:{cls:'badge-trabajito',name:'Trabajito.bo'},
+  eldeber:{cls:'badge-eldeber',name:'El Deber'}
+};
+
+let activeCat = '', activeSrc = '';
+let misSolicitudes = JSON.parse(localStorage.getItem('jl_solicitudes') || '[]');
+
+// ─── UTILS ───
+function v(id){return(document.getElementById(id)?.value||'').trim()}
+function esc(s){if(!s)return'';return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+
+// ─── NAVEGACIÓN ───
+function showPage(p){
+  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+  document.getElementById(p).classList.add('active');
+  const pages=['pageHome','pageJobs','pageCv','pageProfile'];
+  document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',pages[i]===p));
+  if(p==='pageJobs')renderJobs();
+  if(p==='pageCv')renderCvPage();
+}
+function goToCat(cat){activeCat=cat;showPage('pageJobs');document.querySelectorAll('.cat-chip').forEach(c=>c.classList.toggle('active',c.textContent.includes(cat)))}
+function filterBySource(src){activeSrc=src;const f=document.getElementById('fFuente');if(f)f.value=src;showPage('pageJobs')}
+
+// ─── AUTH TABS ───
+function switchAuth(panel){
+  document.getElementById('registerPanel').style.display=panel==='registerPanel'?'block':'none';
+  document.getElementById('loginPanel').style.display=panel==='loginPanel'?'block':'none';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.form===panel));
+}
+document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchAuth(b.dataset.form)));
+
+function showMsg(id, text, type='error'){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.textContent=text;
+  el.className='auth-msg '+(type==='info'?'info':'error');
+}
+
+// ─── REGISTRO ─── CORRECCIÓN #1: mensaje claro si correo duplicado ───
+async function handleRegister(){
+  const n=v('rNombre'),t=v('rTelefono'),c=v('rCorreo'),ci=v('rCiudad'),i=v('rInteres');
+  if(!n||!t||!c||!ci||!i){showMsg('rMsg','⚠️ Completa todos los campos.');return}
+  if(!/\S+@\S+\.\S+/.test(c)){showMsg('rMsg','⚠️ Correo inválido.');return}
+  const fd=new FormData();
+  fd.append('destino','usuarios');
+  fd.append('nombre',n);fd.append('telefono',t);fd.append('correo',c);
+  fd.append('ciudad',ci);fd.append('interes',i);fd.append('cvName','');
+  try{
+    const resp=await fetch(GAS_URL,{method:'POST',body:fd});
+    const data=await resp.json();
+    if(data.status==='ok'){
+      const u={nombre:n,telefono:t,correo:c,ciudad:ci,interes:i,cvName:'',cvDate:'',fecha:new Date().toISOString()};
+      localStorage.setItem('jl_user',JSON.stringify(u));
+      enterApp(u);
+    } else if(data.message && data.message.includes('correo ya está registrado')){
+      // ✅ CORRECCIÓN #1: indicar que solo necesita el correo para entrar
+      showMsg('rMsg',
+        '✅ Ya tienes una cuenta con ese correo. Solo ingresa tu correo en "Ya tengo cuenta" para acceder.',
+        'info'
+      );
+      // Pre-llenar el campo de login y sugerir cambiar de tab
+      document.getElementById('lCorreo').value=c;
+      setTimeout(()=>{
+        switchAuth('loginPanel');
+        showMsg('lMsg','👆 Tu correo ya está listo. Haz clic en "Ingresar" para entrar.','info');
+      }, 2200);
+    } else {
+      showMsg('rMsg','❌ '+(data.message||'Error desconocido'));
+    }
+  }catch(e){
+    console.error(e);
+    showMsg('rMsg','❌ Error de conexión. Intenta de nuevo.');
+  }
+}
+
+// ─── LOGIN ───
+async function handleLogin(){
+  const c=v('lCorreo');
+  if(!c){showMsg('lMsg','⚠️ Ingresa tu correo.');return}
+  if(!/\S+@\S+\.\S+/.test(c)){showMsg('lMsg','⚠️ Correo inválido.');return}
+  const stored=JSON.parse(localStorage.getItem('jl_user')||'{}');
+  if(stored.correo===c){enterApp(stored);return}
+  const u={nombre:c.split('@')[0],correo:c,telefono:'',ciudad:'',interes:'',cvName:'',cvDate:''};
+  localStorage.setItem('jl_user',JSON.stringify(u));
+  enterApp(u);
+}
+
+function enterApp(user){
+  document.getElementById('authScreen').style.display='none';
+  document.getElementById('appWrapper').style.display='block';
+  document.getElementById('userNameNav').textContent=user.nombre||user.correo;
+  document.getElementById('profileName').textContent=user.nombre||'—';
+  document.getElementById('profileEmail').textContent=user.correo;
+  if(user.ciudad)document.getElementById('profileDepto').value=user.ciudad;
+  if(user.interes)document.getElementById('profileTipo').value=user.interes;
+  updateCvUI();
+  initHome();
+  renderJobs();
+  renderMisSolicitudes();
+}
+function logout(){
+  localStorage.removeItem('jl_user');
+  document.getElementById('authScreen').style.display='flex';
+  document.getElementById('appWrapper').style.display='none';
+}
+window.addEventListener('DOMContentLoaded',()=>{
+  const s=localStorage.getItem('jl_user');
+  if(s)enterApp(JSON.parse(s));
+});
+
+// ─── HOME ───
+function initHome(){
+  const fuenteStats={},catStats={};
+  EMPLEOS.forEach(e=>{
+    if(!fuenteStats[e.fuente])fuenteStats[e.fuente]={};
+    fuenteStats[e.fuente][e.categoria]=(fuenteStats[e.fuente][e.categoria]||0)+1;
+    if(!catStats[e.categoria])catStats[e.categoria]={total:0,fuentes:{}};
+    catStats[e.categoria].total++;
+    catStats[e.categoria].fuentes[e.fuente]=(catStats[e.categoria].fuentes[e.fuente]||0)+1;
+  });
+  Object.entries(fuenteStats).forEach(([fuente,cats])=>{
+    const total=Object.values(cats).reduce((a,b)=>a+b,0);
+    const el=document.getElementById('stats-fuente-'+fuente);
+    const tel=document.getElementById('total-'+fuente);
+    if(el)el.innerHTML=Object.entries(cats).map(([c,n])=>`<span class="fuente-stat-chip">${CAT_ICONS[c]||''} ${c}: ${n}</span>`).join('');
+    if(tel)tel.textContent=total+' vacantes en total';
+  });
+  const catsHome=document.getElementById('catsHome');
+  if(catsHome)catsHome.innerHTML=Object.entries(catStats).map(([cat,data])=>{
+    const fuenteTags=Object.entries(data.fuentes).map(([f,n])=>`<span class="cat-fuente-dot badge-${f}">${BADGE[f]?.name||f}: ${n}</span>`).join('');
+    return`<div class="cat-home-card" onclick="goToCat('${esc(cat)}')"><div class="cat-home-icon">${CAT_ICONS[cat]||'🗂'}</div><div class="cat-home-name">${esc(cat)}</div><div class="cat-home-count">${data.total} vacante${data.total!==1?'s':''}</div><div class="cat-home-fuentes">${fuenteTags}</div></div>`;
+  }).join('');
+  document.getElementById('statTotal').textContent=EMPLEOS.length;
+}
+
+// ─── JOBS ───
+function filterCat(btn,cat){
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
+  btn.classList.add('active');activeCat=cat;renderJobs();
+}
+function renderJobs(){
+  const search=(document.getElementById('fSearch')?.value||'').toLowerCase();
+  const depto=(document.getElementById('fDepto')?.value||'').toLowerCase();
+  const fuente=document.getElementById('fFuente')?.value||'';
+  const modalidad=(document.getElementById('fModalidad')?.value||'').toLowerCase();
+  let results=EMPLEOS.filter(e=>
+    (!search||e.titulo.toLowerCase().includes(search)||e.empresa.toLowerCase().includes(search)||e.desc.toLowerCase().includes(search))&&
+    (!depto||e.depto.toLowerCase().includes(depto))&&
+    (!fuente||e.fuente===fuente)&&
+    (!modalidad||e.modalidad.toLowerCase().includes(modalidad.replace('prácticas','práctica')))&&
+    (!activeCat||e.categoria===activeCat)
+  );
+  document.getElementById('resultCount').textContent=results.length+' vacante'+(results.length!==1?'s':'')+' encontrada'+(results.length!==1?'s':'');
+  const grid=document.getElementById('jobsGrid');if(!grid)return;
+  if(results.length===0){grid.innerHTML='<div class="no-results"><div class="icon">🔍</div><p>No se encontraron vacantes con esos filtros.</p></div>';return}
+  grid.innerHTML=results.map(job=>`
+    <div class="job-card" onclick="openModal('${esc(job.id)}')">
+      <span class="job-source-badge ${BADGE[job.fuente]?.cls}">${BADGE[job.fuente]?.name}</span>
+      <div class="job-title">${esc(job.titulo)}</div>
+      <div class="job-company">🏢 ${esc(job.empresa)}</div>
+      <div class="job-meta">
+        <span class="meta-tag">📍 ${esc(job.depto)}</span>
+        <span class="meta-tag">⏱ ${esc(job.modalidad)}</span>
+        <span class="meta-tag">🗂 ${esc(job.categoria)}</span>
+      </div>
+      <div class="job-desc">${esc(job.desc)}</div>
+      <div class="job-footer">
+        <div class="job-salary">💰 ${esc(job.salario)}</div>
+        <div style="display:flex;gap:.4rem">
+          <a href="${esc(job.url)}" target="_blank" class="btn-ver" onclick="event.stopPropagation()">Ver portal</a>
+          <button class="btn-postular" onclick="event.stopPropagation();openModal('${esc(job.id)}')">Postular</button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+['fSearch','fDepto','fFuente','fModalidad'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el)el.addEventListener(id==='fSearch'?'input':'change',renderJobs);
+});
+
+// ─── MODAL ───
+let currentJobId=null;
+function openModal(jobId){
+  currentJobId=jobId;
+  const job=EMPLEOS.find(j=>j.id===jobId);if(!job)return;
+  document.getElementById('modalJobInfo').innerHTML=`<strong style="color:var(--blanco)">${esc(job.titulo)}</strong><br>🏢 ${esc(job.empresa)} &nbsp;|&nbsp; 📍 ${esc(job.depto)}<br>💰 ${esc(job.salario)}`;
+  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
+  document.getElementById('mNombre').value=u.nombre||'';
+  document.getElementById('mTelefono').value=u.telefono||'';
+  document.getElementById('mCorreo').value=u.correo||'';
+  document.getElementById('cvModalStatus').style.display=u.cvName?'block':'none';
+  document.getElementById('successBanner').style.display='none';
+  document.getElementById('modalForm').style.display='block';
+  document.getElementById('modalOverlay').classList.add('open');
+}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('open')}
+document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+
+async function submitPostulacion(){
+  const nombre=v('mNombre'),correo=v('mCorreo'),telefono=v('mTelefono'),tipo=v('mTipo'),detalle=document.getElementById('mDetalle').value;
+  if(!nombre||!correo){alert('Nombre y correo son obligatorios');return}
+  const job=EMPLEOS.find(j=>j.id===currentJobId);
+  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
+  const sol={nombre,correo,telefono,tipoSolicitud:tipo,detalle:detalle||`Me interesa: ${job?.titulo} en ${job?.empresa}`,puesto:job?.titulo||'',empresa:job?.empresa||'',fuente:job?.fuente||'',cvName:u.cvName||'Sin CV',fecha:new Date().toISOString()};
+  try{const p=new URLSearchParams({destino:'solicitudes',...sol});fetch(GAS_URL+'?'+p,{method:'GET',mode:'no-cors'})}catch(_){}
+  misSolicitudes.push(sol);
+  localStorage.setItem('jl_solicitudes',JSON.stringify(misSolicitudes));
+  renderMisSolicitudes();
+  document.getElementById('modalForm').style.display='none';
+  document.getElementById('successBanner').style.display='block';
+  setTimeout(closeModal,3000);
+}
+function renderMisSolicitudes(){
+  const list=document.getElementById('misSolicitudesList');if(!list)return;
+  if(misSolicitudes.length===0){list.innerHTML='<div style="color:var(--gris);font-size:.88rem">Aún no has postulado.</div>';return}
+  list.innerHTML=misSolicitudes.slice().reverse().map(s=>`
+    <div class="solicitud-row">
+      <div><div class="sol-titulo">${esc(s.puesto)}</div><div style="font-size:.75rem;color:var(--gris)">${esc(s.empresa)} · ${new Date(s.fecha).toLocaleDateString('es-BO')}</div></div>
+      <span class="sol-estado">Enviada ✓</span>
+    </div>`).join('');
+}
+
+// ═══════════════════════════════════════════════════════
+// CV — CORRECCIÓN #2: análisis real con IA (Claude API)
+// ═══════════════════════════════════════════════════════
+function handleCvUpload(input){
+  const file=input.files[0];if(!file)return;
+  if(file.size>5*1024*1024){alert('El archivo supera 5MB');return}
+  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
+  u.cvName=file.name;
+  u.cvDate=new Date().toLocaleString('es-BO');
+  localStorage.setItem('jl_user',JSON.stringify(u));
+  updateCvUI();
+  analyzeCvWithAI(file);
+}
+function handleCvDrop(e){
+  e.preventDefault();
+  document.getElementById('cvZone').classList.remove('drag-over');
+  const file=e.dataTransfer.files[0];if(!file)return;
+  const inp=document.getElementById('cvInput');
+  const dt=new DataTransfer();dt.items.add(file);inp.files=dt.files;
+  handleCvUpload(inp);
+}
+function removeCv(){
+  if(!confirm('¿Eliminar tu CV guardado?'))return;
+  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
+  u.cvName='';u.cvDate='';u.cvCategories=[];u.cvSummary='';
+  localStorage.setItem('jl_user',JSON.stringify(u));
+  document.getElementById('cvInput').value='';
+  updateCvUI();renderCvPage();
+}
+function updateCvUI(){
+  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
+  const badge=document.getElementById('cvStatusBadgeProfile');
+  const nameEl=document.getElementById('cvNameProfile');
+  if(badge&&nameEl){badge.style.display=u.cvName?'inline-flex':'none';nameEl.textContent=u.cvName}
+}
+
+// ─── LEER CV ───
+async function readFileAsBase64(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result.split(',')[1]);
+    r.onerror=()=>rej(r.error);
+    r.readAsDataURL(file);
+  });
+}
+async function readFileAsText(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result||'');
+    r.onerror=()=>rej(r.error);
+    r.readAsText(file);
+  });
+}
+
+// ─── ANÁLISIS CON IA ─── CORRECCIÓN #2 ───
+async function analyzeCvWithAI(file){
+  // Mostrar loading
+  document.getElementById('cvIaLoading').style.display='flex';
+  document.getElementById('cvAnalysisSection').style.display='none';
+  document.getElementById('cvEmptyMsg').style.display='none';
+
+  const categorias = Object.keys(CAT_ICONS).join(', ');
+  const isPdf = file.name.toLowerCase().endsWith('.pdf');
+
+  try {
+    let messages;
+
+    if(isPdf){
+      // Enviar el PDF directamente como documento
+      const base64 = await readFileAsBase64(file);
+      messages = [{
+        role:'user',
+        content:[
+          {
+            type:'document',
+            source:{type:'base64',media_type:'application/pdf',data:base64}
+          },
+          {
+            type:'text',
+            text:`Eres un experto en recursos humanos boliviano. Analiza este CV/hoja de vida y determina qué categorías de empleo son más adecuadas para esta persona.
+
+Las categorías disponibles son: ${categorias}
+
+INSTRUCCIONES:
+1. Lee el contenido del CV con cuidado
+2. Identifica las habilidades, experiencia y perfil de la persona
+3. Selecciona ÚNICAMENTE las categorías que realmente correspondan a su perfil (mínimo 1, máximo 4)
+4. Proporciona un breve resumen del perfil (2-3 oraciones)
+
+Responde SOLO en formato JSON, sin texto adicional ni markdown:
+{
+  "categorias": ["Categoria1", "Categoria2"],
+  "resumen": "Breve descripción del perfil profesional",
+  "experiencia": "Área principal de experiencia"
+}`
+          }
+        ]
+      }];
+    } else {
+      // Para DOCX u otros, leer como texto
+      let texto = '';
+      try { texto = await readFileAsText(file); } catch(e) { texto = file.name; }
+      // Limpiar caracteres extraños de DOCX
+      texto = texto.replace(/[^\x20-\x7E\xC0-\xFF\u00C0-\u024F\n\r\t]/g,'').substring(0,6000);
+
+      messages = [{
+        role:'user',
+        content:`Eres un experto en recursos humanos boliviano. Analiza este texto extraído de un CV/hoja de vida y determina qué categorías de empleo son más adecuadas para esta persona.
+
+TEXTO DEL CV:
+${texto || 'Nombre del archivo: '+file.name}
+
+Las categorías disponibles son: ${categorias}
+
+INSTRUCCIONES:
+1. Lee el contenido con cuidado
+2. Identifica las habilidades, experiencia y perfil de la persona
+3. Selecciona ÚNICAMENTE las categorías que realmente correspondan a su perfil (mínimo 1, máximo 4)
+4. Si el texto tiene poco contenido legible, usa el nombre del archivo como pista
+
+Responde SOLO en formato JSON, sin texto adicional ni markdown:
+{
+  "categorias": ["Categoria1", "Categoria2"],
+  "resumen": "Breve descripción del perfil profesional",
+  "experiencia": "Área principal de experiencia"
+}`
+      }];
+    }
+
+    const response = await fetch(CLAUDE_API, {
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        model:'claude-sonnet-4-20250514',
+        max_tokens:400,
+        messages
+      })
+    });
+
+    const data = await response.json();
+    let rawText = data.content?.map(c=>c.text||'').join('') || '';
+    // Limpiar posibles backticks de markdown
+    rawText = rawText.replace(/```json|```/g,'').trim();
+
+    let parsed;
+    try { parsed = JSON.parse(rawText); } catch(e) { parsed = null; }
+
+    // Validar que las categorías devueltas existen en nuestro catálogo
+    const validCats = Object.keys(CAT_ICONS);
+    let detectedCats = [];
+    if(parsed && Array.isArray(parsed.categorias)){
+      detectedCats = parsed.categorias.filter(c => validCats.includes(c));
+    }
+    // Fallback si no hubo resultado válido
+    if(detectedCats.length === 0) detectedCats = fallbackDetect(file.name);
+
+    const u = JSON.parse(localStorage.getItem('jl_user')||'{}');
+    u.cvCategories = detectedCats;
+    u.cvSummary = parsed?.resumen || '';
+    u.cvExperiencia = parsed?.experiencia || '';
+    localStorage.setItem('jl_user', JSON.stringify(u));
+
+  } catch(err) {
+    console.warn('Error IA, usando detección local:', err);
+    const detectedCats = fallbackDetect(file.name);
+    const u = JSON.parse(localStorage.getItem('jl_user')||'{}');
+    u.cvCategories = detectedCats;
+    localStorage.setItem('jl_user', JSON.stringify(u));
+  }
+
+  document.getElementById('cvIaLoading').style.display='none';
+  renderCvPage();
+}
+
+// Detección local básica como respaldo (solo por nombre de archivo)
+function fallbackDetect(filename){
+  const f = filename.toLowerCase();
+  const map = {
+    'Gastronomía':['cocin','chef','gastronomía','culinari','restaurant','comida','alimento','pastelería','panadería','barista','cafeter'],
+    'Salud':['enfermer','medic','salud','clínic','farmac','nutri','fisio','doctor','hospital'],
+    'Tecnología':['softwar','program','desarrollo','web','sistema','informátic','tech','computación'],
+    'Diseño':['diseño','gráfico','visual','ilustr','multimedia','creativ','adobe','photo'],
+    'Educación':['docent','maestro','profesor','educac','enseñanz','pedagog','tutor'],
+    'Ventas':['venta','comerci','ejecutiv','client','asesor'],
+    'Logística':['logístic','transport','almacén','deliver','moto','depósit','reparto'],
+    'Administración':['admin','gestión','secretari','recepcion','oficin'],
+    'Marketing':['marketing','publicidad','comunity','contenido','redes'],
+    'Finanzas':['contab','finanz','contador','auditor','presupuest'],
+  };
+  for(const [cat,kws] of Object.entries(map)){
+    if(kws.some(k=>f.includes(k))) return [cat];
+  }
+  return ['Administración'];
+}
+
+function renderCvPage(){
+  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
+  const hasCv=!!u.cvName;
+  document.getElementById('cvCurrentSection').style.display=hasCv?'flex':'none';
+  document.getElementById('cvEmptyMsg').style.display=hasCv?'none':'block';
+  document.getElementById('cvAnalysisSection').style.display=hasCv?'block':'none';
+  if(hasCv){
+    document.getElementById('cvCurrentName').textContent=u.cvName;
+    document.getElementById('cvCurrentMeta').textContent=u.cvDate?'Subido: '+u.cvDate:'Subido recientemente';
+
+    // Mostrar resumen si existe
+    const cats=u.cvCategories||Object.keys(CAT_ICONS);
+    const chipsEl=document.getElementById('cvSuggestionChips');
+    if(chipsEl){
+      let html='';
+      if(u.cvSummary){
+        html+=`<div style="width:100%;padding:.65rem .85rem;background:rgba(26,158,92,.07);border-radius:.7rem;border:1px solid rgba(26,158,92,.2);font-size:.83rem;color:var(--texto);margin-bottom:.6rem">
+          <strong style="color:var(--verde-claro)">🤖 Perfil detectado:</strong> ${esc(u.cvSummary)}
+        </div>`;
+      }
+      html+=cats.map((cat,i)=>`<span class="cv-chip ${i===0?'active':''}" onclick="toggleCvChip(this,'${esc(cat)}')">${CAT_ICONS[cat]||''} ${esc(cat)}</span>`).join('');
+      chipsEl.innerHTML=html;
+    }
+    renderCvJobSuggestions();
+    renderCvTips(cats);
+  }
+}
+
+function toggleCvChip(chip){chip.classList.toggle('active');renderCvJobSuggestions()}
+function renderCvJobSuggestions(){
+  const activeCats=[...document.querySelectorAll('.cv-chip.active')].map(c=>{
+    // Extraer texto limpio sin emoji
+    return c.textContent.trim().replace(/^[\u{1F300}-\u{1FAD6}][\s]*/u,'').trim();
+  });
+  let jobs=EMPLEOS.filter(e=>activeCats.length===0||activeCats.some(ac=>e.categoria===ac));
+  document.getElementById('cvMatchCount').textContent=`${jobs.length} empleo${jobs.length!==1?'s':''} encontrado${jobs.length!==1?'s':''} según tu perfil`;
+  const preview=document.getElementById('cvJobsPreview');
+  if(preview)preview.innerHTML=jobs.slice(0,6).map(job=>`
+    <div class="cv-job-row" onclick="openModal('${esc(job.id)}')">
+      <div>
+        <div class="cv-job-title">${esc(job.titulo)}</div>
+        <div class="cv-job-meta">🏢 ${esc(job.empresa)} · 📍 ${esc(job.depto)} · ${esc(job.salario)}</div>
+      </div>
+      <span class="match-badge ${BADGE[job.fuente]?.cls||''}">${BADGE[job.fuente]?.name||''}</span>
+    </div>`).join('')||'<div style="color:var(--gris);font-size:.88rem;padding:.5rem">Selecciona al menos una categoría.</div>';
+}
+
+function renderCvTips(cats){
+  const tips=[
+    {icon:'📌',text:'Completa tu perfil con departamento y tipo de empleo preferido.'},
+    {icon:'🔗',text:`Según tu CV, te recomendamos explorar: ${cats.slice(0,3).join(', ')}.`},
+    {icon:'💬',text:'Al postular, incluye una carta de presentación breve.'},
+    {icon:'🔄',text:'Puedes reemplazar tu CV cuando quieras.'},
+    {icon:'📍',text:'Activa el filtro por departamento para ver vacantes cerca de ti.'}
+  ];
+  const el=document.getElementById('cvTips');
+  if(el)el.innerHTML=tips.map(t=>`
+    <div style="display:flex;gap:.65rem;align-items:flex-start;padding:.6rem;background:var(--fondo2);border-radius:.65rem;border:1px solid var(--borde)">
+      <span style="font-size:1.1rem">${t.icon}</span>
+      <span style="font-size:.84rem;color:var(--gris)">${t.text}</span>
+    </div>`).join('');
+}
+
+// ─── PROFILE ───
+function saveProfile(){
+  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
+  u.ciudad=v('profileDepto');u.interes=v('profileTipo');
+  localStorage.setItem('jl_user',JSON.stringify(u));
+  const btn=document.querySelector('#pageProfile .btn-auth');
+  if(btn){btn.textContent='✅ Guardado';setTimeout(()=>btn.textContent='Guardar cambios',2000)}
+}
+</script>
+</body>
+</html>
