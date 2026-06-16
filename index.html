@@ -254,7 +254,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 </head>
 <body>
 
-<!-- AUTH SCREEN -->
+<!-- ==================== AUTH SCREEN ==================== -->
 <div id="authScreen">
   <div class="auth-card">
     <div class="auth-logo">Joven<span>Laburo</span> 🇧🇴</div>
@@ -263,7 +263,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       <button class="tab-btn active" data-form="registerPanel">Crear cuenta</button>
       <button class="tab-btn" data-form="loginPanel">Ya tengo cuenta</button>
     </div>
-
     <div id="registerPanel">
       <div class="field-row">
         <div class="field"><label>Nombre completo</label><input type="text" id="rNombre" placeholder="Juan Mamani"></div>
@@ -290,7 +289,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       <button class="btn-auth" onclick="handleRegister()">Crear mi cuenta gratis →</button>
       <div class="auth-msg" id="rMsg"></div>
     </div>
-
     <div id="loginPanel" style="display:none">
       <div class="field"><label>Tu correo electrónico</label><input type="email" id="lCorreo" placeholder="juan@email.com"></div>
       <button class="btn-auth" onclick="handleLogin()">Ingresar a mi cuenta →</button>
@@ -300,7 +298,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
   </div>
 </div>
 
-<!-- APP (datos en memoria, sin localStorage sensible) -->
+<!-- ==================== APP ==================== -->
 <div id="appWrapper">
   <nav class="navbar">
     <div class="nav-inner">
@@ -326,14 +324,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       <p>Consolidamos ofertas reales de 4 portales bolivianos. Busca por departamento, categoría o sube tu CV para ver empleos a tu medida.</p>
       <button class="btn-hero" onclick="showPage('pageJobs')">🔍 Ver todos los empleos</button>
     </div>
-
     <div class="stats-row">
       <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">Portales integrados</div></div>
       <div class="stat-box"><div class="stat-num" id="statTotal">28</div><div class="stat-lbl">Vacantes activas</div></div>
       <div class="stat-box"><div class="stat-num">9</div><div class="stat-lbl">Departamentos</div></div>
       <div class="stat-box"><div class="stat-num">850+</div><div class="stat-lbl">Contrataciones exitosas</div></div>
     </div>
-
     <div class="section-title">📡 Portales de empleo integrados</div>
     <div class="fuentes-grid" id="fuentesGrid">
       <div class="fuente-card" onclick="filterBySource('trabajando')"><div class="fuente-name">Trabajando.com.bo</div><div class="fuente-url">trabajando.com.bo</div><div id="stats-fuente-trabajando" class="fuente-stats"></div><div class="fuente-total" id="total-trabajando"></div></div>
@@ -341,10 +337,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       <div class="fuente-card" onclick="filterBySource('trabajito')"><div class="fuente-name">Trabajito.com.bo</div><div class="fuente-url">trabajito.com.bo</div><div id="stats-fuente-trabajito" class="fuente-stats"></div><div class="fuente-total" id="total-trabajito"></div></div>
       <div class="fuente-card" onclick="filterBySource('eldeber')"><div class="fuente-name">El Deber Clasificados</div><div class="fuente-url">clasificados.eldeber.com.bo</div><div id="stats-fuente-eldeber" class="fuente-stats"></div><div class="fuente-total" id="total-eldeber"></div></div>
     </div>
-
     <div class="section-title">📊 Empleos por categoría</div>
     <div class="cats-home" id="catsHome"></div>
-
     <div style="background:var(--card);border-radius:1.1rem;padding:1.35rem;border:1px solid var(--borde)">
       <div class="section-title" style="margin-bottom:.85rem">¿Por qué JovenLaburo?</div>
       <div class="reason-grid">
@@ -410,7 +404,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       <button class="cat-chip" onclick="filterCat(this,'Diseño')">🎨 Diseño</button>
       <button class="cat-chip" onclick="filterCat(this,'Finanzas')">💰 Finanzas</button>
     </div>
-    <div class="jobs-grid" id="jobsGrid"></div>
+    <div class="jobs-grid" id="jobsGrid">
+      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+    </div>
   </div>
 
   <!-- CV -->
@@ -457,7 +453,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       </div>
       <div class="cv-analysis-card">
         <div class="cv-analysis-header"><div class="cv-analysis-icon">💡</div><div class="cv-analysis-title">Recomendaciones para tu búsqueda</div></div>
-        <div id="cvTips"></div>
+        <div id="cvTips" style="display:flex;flex-direction:column;gap:.6rem"></div>
       </div>
     </div>
     <div id="cvEmptyMsg" style="text-align:center;padding:2rem;color:var(--gris)">
@@ -521,14 +517,15 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 </div>
 
 <script>
-// ═══════════════════════════════════════════════════════
-// 1. CONFIGURACIÓN - BACKEND UNICO (Google Apps Script)
-// ═══════════════════════════════════════════════════════
-const GAS_URL = "https://script.google.com/macros/s/AKfycbyEAlLGrQvEGy_B8y_1P_d9y9fcPQXyQnxatql6Bov3KkTTP8YHWJwi1GVOSuD6TymErA/exec";
+// ==================== CONFIGURACIÓN ====================
+const GAS_URL = "https://script.google.com/macros/s/AKfycbwvQBX_IsP441uYmSd65BYMcr8eVuCoCPCl_t3N7tcWU1FQrML3KtM8RWaKsjd7Epcu/exec";
 
-// ═══════════════════════════════════════════════════════
-// 2. DATOS ESTÁTICOS DE EMPLEOS (sin cambios)
-// ═══════════════════════════════════════════════════════
+// ==================== ESTADO EN MEMORIA ====================
+let currentUser = null;
+let misSolicitudes = [];
+let activeCat = '', activeSrc = '';
+
+// ==================== DATOS DE EMPLEOS ====================
 const EMPLEOS = [
   {id:'t1',fuente:'trabajando',titulo:'Desarrollador Web Full Stack',empresa:'Tech Bolivia S.R.L.',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Tecnología',salario:'Bs. 4.000 – 6.000',desc:'React, Node.js, bases de datos SQL/NoSQL. Trabajo presencial en Santa Cruz.',url:'https://trabajando.com.bo'},
   {id:'t2',fuente:'trabajando',titulo:'Ejecutivo de Ventas',empresa:'Importadora Andina',depto:'La Paz',modalidad:'Tiempo completo',categoria:'Ventas',salario:'Bs. 2.800 + comisiones',desc:'Ventas B2B, visita a clientes, manejo de cartera.',url:'https://trabajando.com.bo'},
@@ -562,23 +559,121 @@ const EMPLEOS = [
 const CAT_ICONS = {'Tecnología':'💻','Ventas':'🤝','Administración':'📋','Marketing':'📣','Salud':'🏥','Educación':'📚','Gastronomía':'🍽','Logística':'🚚','Diseño':'🎨','Finanzas':'💰'};
 const BADGE = {trabajando:{cls:'badge-trabajando',name:'Trabajando.bo'},trabajopolis:{cls:'badge-trabajopolis',name:'Trabajópolis.bo'},trabajito:{cls:'badge-trabajito',name:'Trabajito.bo'},eldeber:{cls:'badge-eldeber',name:'El Deber'}};
 
-// ═══════════════════════════════════════════════════════
-// 3. ESTADO EN MEMORIA (NO localStorage)
-// ═══════════════════════════════════════════════════════
-let currentUser = null;              // { nombre, correo, telefono, ciudad, interes, cvName, cvDate, cvCategories, cvSummary }
-let misSolicitudes = [];             // Postulaciones hechas en esta sesión
-let activeCat = '', activeSrc = '';
-
-// ═══════════════════════════════════════════════════════
-// 4. UTILIDADES
-// ═══════════════════════════════════════════════════════
-function v(id){ return (document.getElementById(id)?.value || '').trim(); }
-function esc(s){ if(!s) return ''; return s.replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+// ==================== UTILIDADES ====================
+function v(id) { return (document.getElementById(id)?.value || '').trim(); }
+function esc(s) { if(!s) return ''; return s.replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 function showMsg(id, text, type='error'){ let el=document.getElementById(id); if(el){ el.textContent=text; el.className='auth-msg '+(type==='info'?'info':'error'); } }
 
-// ═══════════════════════════════════════════════════════
-// 5. NAVEGACIÓN Y FILTROS
-// ═══════════════════════════════════════════════════════
+// ==================== FETCH CON SOPORTE CORS ====================
+async function fetchApi(url, options) {
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    return await response.json();
+  } catch (error) {
+    console.error('Fetch error:', error);
+    throw new Error('ERROR_CONEXION: No se pudo conectar con el servidor. Verifica tu conexión o que el backend esté activo.');
+  }
+}
+
+// ==================== AUTH ====================
+function switchAuth(panel){
+  document.getElementById('registerPanel').style.display = panel === 'registerPanel' ? 'block' : 'none';
+  document.getElementById('loginPanel').style.display = panel === 'loginPanel' ? 'block' : 'none';
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.toggle('active', b.dataset.form === panel));
+}
+document.querySelectorAll('.tab-btn').forEach(b => b.addEventListener('click', () => switchAuth(b.dataset.form)));
+
+async function handleRegister() {
+  const nombre = v('rNombre'), telefono = v('rTelefono'), correo = v('rCorreo'), ciudad = v('rCiudad'), interes = v('rInteres');
+  if (!nombre || !telefono || !correo || !ciudad || !interes) { showMsg('rMsg', '⚠️ Completa todos los campos.'); return; }
+  if (!/\S+@\S+\.\S+/.test(correo)) { showMsg('rMsg', '⚠️ Correo inválido.'); return; }
+  const formData = new FormData();
+  formData.append('destino', 'usuarios');
+  formData.append('nombre', nombre); formData.append('telefono', telefono); formData.append('correo', correo);
+  formData.append('ciudad', ciudad); formData.append('interes', interes);
+  try {
+    const data = await fetchApi(GAS_URL, { method: 'POST', body: formData });
+    if (data.status === 'ok') {
+      currentUser = { nombre, telefono, correo, ciudad, interes, cvName: '', cvDate: '', cvCategories: [], cvSummary: '' };
+      enterApp();
+    } else if (data.message && data.message.includes('correo ya está registrado')) {
+      showMsg('rMsg', '✅ Ya tienes una cuenta. Usa "Ya tengo cuenta" para ingresar.', 'info');
+      document.getElementById('lCorreo').value = correo;
+      setTimeout(() => switchAuth('loginPanel'), 2000);
+    } else {
+      showMsg('rMsg', '❌ ' + (data.message || 'Error desconocido'));
+    }
+  } catch (error) {
+    showMsg('rMsg', '❌ Error de conexión con el servidor.');
+  }
+}
+
+async function handleLogin() {
+  const correo = v('lCorreo');
+  if (!correo || !/\S+@\S+\.\S+/.test(correo)) { showMsg('lMsg', '⚠️ Correo inválido.'); return; }
+  const formData = new FormData();
+  formData.append('destino', 'buscar_usuario');
+  formData.append('correo', correo);
+  try {
+    const data = await fetchApi(GAS_URL, { method: 'POST', body: formData });
+    if (data.encontrado) {
+      currentUser = { nombre: data.nombre || correo.split('@')[0], correo, telefono: data.telefono || '', ciudad: data.ciudad || '', interes: data.interes || '', cvName: '', cvDate: '', cvCategories: [], cvSummary: '' };
+    } else {
+      currentUser = { nombre: correo.split('@')[0], correo, telefono: '', ciudad: '', interes: '', cvName: '', cvDate: '', cvCategories: [], cvSummary: '' };
+    }
+    enterApp();
+  } catch (error) {
+    currentUser = { nombre: correo.split('@')[0], correo, telefono: '', ciudad: '', interes: '', cvName: '', cvDate: '', cvCategories: [], cvSummary: '' };
+    enterApp();
+  }
+}
+
+function enterApp() {
+  document.getElementById('authScreen').style.display = 'none';
+  document.getElementById('appWrapper').style.display = 'block';
+  document.getElementById('userNameNav').textContent = currentUser.nombre || currentUser.correo;
+  document.getElementById('profileName').textContent = currentUser.nombre || '—';
+  document.getElementById('profileEmail').textContent = currentUser.correo;
+  if (currentUser.ciudad) document.getElementById('profileDepto').value = currentUser.ciudad;
+  if (currentUser.interes) document.getElementById('profileTipo').value = currentUser.interes;
+  updateCvUI();
+  initHome();
+  renderJobs();
+  renderMisSolicitudes();
+}
+function logout() { currentUser = null; misSolicitudes = []; document.getElementById('authScreen').style.display = 'flex'; document.getElementById('appWrapper').style.display = 'none'; }
+
+// ==================== HOME & JOBS ====================
+function initHome() {
+  const fuenteStats = {}, catStats = {};
+  EMPLEOS.forEach(e => {
+    if (!fuenteStats[e.fuente]) fuenteStats[e.fuente] = {};
+    fuenteStats[e.fuente][e.categoria] = (fuenteStats[e.fuente][e.categoria] || 0) + 1;
+    if (!catStats[e.categoria]) catStats[e.categoria] = { total: 0, fuentes: {} };
+    catStats[e.categoria].total++;
+    catStats[e.categoria].fuentes[e.fuente] = (catStats[e.categoria].fuentes[e.fuente] || 0) + 1;
+  });
+  for (let fuente in fuenteStats) {
+    let total = Object.values(fuenteStats[fuente]).reduce((a,b)=>a+b,0);
+    let statsDiv = document.getElementById('stats-fuente-'+fuente);
+    let totalDiv = document.getElementById('total-'+fuente);
+    if (statsDiv) statsDiv.innerHTML = Object.entries(fuenteStats[fuente]).map(([c,n])=>`<span class="fuente-stat-chip">${CAT_ICONS[c]||''} ${c}: ${n}</span>`).join('');
+    if (totalDiv) totalDiv.textContent = total + ' vacantes en total';
+  }
+  const catsHome = document.getElementById('catsHome');
+  if (catsHome) catsHome.innerHTML = Object.entries(catStats).map(([cat,data])=>`
+    <div class="cat-home-card" onclick="goToCat('${esc(cat)}')">
+      <div class="cat-home-icon">${CAT_ICONS[cat]||'🗂'}</div>
+      <div class="cat-home-name">${esc(cat)}</div>
+      <div class="cat-home-count">${data.total} vacante${data.total!==1?'s':''}</div>
+      <div class="cat-home-fuentes">${Object.entries(data.fuentes).map(([f,n])=>`<span class="cat-fuente-dot badge-${f}">${BADGE[f]?.name||f}: ${n}</span>`).join('')}</div>
+    </div>`).join('');
+  document.getElementById('statTotal').textContent = EMPLEOS.length;
+}
+function goToCat(cat) { activeCat = cat; showPage('pageJobs'); document.querySelectorAll('.cat-chip').forEach(c=>c.classList.toggle('active',c.textContent.includes(cat))); renderJobs(); }
+function filterBySource(src) { activeSrc = src; let f = document.getElementById('fFuente'); if(f) f.value = src; showPage('pageJobs'); }
+function filterCat(btn,cat) { document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active')); btn.classList.add('active'); activeCat = cat; renderJobs(); }
 function showPage(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.getElementById(p).classList.add('active');
@@ -587,280 +682,239 @@ function showPage(p){
   if(p==='pageJobs') renderJobs();
   if(p==='pageCv') renderCvPage();
 }
-function goToCat(cat){ activeCat=cat; showPage('pageJobs'); document.querySelectorAll('.cat-chip').forEach(c=>c.classList.toggle('active',c.textContent.includes(cat))); renderJobs(); }
-function filterBySource(src){ activeSrc=src; let f=document.getElementById('fFuente'); if(f) f.value=src; showPage('pageJobs'); }
-function filterCat(btn,cat){ document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active')); btn.classList.add('active'); activeCat=cat; renderJobs(); }
-
-// ═══════════════════════════════════════════════════════
-// 6. AUTH (sin persistencia sensible)
-// ═══════════════════════════════════════════════════════
-function switchAuth(panel){
-  document.getElementById('registerPanel').style.display=panel==='registerPanel'?'block':'none';
-  document.getElementById('loginPanel').style.display=panel==='loginPanel'?'block':'none';
-  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.toggle('active',b.dataset.form===panel));
-}
-document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchAuth(b.dataset.form)));
-
-async function handleRegister(){
-  const nombre=v('rNombre'), telefono=v('rTelefono'), correo=v('rCorreo'), ciudad=v('rCiudad'), interes=v('rInteres');
-  if(!nombre||!telefono||!correo||!ciudad||!interes){ showMsg('rMsg','⚠️ Completa todos los campos.'); return; }
-  if(!/\S+@\S+\.\S+/.test(correo)){ showMsg('rMsg','⚠️ Correo inválido.'); return; }
-  const fd=new FormData(); fd.append('destino','usuarios'); fd.append('nombre',nombre); fd.append('telefono',telefono); fd.append('correo',correo); fd.append('ciudad',ciudad); fd.append('interes',interes); fd.append('cvName','');
-  try{
-    const resp=await fetch(GAS_URL,{method:'POST',body:fd});
-    const data=await resp.json();
-    if(data.status==='ok'){
-      currentUser={ nombre, telefono, correo, ciudad, interes, cvName:'', cvDate:'', cvCategories:[], cvSummary:'' };
-      enterApp();
-    } else if(data.message && data.message.includes('correo ya está registrado')){
-      showMsg('rMsg','✅ Ya tienes una cuenta. Usa "Ya tengo cuenta" para ingresar.','info');
-      document.getElementById('lCorreo').value=correo;
-      setTimeout(()=>switchAuth('loginPanel'),2000);
-    } else { showMsg('rMsg','❌ '+(data.message||'Error desconocido')); }
-  }catch(e){ showMsg('rMsg','❌ Error de conexión.'); }
-}
-
-async function handleLogin(){
-  const correo=v('lCorreo');
-  if(!correo){ showMsg('lMsg','⚠️ Ingresa tu correo.'); return; }
-  if(!/\S+@\S+\.\S+/.test(correo)){ showMsg('lMsg','⚠️ Correo inválido.'); return; }
-  // Simulamos login consultando backend o creando sesión temporal sin guardar datos sensibles
-  const fd=new FormData(); fd.append('destino','buscar_usuario'); fd.append('correo',correo);
-  try{
-    const resp=await fetch(GAS_URL,{method:'POST',body:fd});
-    const data=await resp.json();
-    if(data.encontrado){
-      currentUser={ nombre:data.nombre||correo.split('@')[0], correo, telefono:data.telefono||'', ciudad:data.ciudad||'', interes:data.interes||'', cvName:'', cvDate:'', cvCategories:[], cvSummary:'' };
-    } else {
-      currentUser={ nombre:correo.split('@')[0], correo, telefono:'', ciudad:'', interes:'', cvName:'', cvDate:'', cvCategories:[], cvSummary:'' };
-    }
-    enterApp();
-  }catch(e){
-    // Fallback local sin persistencia
-    currentUser={ nombre:correo.split('@')[0], correo, telefono:'', ciudad:'', interes:'', cvName:'', cvDate:'', cvCategories:[], cvSummary:'' };
-    enterApp();
-  }
-}
-
-function enterApp(){
-  document.getElementById('authScreen').style.display='none';
-  document.getElementById('appWrapper').style.display='block';
-  document.getElementById('userNameNav').textContent=currentUser.nombre||currentUser.correo;
-  document.getElementById('profileName').textContent=currentUser.nombre||'—';
-  document.getElementById('profileEmail').textContent=currentUser.correo;
-  if(currentUser.ciudad) document.getElementById('profileDepto').value=currentUser.ciudad;
-  if(currentUser.interes) document.getElementById('profileTipo').value=currentUser.interes;
-  updateCvUI();
-  initHome();
-  renderJobs();
-  renderMisSolicitudes();
-}
-function logout(){
-  currentUser=null;
-  misSolicitudes=[];
-  document.getElementById('authScreen').style.display='flex';
-  document.getElementById('appWrapper').style.display='none';
-}
-
-// ═══════════════════════════════════════════════════════
-// 7. HOME y JOBS
-// ═══════════════════════════════════════════════════════
-function initHome(){
-  const fuenteStats={}, catStats={};
-  EMPLEOS.forEach(e=>{
-    if(!fuenteStats[e.fuente]) fuenteStats[e.fuente]={};
-    fuenteStats[e.fuente][e.categoria]=(fuenteStats[e.fuente][e.categoria]||0)+1;
-    if(!catStats[e.categoria]) catStats[e.categoria]={total:0,fuentes:{}};
-    catStats[e.categoria].total++;
-    catStats[e.categoria].fuentes[e.fuente]=(catStats[e.categoria].fuentes[e.fuente]||0)+1;
-  });
-  Object.entries(fuenteStats).forEach(([fuente,cats])=>{
-    let total=Object.values(cats).reduce((a,b)=>a+b,0);
-    let statsDiv=document.getElementById('stats-fuente-'+fuente);
-    let totalDiv=document.getElementById('total-'+fuente);
-    if(statsDiv) statsDiv.innerHTML=Object.entries(cats).map(([c,n])=>`<span class="fuente-stat-chip">${CAT_ICONS[c]||''} ${c}: ${n}</span>`).join('');
-    if(totalDiv) totalDiv.textContent=total+' vacantes en total';
-  });
-  const catsHome=document.getElementById('catsHome');
-  if(catsHome) catsHome.innerHTML=Object.entries(catStats).map(([cat,data])=>`<div class="cat-home-card" onclick="goToCat('${esc(cat)}')"><div class="cat-home-icon">${CAT_ICONS[cat]||'🗂'}</div><div class="cat-home-name">${esc(cat)}</div><div class="cat-home-count">${data.total} vacante${data.total!==1?'s':''}</div><div class="cat-home-fuentes">${Object.entries(data.fuentes).map(([f,n])=>`<span class="cat-fuente-dot badge-${f}">${BADGE[f]?.name||f}: ${n}</span>`).join('')}</div></div>`).join('');
-  document.getElementById('statTotal').textContent=EMPLEOS.length;
-}
-
 function renderJobs(){
-  const search=(document.getElementById('fSearch')?.value||'').toLowerCase();
-  const depto=(document.getElementById('fDepto')?.value||'').toLowerCase();
-  const fuente=document.getElementById('fFuente')?.value||'';
-  const modalidad=(document.getElementById('fModalidad')?.value||'').toLowerCase();
-  let results=EMPLEOS.filter(e=>(!search||e.titulo.toLowerCase().includes(search)||e.empresa.toLowerCase().includes(search)||e.desc.toLowerCase().includes(search))&&(!depto||e.depto.toLowerCase().includes(depto))&&(!fuente||e.fuente===fuente)&&(!modalidad||e.modalidad.toLowerCase().includes(modalidad.replace('prácticas','práctica')))&&(!activeCat||e.categoria===activeCat));
-  document.getElementById('resultCount').textContent=results.length+' vacante'+(results.length!==1?'s':'')+' encontrada'+(results.length!==1?'s':'');
-  const grid=document.getElementById('jobsGrid'); if(!grid) return;
-  if(results.length===0){ grid.innerHTML='<div class="no-results"><div class="icon">🔍</div><p>No se encontraron vacantes con esos filtros.</p></div>'; return; }
-  grid.innerHTML=results.map(job=>`<div class="job-card" onclick="openModal('${esc(job.id)}')"><span class="job-source-badge ${BADGE[job.fuente]?.cls}">${BADGE[job.fuente]?.name}</span><div class="job-title">${esc(job.titulo)}</div><div class="job-company">🏢 ${esc(job.empresa)}</div><div class="job-meta"><span class="meta-tag">📍 ${esc(job.depto)}</span><span class="meta-tag">⏱ ${esc(job.modalidad)}</span><span class="meta-tag">🗂 ${esc(job.categoria)}</span></div><div class="job-desc">${esc(job.desc)}</div><div class="job-footer"><div class="job-salary">💰 ${esc(job.salario)}</div><div style="display:flex;gap:.4rem"><a href="${esc(job.url)}" target="_blank" class="btn-ver" onclick="event.stopPropagation()">Ver portal</a><button class="btn-postular" onclick="event.stopPropagation();openModal('${esc(job.id)}')">Postular</button></div></div></div>`).join('');
+  const search = (document.getElementById('fSearch')?.value||'').toLowerCase();
+  const depto = (document.getElementById('fDepto')?.value||'').toLowerCase();
+  const fuente = document.getElementById('fFuente')?.value||'';
+  const modalidad = (document.getElementById('fModalidad')?.value||'').toLowerCase();
+  let results = EMPLEOS.filter(e =>
+    (!search || e.titulo.toLowerCase().includes(search) || e.empresa.toLowerCase().includes(search) || e.desc.toLowerCase().includes(search)) &&
+    (!depto || e.depto.toLowerCase().includes(depto)) &&
+    (!fuente || e.fuente === fuente) &&
+    (!modalidad || e.modalidad.toLowerCase().includes(modalidad.replace('prácticas','práctica'))) &&
+    (!activeCat || e.categoria === activeCat)
+  );
+  document.getElementById('resultCount').textContent = results.length + ' vacante' + (results.length!==1?'s':'') + ' encontrada' + (results.length!==1?'s':'');
+  const grid = document.getElementById('jobsGrid');
+  if (!grid) return;
+  if (results.length === 0) { grid.innerHTML = '<div class="no-results"><div class="icon">🔍</div><p>No se encontraron vacantes con esos filtros.</p></div>'; return; }
+  grid.innerHTML = results.map(job => `
+    <div class="job-card" onclick="openModal('${esc(job.id)}')">
+      <span class="job-source-badge ${BADGE[job.fuente]?.cls}">${BADGE[job.fuente]?.name}</span>
+      <div class="job-title">${esc(job.titulo)}</div>
+      <div class="job-company">🏢 ${esc(job.empresa)}</div>
+      <div class="job-meta"><span class="meta-tag">📍 ${esc(job.depto)}</span><span class="meta-tag">⏱ ${esc(job.modalidad)}</span><span class="meta-tag">🗂 ${esc(job.categoria)}</span></div>
+      <div class="job-desc">${esc(job.desc)}</div>
+      <div class="job-footer">
+        <div class="job-salary">💰 ${esc(job.salario)}</div>
+        <div style="display:flex;gap:.4rem">
+          <a href="${esc(job.url)}" target="_blank" class="btn-ver" onclick="event.stopPropagation()">Ver portal</a>
+          <button class="btn-postular" onclick="event.stopPropagation();openModal('${esc(job.id)}')">Postular</button>
+        </div>
+      </div>
+    </div>`).join('');
 }
-['fSearch','fDepto','fFuente','fModalidad'].forEach(id=>{ let el=document.getElementById(id); if(el) el.addEventListener(id==='fSearch'?'input':'change',renderJobs); });
+['fSearch','fDepto','fFuente','fModalidad'].forEach(id => { let el = document.getElementById(id); if(el) el.addEventListener(id==='fSearch'?'input':'change', renderJobs); });
 
-// ═══════════════════════════════════════════════════════
-// 8. POSTULACIONES (sin localStorage, con verificación backend)
-// ═══════════════════════════════════════════════════════
-let currentJobId=null;
-function openModal(jobId){
-  currentJobId=jobId;
-  let job=EMPLEOS.find(j=>j.id===jobId); if(!job) return;
-  document.getElementById('modalJobInfo').innerHTML=`<strong style="color:var(--blanco)">${esc(job.titulo)}</strong><br>🏢 ${esc(job.empresa)} &nbsp;|&nbsp; 📍 ${esc(job.depto)}<br>💰 ${esc(job.salario)}`;
-  if(currentUser){
-    document.getElementById('mNombre').value=currentUser.nombre||'';
-    document.getElementById('mTelefono').value=currentUser.telefono||'';
-    document.getElementById('mCorreo').value=currentUser.correo||'';
+// ==================== POSTULACIONES ====================
+let currentJobId = null;
+function openModal(jobId) {
+  currentJobId = jobId;
+  let job = EMPLEOS.find(j => j.id === jobId);
+  if (!job) return;
+  document.getElementById('modalJobInfo').innerHTML = `<strong style="color:var(--blanco)">${esc(job.titulo)}</strong><br>🏢 ${esc(job.empresa)} &nbsp;|&nbsp; 📍 ${esc(job.depto)}<br>💰 ${esc(job.salario)}`;
+  if (currentUser) {
+    document.getElementById('mNombre').value = currentUser.nombre || '';
+    document.getElementById('mTelefono').value = currentUser.telefono || '';
+    document.getElementById('mCorreo').value = currentUser.correo || '';
   } else {
-    document.getElementById('mNombre').value='';
-    document.getElementById('mTelefono').value='';
-    document.getElementById('mCorreo').value='';
+    document.getElementById('mNombre').value = '';
+    document.getElementById('mTelefono').value = '';
+    document.getElementById('mCorreo').value = '';
   }
-  document.getElementById('cvModalStatus').style.display=(currentUser && currentUser.cvName)?'block':'none';
-  document.getElementById('successBanner').style.display='none';
-  document.getElementById('modalForm').style.display='block';
+  document.getElementById('cvModalStatus').style.display = (currentUser && currentUser.cvName) ? 'block' : 'none';
+  document.getElementById('successBanner').style.display = 'none';
+  document.getElementById('modalForm').style.display = 'block';
   document.getElementById('modalOverlay').classList.add('open');
 }
-function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
-document.getElementById('modalOverlay').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
+function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); }
+document.getElementById('modalOverlay').addEventListener('click', function(e){ if(e.target === this) closeModal(); });
 
-async function submitPostulacion(){
-  const nombre=v('mNombre'), correo=v('mCorreo'), telefono=v('mTelefono'), tipo=v('mTipo'), detalle=document.getElementById('mDetalle').value;
-  if(!nombre||!correo){ alert('Nombre y correo son obligatorios'); return; }
-  const job=EMPLEOS.find(j=>j.id===currentJobId);
-  const payload={ destino:'solicitudes', nombre, correo, telefono, tipoSolicitud:tipo, detalle:detalle||`Me interesa: ${job?.titulo} en ${job?.empresa}`, puesto:job?.titulo||'', empresa:job?.empresa||'', fuente:job?.fuente||'', cvName:(currentUser?.cvName||'Sin CV'), fecha:new Date().toISOString() };
-  try{
-    const resp=await fetch(GAS_URL,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
-    const data=await resp.json();
-    if(data.status==='ok'){
-      misSolicitudes.push(payload);
+async function submitPostulacion() {
+  const nombre = v('mNombre'), correo = v('mCorreo'), telefono = v('mTelefono'), tipo = v('mTipo'), detalle = document.getElementById('mDetalle').value;
+  if (!nombre || !correo) { alert('Nombre y correo son obligatorios'); return; }
+  const job = EMPLEOS.find(j => j.id === currentJobId);
+  const formData = new FormData();
+  formData.append('destino', 'solicitudes');
+  formData.append('nombre', nombre);
+  formData.append('correo', correo);
+  formData.append('telefono', telefono);
+  formData.append('tipoSolicitud', tipo);
+  formData.append('detalle', detalle || `Me interesa: ${job?.titulo} en ${job?.empresa}`);
+  formData.append('puesto', job?.titulo || '');
+  formData.append('empresa', job?.empresa || '');
+  formData.append('fuente', job?.fuente || '');
+  formData.append('cvName', (currentUser?.cvName) || 'Sin CV');
+  try {
+    const data = await fetchApi(GAS_URL, { method: 'POST', body: formData });
+    if (data.status === 'ok') {
+      misSolicitudes.push({ puesto: job?.titulo, empresa: job?.empresa, fecha: new Date().toISOString() });
       renderMisSolicitudes();
-      document.getElementById('modalForm').style.display='none';
-      document.getElementById('successBanner').style.display='block';
-      setTimeout(closeModal,3000);
-    } else { alert('Error al enviar: '+ (data.message||'intente de nuevo')); }
-  }catch(e){ alert('Error de conexión al enviar postulación.'); }
+      document.getElementById('modalForm').style.display = 'none';
+      document.getElementById('successBanner').style.display = 'block';
+      setTimeout(closeModal, 3000);
+    } else {
+      alert('Error al enviar: ' + (data.message || 'intente de nuevo'));
+    }
+  } catch (error) {
+    alert('Error de conexión al enviar postulación.');
+  }
+}
+function renderMisSolicitudes() {
+  const list = document.getElementById('misSolicitudesList');
+  if (!list) return;
+  if (misSolicitudes.length === 0) { list.innerHTML = '<div style="color:var(--gris);font-size:.88rem">Aún no has postulado en esta sesión.</div>'; return; }
+  list.innerHTML = misSolicitudes.slice().reverse().map(s => `
+    <div class="solicitud-row">
+      <div><div class="sol-titulo">${esc(s.puesto)}</div><div style="font-size:.75rem;color:var(--gris)">${esc(s.empresa)} · ${new Date(s.fecha).toLocaleDateString('es-BO')}</div></div>
+      <span class="sol-estado">Enviada ✓</span>
+    </div>`).join('');
 }
 
-function renderMisSolicitudes(){
-  const list=document.getElementById('misSolicitudesList'); if(!list) return;
-  if(misSolicitudes.length===0){ list.innerHTML='<div style="color:var(--gris);font-size:.88rem">Aún no has postulado en esta sesión.</div>'; return; }
-  list.innerHTML=misSolicitudes.slice().reverse().map(s=>`<div class="solicitud-row"><div><div class="sol-titulo">${esc(s.puesto)}</div><div style="font-size:.75rem;color:var(--gris)">${esc(s.empresa)} · ${new Date(s.fecha).toLocaleDateString('es-BO')}</div></div><span class="sol-estado">Enviada ✓</span></div>`).join('');
-}
-
-// ═══════════════════════════════════════════════════════
-// 9. CV con ANÁLISIS VÍA BACKEND (NO directo a Anthropic)
-// ═══════════════════════════════════════════════════════
-function handleCvUpload(input){
-  let file=input.files[0]; if(!file) return;
-  if(file.size>5*1024*1024){ alert('El archivo supera 5MB'); return; }
-  if(currentUser){
-    currentUser.cvName=file.name;
-    currentUser.cvDate=new Date().toLocaleString('es-BO');
+// ==================== CV ====================
+function handleCvUpload(input) {
+  let file = input.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { alert('El archivo supera 5MB'); return; }
+  if (currentUser) {
+    currentUser.cvName = file.name;
+    currentUser.cvDate = new Date().toLocaleString('es-BO');
     updateCvUI();
     analyzeCvWithBackend(file);
   } else { alert('Debes iniciar sesión primero.'); }
 }
-function handleCvDrop(e){
-  e.preventDefault(); document.getElementById('cvZone').classList.remove('drag-over');
-  let file=e.dataTransfer.files[0]; if(!file) return;
-  let inp=document.getElementById('cvInput'); let dt=new DataTransfer(); dt.items.add(file); inp.files=dt.files;
+function handleCvDrop(e) {
+  e.preventDefault();
+  document.getElementById('cvZone').classList.remove('drag-over');
+  let file = e.dataTransfer.files[0];
+  if (!file) return;
+  let inp = document.getElementById('cvInput');
+  let dt = new DataTransfer();
+  dt.items.add(file);
+  inp.files = dt.files;
   handleCvUpload(inp);
 }
-function removeCv(){
-  if(!confirm('¿Eliminar tu CV guardado?')) return;
-  if(currentUser){ currentUser.cvName=''; currentUser.cvDate=''; currentUser.cvCategories=[]; currentUser.cvSummary=''; }
-  document.getElementById('cvInput').value='';
-  updateCvUI(); renderCvPage();
-}
-function updateCvUI(){
-  let badge=document.getElementById('cvStatusBadgeProfile'), nameEl=document.getElementById('cvNameProfile');
-  if(badge&&nameEl){ badge.style.display=(currentUser && currentUser.cvName)?'inline-flex':'none'; nameEl.textContent=currentUser?.cvName||''; }
-}
-
-async function readFileAsBase64(file){
-  return new Promise((res,rej)=>{ let r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=()=>rej(r.error); r.readAsDataURL(file); });
-}
-
-async function analyzeCvWithBackend(file){
-  document.getElementById('cvIaLoading').style.display='flex';
-  document.getElementById('cvAnalysisSection').style.display='none';
-  document.getElementById('cvEmptyMsg').style.display='none';
-  try{
-    let base64=await readFileAsBase64(file);
-    let resp=await fetch(GAS_URL,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ destino:'analizar_cv', filename:file.name, filebase64:base64 }) });
-    let data=await resp.json();
-    let detectedCats=[];
-    if(data.status==='ok' && Array.isArray(data.categorias)){
-      detectedCats=data.categorias.filter(c=>Object.keys(CAT_ICONS).includes(c));
-    }
-    if(detectedCats.length===0) detectedCats=fallbackDetect(file.name);
-    if(currentUser){ currentUser.cvCategories=detectedCats; currentUser.cvSummary=data.resumen||''; }
-  }catch(err){
-    console.warn('Backend IA no disponible, usando detección local',err);
-    let detectedCats=fallbackDetect(file.name);
-    if(currentUser) currentUser.cvCategories=detectedCats;
-  }
-  document.getElementById('cvIaLoading').style.display='none';
+function removeCv() {
+  if (!confirm('¿Eliminar tu CV guardado?')) return;
+  if (currentUser) { currentUser.cvName = ''; currentUser.cvDate = ''; currentUser.cvCategories = []; currentUser.cvSummary = ''; }
+  document.getElementById('cvInput').value = '';
+  updateCvUI();
   renderCvPage();
 }
-
-function fallbackDetect(filename){
-  let f=filename.toLowerCase();
-  let map={ 'Gastronomía':['cocin','chef','gastronomía','culinari','restaurant','comida','alimento','pastelería','panadería','barista','cafeter'], 'Salud':['enfermer','medic','salud','clínic','farmac','nutri','fisio','doctor','hospital'], 'Tecnología':['softwar','program','desarrollo','web','sistema','informátic','tech','computación'], 'Diseño':['diseño','gráfico','visual','ilustr','multimedia','creativ','adobe','photo'], 'Educación':['docent','maestro','profesor','educac','enseñanz','pedagog','tutor'], 'Ventas':['venta','comerci','ejecutiv','client','asesor'], 'Logística':['logístic','transport','almacén','deliver','moto','depósit','reparto'], 'Administración':['admin','gestión','secretari','recepcion','oficin'], 'Marketing':['marketing','publicidad','comunity','contenido','redes'], 'Finanzas':['contab','finanz','contador','auditor','presupuest'] };
-  for(let [cat,kws] of Object.entries(map)) if(kws.some(k=>f.includes(k))) return [cat];
+function updateCvUI() {
+  let badge = document.getElementById('cvStatusBadgeProfile'), nameEl = document.getElementById('cvNameProfile');
+  if (badge && nameEl) { badge.style.display = (currentUser && currentUser.cvName) ? 'inline-flex' : 'none'; nameEl.textContent = currentUser?.cvName || ''; }
+}
+async function readFileAsBase64(file) {
+  return new Promise((res,rej) => { let r = new FileReader(); r.onload = () => res(r.result.split(',')[1]); r.onerror = () => rej(r.error); r.readAsDataURL(file); });
+}
+async function analyzeCvWithBackend(file) {
+  document.getElementById('cvIaLoading').style.display = 'flex';
+  document.getElementById('cvAnalysisSection').style.display = 'none';
+  document.getElementById('cvEmptyMsg').style.display = 'none';
+  try {
+    let base64 = await readFileAsBase64(file);
+    const formData = new FormData();
+    formData.append('destino', 'analizar_cv');
+    formData.append('filename', file.name);
+    formData.append('filebase64', base64);
+    const data = await fetchApi(GAS_URL, { method: 'POST', body: formData });
+    let detectedCats = [];
+    if (data.status === 'ok' && Array.isArray(data.categorias)) {
+      detectedCats = data.categorias.filter(c => Object.keys(CAT_ICONS).includes(c));
+    }
+    if (detectedCats.length === 0) detectedCats = fallbackDetect(file.name);
+    if (currentUser) { currentUser.cvCategories = detectedCats; currentUser.cvSummary = data.resumen || ''; }
+  } catch (err) {
+    console.warn('Backend no disponible, usando detección local', err);
+    let detectedCats = fallbackDetect(file.name);
+    if (currentUser) currentUser.cvCategories = detectedCats;
+  }
+  document.getElementById('cvIaLoading').style.display = 'none';
+  renderCvPage();
+}
+function fallbackDetect(filename) {
+  let f = filename.toLowerCase();
+  let map = {
+    'Gastronomía':['cocin','chef','gastronomía','culinari','restaurant','comida','alimento','pastelería','panadería','barista','cafeter'],
+    'Salud':['enfermer','medic','salud','clínic','farmac','nutri','fisio','doctor','hospital'],
+    'Tecnología':['softwar','program','desarrollo','web','sistema','informátic','tech','computación','python','java','javascript','react','node'],
+    'Diseño':['diseño','gráfico','visual','ilustr','multimedia','creativ','adobe','photo'],
+    'Educación':['docente','maestro','profesor','educac','enseñanz','pedagog','tutor'],
+    'Ventas':['venta','comerci','ejecutiv','client','asesor','negocio'],
+    'Logística':['logístic','transport','almacén','deliver','moto','depósit','reparto'],
+    'Administración':['admin','gestión','secretari','recepcion','oficin','asistente'],
+    'Marketing':['marketing','publicidad','comunity','contenido','redes','seo','sem'],
+    'Finanzas':['contab','finanz','contador','auditor','presupuest','impuesto']
+  };
+  for (let [cat, kws] of Object.entries(map)) if (kws.some(k => f.includes(k))) return [cat];
   return ['Administración'];
 }
-
-function renderCvPage(){
-  let hasCv=!!(currentUser && currentUser.cvName);
-  document.getElementById('cvCurrentSection').style.display=hasCv?'flex':'none';
-  document.getElementById('cvEmptyMsg').style.display=hasCv?'none':'block';
-  document.getElementById('cvAnalysisSection').style.display=hasCv?'block':'none';
-  if(hasCv && currentUser){
-    document.getElementById('cvCurrentName').textContent=currentUser.cvName;
-    document.getElementById('cvCurrentMeta').textContent=currentUser.cvDate?'Subido: '+currentUser.cvDate:'Subido recientemente';
-    let cats=currentUser.cvCategories||Object.keys(CAT_ICONS);
-    let chipsEl=document.getElementById('cvSuggestionChips');
-    if(chipsEl){
-      let html='';
-      if(currentUser.cvSummary) html+=`<div style="width:100%;padding:.65rem .85rem;background:rgba(26,158,92,.07);border-radius:.7rem;border:1px solid rgba(26,158,92,.2);font-size:.83rem;color:var(--texto);margin-bottom:.6rem"><strong style="color:var(--verde-claro)">🤖 Perfil detectado:</strong> ${esc(currentUser.cvSummary)}</div>`;
-      html+=cats.map((cat,i)=>`<span class="cv-chip ${i===0?'active':''}" onclick="toggleCvChip(this,'${esc(cat)}')">${CAT_ICONS[cat]||''} ${esc(cat)}</span>`).join('');
-      chipsEl.innerHTML=html;
+function renderCvPage() {
+  let hasCv = !!(currentUser && currentUser.cvName);
+  document.getElementById('cvCurrentSection').style.display = hasCv ? 'flex' : 'none';
+  document.getElementById('cvEmptyMsg').style.display = hasCv ? 'none' : 'block';
+  document.getElementById('cvAnalysisSection').style.display = hasCv ? 'block' : 'none';
+  if (hasCv && currentUser) {
+    document.getElementById('cvCurrentName').textContent = currentUser.cvName;
+    document.getElementById('cvCurrentMeta').textContent = currentUser.cvDate ? 'Subido: ' + currentUser.cvDate : 'Subido recientemente';
+    let cats = currentUser.cvCategories || Object.keys(CAT_ICONS);
+    let chipsEl = document.getElementById('cvSuggestionChips');
+    if (chipsEl) {
+      let html = '';
+      if (currentUser.cvSummary) html += `<div style="width:100%;padding:.65rem .85rem;background:rgba(26,158,92,.07);border-radius:.7rem;border:1px solid rgba(26,158,92,.2);font-size:.83rem;color:var(--texto);margin-bottom:.6rem"><strong style="color:var(--verde-claro)">🤖 Perfil detectado:</strong> ${esc(currentUser.cvSummary)}</div>`;
+      html += cats.map((cat,i) => `<span class="cv-chip ${i===0?'active':''}" onclick="toggleCvChip(this,'${esc(cat)}')">${CAT_ICONS[cat]||''} ${esc(cat)}</span>`).join('');
+      chipsEl.innerHTML = html;
     }
     renderCvJobSuggestions();
     renderCvTips(cats);
   }
 }
-function toggleCvChip(chip){ chip.classList.toggle('active'); renderCvJobSuggestions(); }
-function renderCvJobSuggestions(){
-  let activeCats=[...document.querySelectorAll('.cv-chip.active')].map(c=>c.textContent.trim().replace(/^[\u{1F300}-\u{1FAD6}][\s]*/u,'').trim());
-  let jobs=EMPLEOS.filter(e=>activeCats.length===0||activeCats.some(ac=>e.categoria===ac));
-  document.getElementById('cvMatchCount').textContent=`${jobs.length} empleo${jobs.length!==1?'s':''} encontrado${jobs.length!==1?'s':''} según tu perfil`;
-  let preview=document.getElementById('cvJobsPreview');
-  if(preview) preview.innerHTML=jobs.slice(0,6).map(job=>`<div class="cv-job-row" onclick="openModal('${esc(job.id)}')"><div><div class="cv-job-title">${esc(job.titulo)}</div><div class="cv-job-meta">🏢 ${esc(job.empresa)} · 📍 ${esc(job.depto)} · ${esc(job.salario)}</div></div><span class="match-badge ${BADGE[job.fuente]?.cls||''}">${BADGE[job.fuente]?.name||''}</span></div>`).join('')||'<div style="color:var(--gris);font-size:.88rem;padding:.5rem">Selecciona al menos una categoría.</div>';
+function toggleCvChip(chip) { chip.classList.toggle('active'); renderCvJobSuggestions(); }
+function renderCvJobSuggestions() {
+  let activeCats = [...document.querySelectorAll('.cv-chip.active')].map(c => c.textContent.trim().replace(/^[\u{1F300}-\u{1FAD6}][\s]*/u,'').trim());
+  let jobs = EMPLEOS.filter(e => activeCats.length === 0 || activeCats.some(ac => e.categoria === ac));
+  document.getElementById('cvMatchCount').textContent = `${jobs.length} empleo${jobs.length!==1?'s':''} encontrado${jobs.length!==1?'s':''} según tu perfil`;
+  let preview = document.getElementById('cvJobsPreview');
+  if (preview) preview.innerHTML = jobs.slice(0,6).map(job => `
+    <div class="cv-job-row" onclick="openModal('${esc(job.id)}')">
+      <div><div class="cv-job-title">${esc(job.titulo)}</div><div class="cv-job-meta">🏢 ${esc(job.empresa)} · 📍 ${esc(job.depto)} · ${esc(job.salario)}</div></div>
+      <span class="match-badge ${BADGE[job.fuente]?.cls||''}">${BADGE[job.fuente]?.name||''}</span>
+    </div>`).join('') || '<div style="color:var(--gris);font-size:.88rem;padding:.5rem">Selecciona al menos una categoría.</div>';
 }
-function renderCvTips(cats){
-  let tips=[{icon:'📌',text:'Completa tu perfil con departamento y tipo de empleo preferido.'},{icon:'🔗',text:`Según tu CV, te recomendamos explorar: ${cats.slice(0,3).join(', ')}.`},{icon:'💬',text:'Al postular, incluye una carta de presentación breve.'},{icon:'🔄',text:'Puedes reemplazar tu CV cuando quieras.'},{icon:'📍',text:'Activa el filtro por departamento para ver vacantes cerca de ti.'}];
-  let el=document.getElementById('cvTips');
-  if(el) el.innerHTML=tips.map(t=>`<div style="display:flex;gap:.65rem;align-items:flex-start;padding:.6rem;background:var(--fondo2);border-radius:.65rem;border:1px solid var(--borde)"><span style="font-size:1.1rem">${t.icon}</span><span style="font-size:.84rem;color:var(--gris)">${t.text}</span></div>`).join('');
+function renderCvTips(cats) {
+  let tips = [
+    {icon:'📌', text:'Completa tu perfil con departamento y tipo de empleo preferido.'},
+    {icon:'🔗', text:`Según tu CV, te recomendamos explorar: ${cats.slice(0,3).join(', ')}.`},
+    {icon:'💬', text:'Al postular, incluye una carta de presentación breve.'},
+    {icon:'🔄', text:'Puedes reemplazar tu CV cuando quieras.'},
+    {icon:'📍', text:'Activa el filtro por departamento para ver vacantes cerca de ti.'}
+  ];
+  let el = document.getElementById('cvTips');
+  if (el) el.innerHTML = tips.map(t => `<div style="display:flex;gap:.65rem;align-items:flex-start;padding:.6rem;background:var(--fondo2);border-radius:.65rem;border:1px solid var(--borde)"><span style="font-size:1.1rem">${t.icon}</span><span style="font-size:.84rem;color:var(--gris)">${t.text}</span></div>`).join('');
 }
 
-// ═══════════════════════════════════════════════════════
-// 10. PERFIL (solo modifica currentUser)
-// ═══════════════════════════════════════════════════════
-function saveProfile(){
-  if(!currentUser) return;
-  currentUser.ciudad=v('profileDepto');
-  currentUser.interes=v('profileTipo');
-  let btn=document.querySelector('#pageProfile .btn-auth');
-  if(btn){ btn.textContent='✅ Guardado'; setTimeout(()=>btn.textContent='Guardar cambios',2000); }
+// ==================== PERFIL ====================
+function saveProfile() {
+  if (!currentUser) return;
+  currentUser.ciudad = v('profileDepto');
+  currentUser.interes = v('profileTipo');
+  let btn = document.querySelector('#pageProfile .btn-auth');
+  if (btn) { btn.textContent = '✅ Guardado'; setTimeout(() => btn.textContent = 'Guardar cambios', 2000); }
 }
 
-// Inicio: no hay sesión persistente, el usuario debe loguearse.
-window.addEventListener('DOMContentLoaded',()=>{
-  // No se carga usuario desde localStorage, todo empieza desde authScreen.
-});
+// Inicio
+window.addEventListener('DOMContentLoaded', () => {});
 </script>
 </body>
 </html>
