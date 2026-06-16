@@ -254,7 +254,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 </head>
 <body>
 
-<!-- ═══════════════════ AUTH SCREEN ═══════════════════ -->
+<!-- AUTH SCREEN -->
 <div id="authScreen">
   <div class="auth-card">
     <div class="auth-logo">Joven<span>Laburo</span> 🇧🇴</div>
@@ -300,7 +300,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
   </div>
 </div>
 
-<!-- ═══════════════════ APP ═══════════════════ -->
+<!-- APP (datos en memoria, sin localStorage sensible) -->
 <div id="appWrapper">
   <nav class="navbar">
     <div class="nav-inner">
@@ -410,10 +410,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       <button class="cat-chip" onclick="filterCat(this,'Diseño')">🎨 Diseño</button>
       <button class="cat-chip" onclick="filterCat(this,'Finanzas')">💰 Finanzas</button>
     </div>
-    <div class="jobs-grid" id="jobsGrid">
-      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
-      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
-    </div>
+    <div class="jobs-grid" id="jobsGrid"></div>
   </div>
 
   <!-- CV -->
@@ -422,7 +419,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       <h2>📄 Mi Hoja de Vida</h2>
       <p>Sube tu CV y nuestra IA analizará tu perfil para recomendarte los empleos más adecuados. Funciona con PDF o Word.</p>
     </div>
-
     <div id="cvCurrentSection" style="display:none" class="cv-current">
       <div class="cv-current-info">
         <div class="cv-icon-big">📎</div>
@@ -433,7 +429,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       </div>
       <button class="btn-cv-remove" onclick="removeCv()">🗑 Eliminar CV</button>
     </div>
-
     <div class="cv-upload-zone" id="cvZone"
       onclick="document.getElementById('cvInput').click()"
       ondragover="event.preventDefault();this.classList.add('drag-over')"
@@ -447,19 +442,13 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       </div>
       <input type="file" id="cvInput" accept=".pdf,.doc,.docx" onchange="handleCvUpload(this)">
     </div>
-
-    <!-- Loading IA -->
     <div id="cvIaLoading" style="display:none" class="ia-loading">
       <div class="ia-spinner"></div>
       <span>Analizando tu CV con inteligencia artificial... esto toma unos segundos</span>
     </div>
-
     <div id="cvAnalysisSection" style="display:none">
       <div class="cv-analysis-card">
-        <div class="cv-analysis-header">
-          <div class="cv-analysis-icon">🎯</div>
-          <div class="cv-analysis-title">Empleos sugeridos según tu CV</div>
-        </div>
+        <div class="cv-analysis-header"><div class="cv-analysis-icon">🎯</div><div class="cv-analysis-title">Empleos sugeridos según tu CV</div></div>
         <p style="font-size:.85rem;color:var(--gris);margin-bottom:1rem">La IA detectó estas categorías en tu CV. Selecciona las que te interesan:</p>
         <div class="cv-suggestion-chips" id="cvSuggestionChips"></div>
         <div style="font-size:.82rem;color:var(--gris);margin-bottom:.75rem" id="cvMatchCount"></div>
@@ -467,14 +456,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
         <button class="btn-hero" style="margin-top:1rem;font-size:.85rem;padding:.65rem 1.4rem" onclick="showPage('pageJobs')">Ver todos los empleos →</button>
       </div>
       <div class="cv-analysis-card">
-        <div class="cv-analysis-header">
-          <div class="cv-analysis-icon">💡</div>
-          <div class="cv-analysis-title">Recomendaciones para tu búsqueda</div>
-        </div>
-        <div id="cvTips" style="display:flex;flex-direction:column;gap:.6rem"></div>
+        <div class="cv-analysis-header"><div class="cv-analysis-icon">💡</div><div class="cv-analysis-title">Recomendaciones para tu búsqueda</div></div>
+        <div id="cvTips"></div>
       </div>
     </div>
-
     <div id="cvEmptyMsg" style="text-align:center;padding:2rem;color:var(--gris)">
       <div style="font-size:3rem;margin-bottom:.75rem">📋</div>
       <div style="font-size:.92rem">Sube tu CV para recibir sugerencias personalizadas con IA</div>
@@ -514,7 +499,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
   </div>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL POSTULACIÓN -->
 <div class="overlay" id="modalOverlay">
   <div class="modal-box">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -526,20 +511,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
     </div>
     <div id="modalForm">
       <div class="field"><label>Nombre completo</label><input type="text" id="mNombre" placeholder="Juan Mamani"></div>
-      <div class="field-row">
-        <div class="field"><label>Teléfono</label><input type="tel" id="mTelefono"></div>
-        <div class="field"><label>Correo</label><input type="email" id="mCorreo"></div>
-      </div>
-      <div class="field"><label>Tipo de solicitud</label>
-        <select id="mTipo">
-          <option value="Postulación directa">Postulación directa</option>
-          <option value="Solicitar cita">Solicitar cita</option>
-          <option value="Más información">Pedir más información</option>
-        </select>
-      </div>
-      <div class="field"><label>Carta de presentación (opcional)</label>
-        <textarea id="mDetalle" rows="3" placeholder="Breve presentación..."></textarea>
-      </div>
+      <div class="field-row"><div class="field"><label>Teléfono</label><input type="tel" id="mTelefono"></div><div class="field"><label>Correo</label><input type="email" id="mCorreo"></div></div>
+      <div class="field"><label>Tipo de solicitud</label><select id="mTipo"><option value="Postulación directa">Postulación directa</option><option value="Solicitar cita">Solicitar cita</option><option value="Más información">Pedir más información</option></select></div>
+      <div class="field"><label>Carta de presentación (opcional)</label><textarea id="mDetalle" rows="3" placeholder="Breve presentación..."></textarea></div>
       <div id="cvModalStatus" style="margin-bottom:.85rem;font-size:.82rem;color:var(--verde-claro);display:none">✅ Se adjuntará tu CV</div>
       <button class="btn-auth" onclick="submitPostulacion()">Enviar postulación</button>
     </div>
@@ -548,13 +522,12 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 
 <script>
 // ═══════════════════════════════════════════════════════
-// CONFIG
+// 1. CONFIGURACIÓN - BACKEND UNICO (Google Apps Script)
 // ═══════════════════════════════════════════════════════
 const GAS_URL = "https://script.google.com/macros/s/AKfycbyEAlLGrQvEGy_B8y_1P_d9y9fcPQXyQnxatql6Bov3KkTTP8YHWJwi1GVOSuD6TymErA/exec";
-const CLAUDE_API = "https://api.anthropic.com/v1/messages";
 
 // ═══════════════════════════════════════════════════════
-// DATOS DE EMPLEOS
+// 2. DATOS ESTÁTICOS DE EMPLEOS (sin cambios)
 // ═══════════════════════════════════════════════════════
 const EMPLEOS = [
   {id:'t1',fuente:'trabajando',titulo:'Desarrollador Web Full Stack',empresa:'Tech Bolivia S.R.L.',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Tecnología',salario:'Bs. 4.000 – 6.000',desc:'React, Node.js, bases de datos SQL/NoSQL. Trabajo presencial en Santa Cruz.',url:'https://trabajando.com.bo'},
@@ -586,35 +559,41 @@ const EMPLEOS = [
   {id:'d6',fuente:'eldeber',titulo:'Cocinero/a Restaurante 5★',empresa:'Hotel Camino Real',depto:'Santa Cruz',modalidad:'Tiempo completo',categoria:'Gastronomía',salario:'Bs. 3.000 – 4.500',desc:'Cocina internacional, preparación de menús.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
   {id:'d7',fuente:'eldeber',titulo:'Especialista en E-commerce',empresa:'TiendaBolivia.com',depto:'Remoto',modalidad:'Remoto',categoria:'Marketing',salario:'Bs. 4.000 – 6.000',desc:'Gestión de tienda online, campañas de publicidad digital.',url:'https://clasificados.eldeber.com.bo/category/empleos'},
 ];
-
 const CAT_ICONS = {'Tecnología':'💻','Ventas':'🤝','Administración':'📋','Marketing':'📣','Salud':'🏥','Educación':'📚','Gastronomía':'🍽','Logística':'🚚','Diseño':'🎨','Finanzas':'💰'};
-const BADGE = {
-  trabajando:{cls:'badge-trabajando',name:'Trabajando.bo'},
-  trabajopolis:{cls:'badge-trabajopolis',name:'Trabajópolis.bo'},
-  trabajito:{cls:'badge-trabajito',name:'Trabajito.bo'},
-  eldeber:{cls:'badge-eldeber',name:'El Deber'}
-};
+const BADGE = {trabajando:{cls:'badge-trabajando',name:'Trabajando.bo'},trabajopolis:{cls:'badge-trabajopolis',name:'Trabajópolis.bo'},trabajito:{cls:'badge-trabajito',name:'Trabajito.bo'},eldeber:{cls:'badge-eldeber',name:'El Deber'}};
 
+// ═══════════════════════════════════════════════════════
+// 3. ESTADO EN MEMORIA (NO localStorage)
+// ═══════════════════════════════════════════════════════
+let currentUser = null;              // { nombre, correo, telefono, ciudad, interes, cvName, cvDate, cvCategories, cvSummary }
+let misSolicitudes = [];             // Postulaciones hechas en esta sesión
 let activeCat = '', activeSrc = '';
-let misSolicitudes = JSON.parse(localStorage.getItem('jl_solicitudes') || '[]');
 
-// ─── UTILS ───
-function v(id){return(document.getElementById(id)?.value||'').trim()}
-function esc(s){if(!s)return'';return s.replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+// ═══════════════════════════════════════════════════════
+// 4. UTILIDADES
+// ═══════════════════════════════════════════════════════
+function v(id){ return (document.getElementById(id)?.value || '').trim(); }
+function esc(s){ if(!s) return ''; return s.replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
+function showMsg(id, text, type='error'){ let el=document.getElementById(id); if(el){ el.textContent=text; el.className='auth-msg '+(type==='info'?'info':'error'); } }
 
-// ─── NAVEGACIÓN ───
+// ═══════════════════════════════════════════════════════
+// 5. NAVEGACIÓN Y FILTROS
+// ═══════════════════════════════════════════════════════
 function showPage(p){
   document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
   document.getElementById(p).classList.add('active');
   const pages=['pageHome','pageJobs','pageCv','pageProfile'];
   document.querySelectorAll('.nav-tab').forEach((t,i)=>t.classList.toggle('active',pages[i]===p));
-  if(p==='pageJobs')renderJobs();
-  if(p==='pageCv')renderCvPage();
+  if(p==='pageJobs') renderJobs();
+  if(p==='pageCv') renderCvPage();
 }
-function goToCat(cat){activeCat=cat;showPage('pageJobs');document.querySelectorAll('.cat-chip').forEach(c=>c.classList.toggle('active',c.textContent.includes(cat)))}
-function filterBySource(src){activeSrc=src;const f=document.getElementById('fFuente');if(f)f.value=src;showPage('pageJobs')}
+function goToCat(cat){ activeCat=cat; showPage('pageJobs'); document.querySelectorAll('.cat-chip').forEach(c=>c.classList.toggle('active',c.textContent.includes(cat))); renderJobs(); }
+function filterBySource(src){ activeSrc=src; let f=document.getElementById('fFuente'); if(f) f.value=src; showPage('pageJobs'); }
+function filterCat(btn,cat){ document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active')); btn.classList.add('active'); activeCat=cat; renderJobs(); }
 
-// ─── AUTH TABS ───
+// ═══════════════════════════════════════════════════════
+// 6. AUTH (sin persistencia sensible)
+// ═══════════════════════════════════════════════════════
 function switchAuth(panel){
   document.getElementById('registerPanel').style.display=panel==='registerPanel'?'block':'none';
   document.getElementById('loginPanel').style.display=panel==='loginPanel'?'block':'none';
@@ -622,412 +601,230 @@ function switchAuth(panel){
 }
 document.querySelectorAll('.tab-btn').forEach(b=>b.addEventListener('click',()=>switchAuth(b.dataset.form)));
 
-function showMsg(id, text, type='error'){
-  const el=document.getElementById(id);
-  if(!el)return;
-  el.textContent=text;
-  el.className='auth-msg '+(type==='info'?'info':'error');
-}
-
-// ─── REGISTRO ─── CORRECCIÓN #1: mensaje claro si correo duplicado ───
 async function handleRegister(){
-  const n=v('rNombre'),t=v('rTelefono'),c=v('rCorreo'),ci=v('rCiudad'),i=v('rInteres');
-  if(!n||!t||!c||!ci||!i){showMsg('rMsg','⚠️ Completa todos los campos.');return}
-  if(!/\S+@\S+\.\S+/.test(c)){showMsg('rMsg','⚠️ Correo inválido.');return}
-  const fd=new FormData();
-  fd.append('destino','usuarios');
-  fd.append('nombre',n);fd.append('telefono',t);fd.append('correo',c);
-  fd.append('ciudad',ci);fd.append('interes',i);fd.append('cvName','');
+  const nombre=v('rNombre'), telefono=v('rTelefono'), correo=v('rCorreo'), ciudad=v('rCiudad'), interes=v('rInteres');
+  if(!nombre||!telefono||!correo||!ciudad||!interes){ showMsg('rMsg','⚠️ Completa todos los campos.'); return; }
+  if(!/\S+@\S+\.\S+/.test(correo)){ showMsg('rMsg','⚠️ Correo inválido.'); return; }
+  const fd=new FormData(); fd.append('destino','usuarios'); fd.append('nombre',nombre); fd.append('telefono',telefono); fd.append('correo',correo); fd.append('ciudad',ciudad); fd.append('interes',interes); fd.append('cvName','');
   try{
     const resp=await fetch(GAS_URL,{method:'POST',body:fd});
     const data=await resp.json();
     if(data.status==='ok'){
-      const u={nombre:n,telefono:t,correo:c,ciudad:ci,interes:i,cvName:'',cvDate:'',fecha:new Date().toISOString()};
-      localStorage.setItem('jl_user',JSON.stringify(u));
-      enterApp(u);
+      currentUser={ nombre, telefono, correo, ciudad, interes, cvName:'', cvDate:'', cvCategories:[], cvSummary:'' };
+      enterApp();
     } else if(data.message && data.message.includes('correo ya está registrado')){
-      // ✅ CORRECCIÓN #1: indicar que solo necesita el correo para entrar
-      showMsg('rMsg',
-        '✅ Ya tienes una cuenta con ese correo. Solo ingresa tu correo en "Ya tengo cuenta" para acceder.',
-        'info'
-      );
-      // Pre-llenar el campo de login y sugerir cambiar de tab
-      document.getElementById('lCorreo').value=c;
-      setTimeout(()=>{
-        switchAuth('loginPanel');
-        showMsg('lMsg','👆 Tu correo ya está listo. Haz clic en "Ingresar" para entrar.','info');
-      }, 2200);
+      showMsg('rMsg','✅ Ya tienes una cuenta. Usa "Ya tengo cuenta" para ingresar.','info');
+      document.getElementById('lCorreo').value=correo;
+      setTimeout(()=>switchAuth('loginPanel'),2000);
+    } else { showMsg('rMsg','❌ '+(data.message||'Error desconocido')); }
+  }catch(e){ showMsg('rMsg','❌ Error de conexión.'); }
+}
+
+async function handleLogin(){
+  const correo=v('lCorreo');
+  if(!correo){ showMsg('lMsg','⚠️ Ingresa tu correo.'); return; }
+  if(!/\S+@\S+\.\S+/.test(correo)){ showMsg('lMsg','⚠️ Correo inválido.'); return; }
+  // Simulamos login consultando backend o creando sesión temporal sin guardar datos sensibles
+  const fd=new FormData(); fd.append('destino','buscar_usuario'); fd.append('correo',correo);
+  try{
+    const resp=await fetch(GAS_URL,{method:'POST',body:fd});
+    const data=await resp.json();
+    if(data.encontrado){
+      currentUser={ nombre:data.nombre||correo.split('@')[0], correo, telefono:data.telefono||'', ciudad:data.ciudad||'', interes:data.interes||'', cvName:'', cvDate:'', cvCategories:[], cvSummary:'' };
     } else {
-      showMsg('rMsg','❌ '+(data.message||'Error desconocido'));
+      currentUser={ nombre:correo.split('@')[0], correo, telefono:'', ciudad:'', interes:'', cvName:'', cvDate:'', cvCategories:[], cvSummary:'' };
     }
+    enterApp();
   }catch(e){
-    console.error(e);
-    showMsg('rMsg','❌ Error de conexión. Intenta de nuevo.');
+    // Fallback local sin persistencia
+    currentUser={ nombre:correo.split('@')[0], correo, telefono:'', ciudad:'', interes:'', cvName:'', cvDate:'', cvCategories:[], cvSummary:'' };
+    enterApp();
   }
 }
 
-// ─── LOGIN ───
-async function handleLogin(){
-  const c=v('lCorreo');
-  if(!c){showMsg('lMsg','⚠️ Ingresa tu correo.');return}
-  if(!/\S+@\S+\.\S+/.test(c)){showMsg('lMsg','⚠️ Correo inválido.');return}
-  const stored=JSON.parse(localStorage.getItem('jl_user')||'{}');
-  if(stored.correo===c){enterApp(stored);return}
-  const u={nombre:c.split('@')[0],correo:c,telefono:'',ciudad:'',interes:'',cvName:'',cvDate:''};
-  localStorage.setItem('jl_user',JSON.stringify(u));
-  enterApp(u);
-}
-
-function enterApp(user){
+function enterApp(){
   document.getElementById('authScreen').style.display='none';
   document.getElementById('appWrapper').style.display='block';
-  document.getElementById('userNameNav').textContent=user.nombre||user.correo;
-  document.getElementById('profileName').textContent=user.nombre||'—';
-  document.getElementById('profileEmail').textContent=user.correo;
-  if(user.ciudad)document.getElementById('profileDepto').value=user.ciudad;
-  if(user.interes)document.getElementById('profileTipo').value=user.interes;
+  document.getElementById('userNameNav').textContent=currentUser.nombre||currentUser.correo;
+  document.getElementById('profileName').textContent=currentUser.nombre||'—';
+  document.getElementById('profileEmail').textContent=currentUser.correo;
+  if(currentUser.ciudad) document.getElementById('profileDepto').value=currentUser.ciudad;
+  if(currentUser.interes) document.getElementById('profileTipo').value=currentUser.interes;
   updateCvUI();
   initHome();
   renderJobs();
   renderMisSolicitudes();
 }
 function logout(){
-  localStorage.removeItem('jl_user');
+  currentUser=null;
+  misSolicitudes=[];
   document.getElementById('authScreen').style.display='flex';
   document.getElementById('appWrapper').style.display='none';
 }
-window.addEventListener('DOMContentLoaded',()=>{
-  const s=localStorage.getItem('jl_user');
-  if(s)enterApp(JSON.parse(s));
-});
 
-// ─── HOME ───
+// ═══════════════════════════════════════════════════════
+// 7. HOME y JOBS
+// ═══════════════════════════════════════════════════════
 function initHome(){
-  const fuenteStats={},catStats={};
+  const fuenteStats={}, catStats={};
   EMPLEOS.forEach(e=>{
-    if(!fuenteStats[e.fuente])fuenteStats[e.fuente]={};
+    if(!fuenteStats[e.fuente]) fuenteStats[e.fuente]={};
     fuenteStats[e.fuente][e.categoria]=(fuenteStats[e.fuente][e.categoria]||0)+1;
-    if(!catStats[e.categoria])catStats[e.categoria]={total:0,fuentes:{}};
+    if(!catStats[e.categoria]) catStats[e.categoria]={total:0,fuentes:{}};
     catStats[e.categoria].total++;
     catStats[e.categoria].fuentes[e.fuente]=(catStats[e.categoria].fuentes[e.fuente]||0)+1;
   });
   Object.entries(fuenteStats).forEach(([fuente,cats])=>{
-    const total=Object.values(cats).reduce((a,b)=>a+b,0);
-    const el=document.getElementById('stats-fuente-'+fuente);
-    const tel=document.getElementById('total-'+fuente);
-    if(el)el.innerHTML=Object.entries(cats).map(([c,n])=>`<span class="fuente-stat-chip">${CAT_ICONS[c]||''} ${c}: ${n}</span>`).join('');
-    if(tel)tel.textContent=total+' vacantes en total';
+    let total=Object.values(cats).reduce((a,b)=>a+b,0);
+    let statsDiv=document.getElementById('stats-fuente-'+fuente);
+    let totalDiv=document.getElementById('total-'+fuente);
+    if(statsDiv) statsDiv.innerHTML=Object.entries(cats).map(([c,n])=>`<span class="fuente-stat-chip">${CAT_ICONS[c]||''} ${c}: ${n}</span>`).join('');
+    if(totalDiv) totalDiv.textContent=total+' vacantes en total';
   });
   const catsHome=document.getElementById('catsHome');
-  if(catsHome)catsHome.innerHTML=Object.entries(catStats).map(([cat,data])=>{
-    const fuenteTags=Object.entries(data.fuentes).map(([f,n])=>`<span class="cat-fuente-dot badge-${f}">${BADGE[f]?.name||f}: ${n}</span>`).join('');
-    return`<div class="cat-home-card" onclick="goToCat('${esc(cat)}')"><div class="cat-home-icon">${CAT_ICONS[cat]||'🗂'}</div><div class="cat-home-name">${esc(cat)}</div><div class="cat-home-count">${data.total} vacante${data.total!==1?'s':''}</div><div class="cat-home-fuentes">${fuenteTags}</div></div>`;
-  }).join('');
+  if(catsHome) catsHome.innerHTML=Object.entries(catStats).map(([cat,data])=>`<div class="cat-home-card" onclick="goToCat('${esc(cat)}')"><div class="cat-home-icon">${CAT_ICONS[cat]||'🗂'}</div><div class="cat-home-name">${esc(cat)}</div><div class="cat-home-count">${data.total} vacante${data.total!==1?'s':''}</div><div class="cat-home-fuentes">${Object.entries(data.fuentes).map(([f,n])=>`<span class="cat-fuente-dot badge-${f}">${BADGE[f]?.name||f}: ${n}</span>`).join('')}</div></div>`).join('');
   document.getElementById('statTotal').textContent=EMPLEOS.length;
 }
 
-// ─── JOBS ───
-function filterCat(btn,cat){
-  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
-  btn.classList.add('active');activeCat=cat;renderJobs();
-}
 function renderJobs(){
   const search=(document.getElementById('fSearch')?.value||'').toLowerCase();
   const depto=(document.getElementById('fDepto')?.value||'').toLowerCase();
   const fuente=document.getElementById('fFuente')?.value||'';
   const modalidad=(document.getElementById('fModalidad')?.value||'').toLowerCase();
-  let results=EMPLEOS.filter(e=>
-    (!search||e.titulo.toLowerCase().includes(search)||e.empresa.toLowerCase().includes(search)||e.desc.toLowerCase().includes(search))&&
-    (!depto||e.depto.toLowerCase().includes(depto))&&
-    (!fuente||e.fuente===fuente)&&
-    (!modalidad||e.modalidad.toLowerCase().includes(modalidad.replace('prácticas','práctica')))&&
-    (!activeCat||e.categoria===activeCat)
-  );
+  let results=EMPLEOS.filter(e=>(!search||e.titulo.toLowerCase().includes(search)||e.empresa.toLowerCase().includes(search)||e.desc.toLowerCase().includes(search))&&(!depto||e.depto.toLowerCase().includes(depto))&&(!fuente||e.fuente===fuente)&&(!modalidad||e.modalidad.toLowerCase().includes(modalidad.replace('prácticas','práctica')))&&(!activeCat||e.categoria===activeCat));
   document.getElementById('resultCount').textContent=results.length+' vacante'+(results.length!==1?'s':'')+' encontrada'+(results.length!==1?'s':'');
-  const grid=document.getElementById('jobsGrid');if(!grid)return;
-  if(results.length===0){grid.innerHTML='<div class="no-results"><div class="icon">🔍</div><p>No se encontraron vacantes con esos filtros.</p></div>';return}
-  grid.innerHTML=results.map(job=>`
-    <div class="job-card" onclick="openModal('${esc(job.id)}')">
-      <span class="job-source-badge ${BADGE[job.fuente]?.cls}">${BADGE[job.fuente]?.name}</span>
-      <div class="job-title">${esc(job.titulo)}</div>
-      <div class="job-company">🏢 ${esc(job.empresa)}</div>
-      <div class="job-meta">
-        <span class="meta-tag">📍 ${esc(job.depto)}</span>
-        <span class="meta-tag">⏱ ${esc(job.modalidad)}</span>
-        <span class="meta-tag">🗂 ${esc(job.categoria)}</span>
-      </div>
-      <div class="job-desc">${esc(job.desc)}</div>
-      <div class="job-footer">
-        <div class="job-salary">💰 ${esc(job.salario)}</div>
-        <div style="display:flex;gap:.4rem">
-          <a href="${esc(job.url)}" target="_blank" class="btn-ver" onclick="event.stopPropagation()">Ver portal</a>
-          <button class="btn-postular" onclick="event.stopPropagation();openModal('${esc(job.id)}')">Postular</button>
-        </div>
-      </div>
-    </div>`).join('');
+  const grid=document.getElementById('jobsGrid'); if(!grid) return;
+  if(results.length===0){ grid.innerHTML='<div class="no-results"><div class="icon">🔍</div><p>No se encontraron vacantes con esos filtros.</p></div>'; return; }
+  grid.innerHTML=results.map(job=>`<div class="job-card" onclick="openModal('${esc(job.id)}')"><span class="job-source-badge ${BADGE[job.fuente]?.cls}">${BADGE[job.fuente]?.name}</span><div class="job-title">${esc(job.titulo)}</div><div class="job-company">🏢 ${esc(job.empresa)}</div><div class="job-meta"><span class="meta-tag">📍 ${esc(job.depto)}</span><span class="meta-tag">⏱ ${esc(job.modalidad)}</span><span class="meta-tag">🗂 ${esc(job.categoria)}</span></div><div class="job-desc">${esc(job.desc)}</div><div class="job-footer"><div class="job-salary">💰 ${esc(job.salario)}</div><div style="display:flex;gap:.4rem"><a href="${esc(job.url)}" target="_blank" class="btn-ver" onclick="event.stopPropagation()">Ver portal</a><button class="btn-postular" onclick="event.stopPropagation();openModal('${esc(job.id)}')">Postular</button></div></div></div>`).join('');
 }
-['fSearch','fDepto','fFuente','fModalidad'].forEach(id=>{
-  const el=document.getElementById(id);
-  if(el)el.addEventListener(id==='fSearch'?'input':'change',renderJobs);
-});
+['fSearch','fDepto','fFuente','fModalidad'].forEach(id=>{ let el=document.getElementById(id); if(el) el.addEventListener(id==='fSearch'?'input':'change',renderJobs); });
 
-// ─── MODAL ───
+// ═══════════════════════════════════════════════════════
+// 8. POSTULACIONES (sin localStorage, con verificación backend)
+// ═══════════════════════════════════════════════════════
 let currentJobId=null;
 function openModal(jobId){
   currentJobId=jobId;
-  const job=EMPLEOS.find(j=>j.id===jobId);if(!job)return;
+  let job=EMPLEOS.find(j=>j.id===jobId); if(!job) return;
   document.getElementById('modalJobInfo').innerHTML=`<strong style="color:var(--blanco)">${esc(job.titulo)}</strong><br>🏢 ${esc(job.empresa)} &nbsp;|&nbsp; 📍 ${esc(job.depto)}<br>💰 ${esc(job.salario)}`;
-  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
-  document.getElementById('mNombre').value=u.nombre||'';
-  document.getElementById('mTelefono').value=u.telefono||'';
-  document.getElementById('mCorreo').value=u.correo||'';
-  document.getElementById('cvModalStatus').style.display=u.cvName?'block':'none';
+  if(currentUser){
+    document.getElementById('mNombre').value=currentUser.nombre||'';
+    document.getElementById('mTelefono').value=currentUser.telefono||'';
+    document.getElementById('mCorreo').value=currentUser.correo||'';
+  } else {
+    document.getElementById('mNombre').value='';
+    document.getElementById('mTelefono').value='';
+    document.getElementById('mCorreo').value='';
+  }
+  document.getElementById('cvModalStatus').style.display=(currentUser && currentUser.cvName)?'block':'none';
   document.getElementById('successBanner').style.display='none';
   document.getElementById('modalForm').style.display='block';
   document.getElementById('modalOverlay').classList.add('open');
 }
-function closeModal(){document.getElementById('modalOverlay').classList.remove('open')}
-document.getElementById('modalOverlay').addEventListener('click',function(e){if(e.target===this)closeModal()});
+function closeModal(){ document.getElementById('modalOverlay').classList.remove('open'); }
+document.getElementById('modalOverlay').addEventListener('click',function(e){ if(e.target===this) closeModal(); });
 
 async function submitPostulacion(){
-  const nombre=v('mNombre'),correo=v('mCorreo'),telefono=v('mTelefono'),tipo=v('mTipo'),detalle=document.getElementById('mDetalle').value;
-  if(!nombre||!correo){alert('Nombre y correo son obligatorios');return}
+  const nombre=v('mNombre'), correo=v('mCorreo'), telefono=v('mTelefono'), tipo=v('mTipo'), detalle=document.getElementById('mDetalle').value;
+  if(!nombre||!correo){ alert('Nombre y correo son obligatorios'); return; }
   const job=EMPLEOS.find(j=>j.id===currentJobId);
-  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
-  const sol={nombre,correo,telefono,tipoSolicitud:tipo,detalle:detalle||`Me interesa: ${job?.titulo} en ${job?.empresa}`,puesto:job?.titulo||'',empresa:job?.empresa||'',fuente:job?.fuente||'',cvName:u.cvName||'Sin CV',fecha:new Date().toISOString()};
-  try{const p=new URLSearchParams({destino:'solicitudes',...sol});fetch(GAS_URL+'?'+p,{method:'GET',mode:'no-cors'})}catch(_){}
-  misSolicitudes.push(sol);
-  localStorage.setItem('jl_solicitudes',JSON.stringify(misSolicitudes));
-  renderMisSolicitudes();
-  document.getElementById('modalForm').style.display='none';
-  document.getElementById('successBanner').style.display='block';
-  setTimeout(closeModal,3000);
+  const payload={ destino:'solicitudes', nombre, correo, telefono, tipoSolicitud:tipo, detalle:detalle||`Me interesa: ${job?.titulo} en ${job?.empresa}`, puesto:job?.titulo||'', empresa:job?.empresa||'', fuente:job?.fuente||'', cvName:(currentUser?.cvName||'Sin CV'), fecha:new Date().toISOString() };
+  try{
+    const resp=await fetch(GAS_URL,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(payload) });
+    const data=await resp.json();
+    if(data.status==='ok'){
+      misSolicitudes.push(payload);
+      renderMisSolicitudes();
+      document.getElementById('modalForm').style.display='none';
+      document.getElementById('successBanner').style.display='block';
+      setTimeout(closeModal,3000);
+    } else { alert('Error al enviar: '+ (data.message||'intente de nuevo')); }
+  }catch(e){ alert('Error de conexión al enviar postulación.'); }
 }
+
 function renderMisSolicitudes(){
-  const list=document.getElementById('misSolicitudesList');if(!list)return;
-  if(misSolicitudes.length===0){list.innerHTML='<div style="color:var(--gris);font-size:.88rem">Aún no has postulado.</div>';return}
-  list.innerHTML=misSolicitudes.slice().reverse().map(s=>`
-    <div class="solicitud-row">
-      <div><div class="sol-titulo">${esc(s.puesto)}</div><div style="font-size:.75rem;color:var(--gris)">${esc(s.empresa)} · ${new Date(s.fecha).toLocaleDateString('es-BO')}</div></div>
-      <span class="sol-estado">Enviada ✓</span>
-    </div>`).join('');
+  const list=document.getElementById('misSolicitudesList'); if(!list) return;
+  if(misSolicitudes.length===0){ list.innerHTML='<div style="color:var(--gris);font-size:.88rem">Aún no has postulado en esta sesión.</div>'; return; }
+  list.innerHTML=misSolicitudes.slice().reverse().map(s=>`<div class="solicitud-row"><div><div class="sol-titulo">${esc(s.puesto)}</div><div style="font-size:.75rem;color:var(--gris)">${esc(s.empresa)} · ${new Date(s.fecha).toLocaleDateString('es-BO')}</div></div><span class="sol-estado">Enviada ✓</span></div>`).join('');
 }
 
 // ═══════════════════════════════════════════════════════
-// CV — CORRECCIÓN #2: análisis real con IA (Claude API)
+// 9. CV con ANÁLISIS VÍA BACKEND (NO directo a Anthropic)
 // ═══════════════════════════════════════════════════════
 function handleCvUpload(input){
-  const file=input.files[0];if(!file)return;
-  if(file.size>5*1024*1024){alert('El archivo supera 5MB');return}
-  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
-  u.cvName=file.name;
-  u.cvDate=new Date().toLocaleString('es-BO');
-  localStorage.setItem('jl_user',JSON.stringify(u));
-  updateCvUI();
-  analyzeCvWithAI(file);
+  let file=input.files[0]; if(!file) return;
+  if(file.size>5*1024*1024){ alert('El archivo supera 5MB'); return; }
+  if(currentUser){
+    currentUser.cvName=file.name;
+    currentUser.cvDate=new Date().toLocaleString('es-BO');
+    updateCvUI();
+    analyzeCvWithBackend(file);
+  } else { alert('Debes iniciar sesión primero.'); }
 }
 function handleCvDrop(e){
-  e.preventDefault();
-  document.getElementById('cvZone').classList.remove('drag-over');
-  const file=e.dataTransfer.files[0];if(!file)return;
-  const inp=document.getElementById('cvInput');
-  const dt=new DataTransfer();dt.items.add(file);inp.files=dt.files;
+  e.preventDefault(); document.getElementById('cvZone').classList.remove('drag-over');
+  let file=e.dataTransfer.files[0]; if(!file) return;
+  let inp=document.getElementById('cvInput'); let dt=new DataTransfer(); dt.items.add(file); inp.files=dt.files;
   handleCvUpload(inp);
 }
 function removeCv(){
-  if(!confirm('¿Eliminar tu CV guardado?'))return;
-  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
-  u.cvName='';u.cvDate='';u.cvCategories=[];u.cvSummary='';
-  localStorage.setItem('jl_user',JSON.stringify(u));
+  if(!confirm('¿Eliminar tu CV guardado?')) return;
+  if(currentUser){ currentUser.cvName=''; currentUser.cvDate=''; currentUser.cvCategories=[]; currentUser.cvSummary=''; }
   document.getElementById('cvInput').value='';
-  updateCvUI();renderCvPage();
+  updateCvUI(); renderCvPage();
 }
 function updateCvUI(){
-  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
-  const badge=document.getElementById('cvStatusBadgeProfile');
-  const nameEl=document.getElementById('cvNameProfile');
-  if(badge&&nameEl){badge.style.display=u.cvName?'inline-flex':'none';nameEl.textContent=u.cvName}
+  let badge=document.getElementById('cvStatusBadgeProfile'), nameEl=document.getElementById('cvNameProfile');
+  if(badge&&nameEl){ badge.style.display=(currentUser && currentUser.cvName)?'inline-flex':'none'; nameEl.textContent=currentUser?.cvName||''; }
 }
 
-// ─── LEER CV ───
 async function readFileAsBase64(file){
-  return new Promise((res,rej)=>{
-    const r=new FileReader();
-    r.onload=()=>res(r.result.split(',')[1]);
-    r.onerror=()=>rej(r.error);
-    r.readAsDataURL(file);
-  });
-}
-async function readFileAsText(file){
-  return new Promise((res,rej)=>{
-    const r=new FileReader();
-    r.onload=()=>res(r.result||'');
-    r.onerror=()=>rej(r.error);
-    r.readAsText(file);
-  });
+  return new Promise((res,rej)=>{ let r=new FileReader(); r.onload=()=>res(r.result.split(',')[1]); r.onerror=()=>rej(r.error); r.readAsDataURL(file); });
 }
 
-// ─── ANÁLISIS CON IA ─── CORRECCIÓN #2 ───
-async function analyzeCvWithAI(file){
-  // Mostrar loading
+async function analyzeCvWithBackend(file){
   document.getElementById('cvIaLoading').style.display='flex';
   document.getElementById('cvAnalysisSection').style.display='none';
   document.getElementById('cvEmptyMsg').style.display='none';
-
-  const categorias = Object.keys(CAT_ICONS).join(', ');
-  const isPdf = file.name.toLowerCase().endsWith('.pdf');
-
-  try {
-    let messages;
-
-    if(isPdf){
-      // Enviar el PDF directamente como documento
-      const base64 = await readFileAsBase64(file);
-      messages = [{
-        role:'user',
-        content:[
-          {
-            type:'document',
-            source:{type:'base64',media_type:'application/pdf',data:base64}
-          },
-          {
-            type:'text',
-            text:`Eres un experto en recursos humanos boliviano. Analiza este CV/hoja de vida y determina qué categorías de empleo son más adecuadas para esta persona.
-
-Las categorías disponibles son: ${categorias}
-
-INSTRUCCIONES:
-1. Lee el contenido del CV con cuidado
-2. Identifica las habilidades, experiencia y perfil de la persona
-3. Selecciona ÚNICAMENTE las categorías que realmente correspondan a su perfil (mínimo 1, máximo 4)
-4. Proporciona un breve resumen del perfil (2-3 oraciones)
-
-Responde SOLO en formato JSON, sin texto adicional ni markdown:
-{
-  "categorias": ["Categoria1", "Categoria2"],
-  "resumen": "Breve descripción del perfil profesional",
-  "experiencia": "Área principal de experiencia"
-}`
-          }
-        ]
-      }];
-    } else {
-      // Para DOCX u otros, leer como texto
-      let texto = '';
-      try { texto = await readFileAsText(file); } catch(e) { texto = file.name; }
-      // Limpiar caracteres extraños de DOCX
-      texto = texto.replace(/[^\x20-\x7E\xC0-\xFF\u00C0-\u024F\n\r\t]/g,'').substring(0,6000);
-
-      messages = [{
-        role:'user',
-        content:`Eres un experto en recursos humanos boliviano. Analiza este texto extraído de un CV/hoja de vida y determina qué categorías de empleo son más adecuadas para esta persona.
-
-TEXTO DEL CV:
-${texto || 'Nombre del archivo: '+file.name}
-
-Las categorías disponibles son: ${categorias}
-
-INSTRUCCIONES:
-1. Lee el contenido con cuidado
-2. Identifica las habilidades, experiencia y perfil de la persona
-3. Selecciona ÚNICAMENTE las categorías que realmente correspondan a su perfil (mínimo 1, máximo 4)
-4. Si el texto tiene poco contenido legible, usa el nombre del archivo como pista
-
-Responde SOLO en formato JSON, sin texto adicional ni markdown:
-{
-  "categorias": ["Categoria1", "Categoria2"],
-  "resumen": "Breve descripción del perfil profesional",
-  "experiencia": "Área principal de experiencia"
-}`
-      }];
+  try{
+    let base64=await readFileAsBase64(file);
+    let resp=await fetch(GAS_URL,{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ destino:'analizar_cv', filename:file.name, filebase64:base64 }) });
+    let data=await resp.json();
+    let detectedCats=[];
+    if(data.status==='ok' && Array.isArray(data.categorias)){
+      detectedCats=data.categorias.filter(c=>Object.keys(CAT_ICONS).includes(c));
     }
-
-    const response = await fetch(CLAUDE_API, {
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        model:'claude-sonnet-4-20250514',
-        max_tokens:400,
-        messages
-      })
-    });
-
-    const data = await response.json();
-    let rawText = data.content?.map(c=>c.text||'').join('') || '';
-    // Limpiar posibles backticks de markdown
-    rawText = rawText.replace(/```json|```/g,'').trim();
-
-    let parsed;
-    try { parsed = JSON.parse(rawText); } catch(e) { parsed = null; }
-
-    // Validar que las categorías devueltas existen en nuestro catálogo
-    const validCats = Object.keys(CAT_ICONS);
-    let detectedCats = [];
-    if(parsed && Array.isArray(parsed.categorias)){
-      detectedCats = parsed.categorias.filter(c => validCats.includes(c));
-    }
-    // Fallback si no hubo resultado válido
-    if(detectedCats.length === 0) detectedCats = fallbackDetect(file.name);
-
-    const u = JSON.parse(localStorage.getItem('jl_user')||'{}');
-    u.cvCategories = detectedCats;
-    u.cvSummary = parsed?.resumen || '';
-    u.cvExperiencia = parsed?.experiencia || '';
-    localStorage.setItem('jl_user', JSON.stringify(u));
-
-  } catch(err) {
-    console.warn('Error IA, usando detección local:', err);
-    const detectedCats = fallbackDetect(file.name);
-    const u = JSON.parse(localStorage.getItem('jl_user')||'{}');
-    u.cvCategories = detectedCats;
-    localStorage.setItem('jl_user', JSON.stringify(u));
+    if(detectedCats.length===0) detectedCats=fallbackDetect(file.name);
+    if(currentUser){ currentUser.cvCategories=detectedCats; currentUser.cvSummary=data.resumen||''; }
+  }catch(err){
+    console.warn('Backend IA no disponible, usando detección local',err);
+    let detectedCats=fallbackDetect(file.name);
+    if(currentUser) currentUser.cvCategories=detectedCats;
   }
-
   document.getElementById('cvIaLoading').style.display='none';
   renderCvPage();
 }
 
-// Detección local básica como respaldo (solo por nombre de archivo)
 function fallbackDetect(filename){
-  const f = filename.toLowerCase();
-  const map = {
-    'Gastronomía':['cocin','chef','gastronomía','culinari','restaurant','comida','alimento','pastelería','panadería','barista','cafeter'],
-    'Salud':['enfermer','medic','salud','clínic','farmac','nutri','fisio','doctor','hospital'],
-    'Tecnología':['softwar','program','desarrollo','web','sistema','informátic','tech','computación'],
-    'Diseño':['diseño','gráfico','visual','ilustr','multimedia','creativ','adobe','photo'],
-    'Educación':['docent','maestro','profesor','educac','enseñanz','pedagog','tutor'],
-    'Ventas':['venta','comerci','ejecutiv','client','asesor'],
-    'Logística':['logístic','transport','almacén','deliver','moto','depósit','reparto'],
-    'Administración':['admin','gestión','secretari','recepcion','oficin'],
-    'Marketing':['marketing','publicidad','comunity','contenido','redes'],
-    'Finanzas':['contab','finanz','contador','auditor','presupuest'],
-  };
-  for(const [cat,kws] of Object.entries(map)){
-    if(kws.some(k=>f.includes(k))) return [cat];
-  }
+  let f=filename.toLowerCase();
+  let map={ 'Gastronomía':['cocin','chef','gastronomía','culinari','restaurant','comida','alimento','pastelería','panadería','barista','cafeter'], 'Salud':['enfermer','medic','salud','clínic','farmac','nutri','fisio','doctor','hospital'], 'Tecnología':['softwar','program','desarrollo','web','sistema','informátic','tech','computación'], 'Diseño':['diseño','gráfico','visual','ilustr','multimedia','creativ','adobe','photo'], 'Educación':['docent','maestro','profesor','educac','enseñanz','pedagog','tutor'], 'Ventas':['venta','comerci','ejecutiv','client','asesor'], 'Logística':['logístic','transport','almacén','deliver','moto','depósit','reparto'], 'Administración':['admin','gestión','secretari','recepcion','oficin'], 'Marketing':['marketing','publicidad','comunity','contenido','redes'], 'Finanzas':['contab','finanz','contador','auditor','presupuest'] };
+  for(let [cat,kws] of Object.entries(map)) if(kws.some(k=>f.includes(k))) return [cat];
   return ['Administración'];
 }
 
 function renderCvPage(){
-  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
-  const hasCv=!!u.cvName;
+  let hasCv=!!(currentUser && currentUser.cvName);
   document.getElementById('cvCurrentSection').style.display=hasCv?'flex':'none';
   document.getElementById('cvEmptyMsg').style.display=hasCv?'none':'block';
   document.getElementById('cvAnalysisSection').style.display=hasCv?'block':'none';
-  if(hasCv){
-    document.getElementById('cvCurrentName').textContent=u.cvName;
-    document.getElementById('cvCurrentMeta').textContent=u.cvDate?'Subido: '+u.cvDate:'Subido recientemente';
-
-    // Mostrar resumen si existe
-    const cats=u.cvCategories||Object.keys(CAT_ICONS);
-    const chipsEl=document.getElementById('cvSuggestionChips');
+  if(hasCv && currentUser){
+    document.getElementById('cvCurrentName').textContent=currentUser.cvName;
+    document.getElementById('cvCurrentMeta').textContent=currentUser.cvDate?'Subido: '+currentUser.cvDate:'Subido recientemente';
+    let cats=currentUser.cvCategories||Object.keys(CAT_ICONS);
+    let chipsEl=document.getElementById('cvSuggestionChips');
     if(chipsEl){
       let html='';
-      if(u.cvSummary){
-        html+=`<div style="width:100%;padding:.65rem .85rem;background:rgba(26,158,92,.07);border-radius:.7rem;border:1px solid rgba(26,158,92,.2);font-size:.83rem;color:var(--texto);margin-bottom:.6rem">
-          <strong style="color:var(--verde-claro)">🤖 Perfil detectado:</strong> ${esc(u.cvSummary)}
-        </div>`;
-      }
+      if(currentUser.cvSummary) html+=`<div style="width:100%;padding:.65rem .85rem;background:rgba(26,158,92,.07);border-radius:.7rem;border:1px solid rgba(26,158,92,.2);font-size:.83rem;color:var(--texto);margin-bottom:.6rem"><strong style="color:var(--verde-claro)">🤖 Perfil detectado:</strong> ${esc(currentUser.cvSummary)}</div>`;
       html+=cats.map((cat,i)=>`<span class="cv-chip ${i===0?'active':''}" onclick="toggleCvChip(this,'${esc(cat)}')">${CAT_ICONS[cat]||''} ${esc(cat)}</span>`).join('');
       chipsEl.innerHTML=html;
     }
@@ -1035,50 +832,35 @@ function renderCvPage(){
     renderCvTips(cats);
   }
 }
-
-function toggleCvChip(chip){chip.classList.toggle('active');renderCvJobSuggestions()}
+function toggleCvChip(chip){ chip.classList.toggle('active'); renderCvJobSuggestions(); }
 function renderCvJobSuggestions(){
-  const activeCats=[...document.querySelectorAll('.cv-chip.active')].map(c=>{
-    // Extraer texto limpio sin emoji
-    return c.textContent.trim().replace(/^[\u{1F300}-\u{1FAD6}][\s]*/u,'').trim();
-  });
+  let activeCats=[...document.querySelectorAll('.cv-chip.active')].map(c=>c.textContent.trim().replace(/^[\u{1F300}-\u{1FAD6}][\s]*/u,'').trim());
   let jobs=EMPLEOS.filter(e=>activeCats.length===0||activeCats.some(ac=>e.categoria===ac));
   document.getElementById('cvMatchCount').textContent=`${jobs.length} empleo${jobs.length!==1?'s':''} encontrado${jobs.length!==1?'s':''} según tu perfil`;
-  const preview=document.getElementById('cvJobsPreview');
-  if(preview)preview.innerHTML=jobs.slice(0,6).map(job=>`
-    <div class="cv-job-row" onclick="openModal('${esc(job.id)}')">
-      <div>
-        <div class="cv-job-title">${esc(job.titulo)}</div>
-        <div class="cv-job-meta">🏢 ${esc(job.empresa)} · 📍 ${esc(job.depto)} · ${esc(job.salario)}</div>
-      </div>
-      <span class="match-badge ${BADGE[job.fuente]?.cls||''}">${BADGE[job.fuente]?.name||''}</span>
-    </div>`).join('')||'<div style="color:var(--gris);font-size:.88rem;padding:.5rem">Selecciona al menos una categoría.</div>';
+  let preview=document.getElementById('cvJobsPreview');
+  if(preview) preview.innerHTML=jobs.slice(0,6).map(job=>`<div class="cv-job-row" onclick="openModal('${esc(job.id)}')"><div><div class="cv-job-title">${esc(job.titulo)}</div><div class="cv-job-meta">🏢 ${esc(job.empresa)} · 📍 ${esc(job.depto)} · ${esc(job.salario)}</div></div><span class="match-badge ${BADGE[job.fuente]?.cls||''}">${BADGE[job.fuente]?.name||''}</span></div>`).join('')||'<div style="color:var(--gris);font-size:.88rem;padding:.5rem">Selecciona al menos una categoría.</div>';
 }
-
 function renderCvTips(cats){
-  const tips=[
-    {icon:'📌',text:'Completa tu perfil con departamento y tipo de empleo preferido.'},
-    {icon:'🔗',text:`Según tu CV, te recomendamos explorar: ${cats.slice(0,3).join(', ')}.`},
-    {icon:'💬',text:'Al postular, incluye una carta de presentación breve.'},
-    {icon:'🔄',text:'Puedes reemplazar tu CV cuando quieras.'},
-    {icon:'📍',text:'Activa el filtro por departamento para ver vacantes cerca de ti.'}
-  ];
-  const el=document.getElementById('cvTips');
-  if(el)el.innerHTML=tips.map(t=>`
-    <div style="display:flex;gap:.65rem;align-items:flex-start;padding:.6rem;background:var(--fondo2);border-radius:.65rem;border:1px solid var(--borde)">
-      <span style="font-size:1.1rem">${t.icon}</span>
-      <span style="font-size:.84rem;color:var(--gris)">${t.text}</span>
-    </div>`).join('');
+  let tips=[{icon:'📌',text:'Completa tu perfil con departamento y tipo de empleo preferido.'},{icon:'🔗',text:`Según tu CV, te recomendamos explorar: ${cats.slice(0,3).join(', ')}.`},{icon:'💬',text:'Al postular, incluye una carta de presentación breve.'},{icon:'🔄',text:'Puedes reemplazar tu CV cuando quieras.'},{icon:'📍',text:'Activa el filtro por departamento para ver vacantes cerca de ti.'}];
+  let el=document.getElementById('cvTips');
+  if(el) el.innerHTML=tips.map(t=>`<div style="display:flex;gap:.65rem;align-items:flex-start;padding:.6rem;background:var(--fondo2);border-radius:.65rem;border:1px solid var(--borde)"><span style="font-size:1.1rem">${t.icon}</span><span style="font-size:.84rem;color:var(--gris)">${t.text}</span></div>`).join('');
 }
 
-// ─── PROFILE ───
+// ═══════════════════════════════════════════════════════
+// 10. PERFIL (solo modifica currentUser)
+// ═══════════════════════════════════════════════════════
 function saveProfile(){
-  const u=JSON.parse(localStorage.getItem('jl_user')||'{}');
-  u.ciudad=v('profileDepto');u.interes=v('profileTipo');
-  localStorage.setItem('jl_user',JSON.stringify(u));
-  const btn=document.querySelector('#pageProfile .btn-auth');
-  if(btn){btn.textContent='✅ Guardado';setTimeout(()=>btn.textContent='Guardar cambios',2000)}
+  if(!currentUser) return;
+  currentUser.ciudad=v('profileDepto');
+  currentUser.interes=v('profileTipo');
+  let btn=document.querySelector('#pageProfile .btn-auth');
+  if(btn){ btn.textContent='✅ Guardado'; setTimeout(()=>btn.textContent='Guardar cambios',2000); }
 }
+
+// Inicio: no hay sesión persistente, el usuario debe loguearse.
+window.addEventListener('DOMContentLoaded',()=>{
+  // No se carga usuario desde localStorage, todo empieza desde authScreen.
+});
 </script>
 </body>
 </html>
