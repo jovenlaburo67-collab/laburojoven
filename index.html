@@ -7,34 +7,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-:root{
-  --verde:#1a9e5c;
-  --verde-claro:#22c46e;
-  --verde-neon:#2dffa0;
-  --amarillo:#f5c518;
-  --rojo:#e05252;
-  --crema:#13161d;
-  --fondo:#0e1117;
-  --fondo2:#181c26;
-  --fondo3:#1e2330;
-  --card:#1f2537;
-  --card2:#252c3d;
-  --borde:#2a3145;
-  --gris:#8899b5;
-  --gris-claro:#2a3145;
-  --negro:#0e1117;
-  --blanco:#e8edf7;
-  --texto:#c8d4ea;
-  --sombra:0 4px 28px rgba(0,0,0,0.45);
-  --sombra-verde:0 4px 24px rgba(26,158,92,0.22);
-}
+:root{--verde:#1a9e5c;--verde-claro:#22c46e;--verde-neon:#2dffa0;--amarillo:#f5c518;--rojo:#e05252;--fondo:#0e1117;--fondo2:#181c26;--fondo3:#1e2330;--card:#1f2537;--card2:#252c3d;--borde:#2a3145;--gris:#8899b5;--gris-claro:#2a3145;--negro:#0e1117;--blanco:#e8edf7;--texto:#c8d4ea;--sombra:0 4px 28px rgba(0,0,0,0.45);--sombra-verde:0 4px 24px rgba(26,158,92,0.22)}
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto);line-height:1.6;overflow-x:hidden}
 ::-webkit-scrollbar{width:5px}
 ::-webkit-scrollbar-track{background:var(--fondo2)}
 ::-webkit-scrollbar-thumb{background:var(--verde);border-radius:99px}
-
-/* ─── AUTH ─── */
 #authScreen{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:radial-gradient(ellipse at 30% 40%,#0d2a1a 0%,#0e1117 60%,#131825 100%);overflow:hidden}
 #authScreen::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%231a9e5c' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='8'/%3E%3C/g%3E%3C/svg%3E")}
 .auth-card{position:relative;background:var(--card);border:1px solid var(--borde);border-radius:1.75rem;width:min(460px,94vw);padding:2.25rem;box-shadow:0 32px 72px rgba(0,0,0,0.6);animation:slideUp .5s cubic-bezier(.16,1,.3,1);max-height:95vh;overflow-y:auto}
@@ -58,8 +36,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .auth-msg.info{color:#7dd3a8;background:rgba(26,158,92,.12);font-weight:600}
 .auth-switch{text-align:center;margin-top:.85rem;font-size:.85rem;color:var(--gris)}
 .auth-switch a{color:var(--verde);font-weight:600;cursor:pointer;text-decoration:none}
-
-/* ─── APP ─── */
 #appWrapper{display:none}
 .navbar{position:sticky;top:0;z-index:100;background:rgba(14,17,23,.92);backdrop-filter:blur(18px);border-bottom:1px solid var(--borde);padding:.8rem 1.5rem}
 .nav-inner{max-width:1340px;margin:0 auto;display:flex;align-items:center;gap:1rem}
@@ -73,11 +49,8 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .user-pill{display:flex;align-items:center;gap:.4rem;background:rgba(26,158,92,.12);padding:.35rem .8rem;border-radius:99px;font-size:.82rem;color:var(--verde);font-weight:600;border:1px solid rgba(26,158,92,.25)}
 .btn-logout{padding:.4rem .9rem;border-radius:99px;border:1.5px solid var(--borde);background:transparent;font-size:.82rem;cursor:pointer;color:var(--gris);transition:.2s;font-family:'DM Sans',sans-serif}
 .btn-logout:hover{border-color:var(--rojo);color:var(--rojo)}
-
 .page{display:none;max-width:1340px;margin:0 auto;padding:1.75rem 1.5rem}
 .page.active{display:block}
-
-/* ─── HERO ─── */
 .hero-band{background:linear-gradient(135deg,#0d1f14 0%,#111827 50%,#1a2030 100%);border:1px solid var(--borde);color:var(--blanco);border-radius:1.75rem;padding:3rem 2.5rem;margin-bottom:2rem;position:relative;overflow:hidden}
 .hero-band::after{content:'';position:absolute;top:-40px;right:-40px;width:300px;height:300px;background:radial-gradient(circle,rgba(26,158,92,.18) 0%,transparent 70%);border-radius:50%}
 .hero-band::before{content:'🇧🇴';position:absolute;right:2rem;top:50%;transform:translateY(-50%);font-size:9rem;opacity:.07;line-height:1;z-index:0}
@@ -88,14 +61,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .hero-band p{color:var(--gris);max-width:500px;margin-bottom:1.25rem;font-size:.95rem}
 .btn-hero{display:inline-flex;align-items:center;gap:.5rem;background:linear-gradient(135deg,var(--verde),var(--verde-claro));color:#fff;padding:.8rem 1.75rem;border-radius:99px;font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;border:none;cursor:pointer;box-shadow:var(--sombra-verde);transition:.2s}
 .btn-hero:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(34,196,110,.4)}
-
-/* ─── STATS ─── */
 .stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:.9rem;margin-bottom:2rem}
 .stat-box{background:var(--card);border-radius:1.1rem;padding:1.25rem;text-align:center;border:1px solid var(--borde);box-shadow:var(--sombra)}
 .stat-num{font-family:'Sora',sans-serif;font-size:1.9rem;font-weight:800;color:var(--verde)}
 .stat-lbl{font-size:.78rem;color:var(--gris);margin-top:.2rem}
-
-/* ─── FUENTES ─── */
 .fuentes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:.9rem;margin-bottom:1.75rem}
 .fuente-card{background:var(--card);border-radius:1.1rem;padding:1.1rem;border:1px solid var(--borde);display:flex;flex-direction:column;gap:.4rem;transition:.2s;cursor:pointer}
 .fuente-card:hover,.fuente-card.active{border-color:var(--verde);background:rgba(26,158,92,.06);transform:translateY(-2px);box-shadow:var(--sombra-verde)}
@@ -104,8 +73,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .fuente-stats{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.25rem}
 .fuente-stat-chip{background:rgba(26,158,92,.12);color:var(--verde);font-size:.7rem;font-weight:600;padding:.15rem .5rem;border-radius:99px;border:1px solid rgba(26,158,92,.2)}
 .fuente-total{font-size:.78rem;font-weight:700;color:var(--verde-claro)}
-
-/* ─── CATS ─── */
 .cats-home{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:.75rem;margin-bottom:1.75rem}
 .cat-home-card{background:var(--card);border-radius:1.1rem;padding:1rem;border:1px solid var(--borde);cursor:pointer;transition:.2s;text-align:center}
 .cat-home-card:hover{border-color:var(--verde);box-shadow:var(--sombra-verde);transform:translateY(-2px);background:rgba(26,158,92,.05)}
@@ -114,23 +81,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .cat-home-count{font-size:.78rem;color:var(--gris)}
 .cat-home-fuentes{display:flex;flex-wrap:wrap;gap:.25rem;justify-content:center;margin-top:.35rem}
 .cat-fuente-dot{font-size:.65rem;padding:.12rem .4rem;border-radius:99px;font-weight:600}
-
-/* ─── FILTERS ─── */
 .filter-bar{background:var(--card);border-radius:1.1rem;padding:1.1rem 1.35rem;border:1px solid var(--borde);margin-bottom:1.25rem;display:flex;flex-wrap:wrap;gap:.65rem;align-items:flex-end}
 .filter-group{display:flex;flex-direction:column;gap:.3rem;min-width:140px;flex:1}
 .filter-group label{font-size:.72rem;font-weight:600;color:var(--gris);letter-spacing:.04em;text-transform:uppercase}
 .filter-group input,.filter-group select{padding:.6rem .85rem;border:1.5px solid var(--borde);border-radius:.65rem;font-family:'DM Sans',sans-serif;font-size:.88rem;background:var(--fondo2);color:var(--blanco);outline:none;transition:.2s}
 .filter-group input:focus,.filter-group select:focus{border-color:var(--verde)}
-.filter-group select option{background:var(--fondo2)}
-.btn-buscar{padding:.6rem 1.35rem;background:var(--verde);color:#fff;border:none;border-radius:.65rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:.2s;align-self:flex-end;font-size:.9rem}
+.btn-buscar{padding:.6rem 1.35rem;background:var(--verde);color:#fff;border:none;border-radius:.65rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:.2s;align-self:flex-end}
 .btn-buscar:hover{background:var(--verde-claro)}
-
-/* ─── CAT CHIPS ─── */
 .cats-row{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.25rem}
 .cat-chip{padding:.4rem .9rem;border-radius:99px;border:1.5px solid var(--borde);background:var(--card);font-size:.82rem;cursor:pointer;transition:.2s;font-weight:500;color:var(--texto)}
 .cat-chip:hover,.cat-chip.active{background:var(--verde);color:#fff;border-color:var(--verde)}
-
-/* ─── JOB CARDS ─── */
 .jobs-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(315px,1fr));gap:1.1rem}
 .job-card{background:var(--card);border-radius:1.1rem;padding:1.35rem;border:1px solid var(--borde);transition:.25s;cursor:pointer;position:relative;overflow:hidden}
 .job-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--verde),var(--verde-neon));opacity:0;transition:.2s}
@@ -152,25 +112,17 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .btn-postular:hover{opacity:.9;transform:scale(1.02)}
 .btn-ver{padding:.4rem 1rem;border:1.5px solid rgba(26,158,92,.4);border-radius:99px;background:transparent;color:var(--verde-claro);font-weight:600;font-size:.82rem;cursor:pointer;transition:.2s}
 .btn-ver:hover{background:var(--verde);color:#fff;border-color:var(--verde)}
-
-/* ─── SKELETON ─── */
 .skeleton{background:linear-gradient(90deg,var(--fondo2) 25%,var(--card2) 50%,var(--fondo2) 75%);background-size:200% 100%;animation:shimmer 1.4s infinite;border-radius:.9rem;height:190px}
 @keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
 .no-results{grid-column:1/-1;text-align:center;padding:3.5rem 2rem;color:var(--gris)}
 .no-results .icon{font-size:2.5rem;margin-bottom:.75rem}
-
-/* ─── FUENTES STATUS ─── */
 .fuentes-status{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.25rem;background:var(--card);padding:.85rem 1.1rem;border-radius:.9rem;border:1px solid var(--borde);align-items:center}
 .source-dot{display:inline-flex;align-items:center;gap:.35rem;font-size:.78rem;color:var(--gris)}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--borde)}
 .dot.verde{background:var(--verde)}
-
-/* ─── SECTION HEADER ─── */
 .sec-head{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.65rem;margin-bottom:1.1rem}
 .sec-head h2{font-family:'Sora',sans-serif;font-size:1.25rem;font-weight:700;color:var(--blanco)}
 .sec-head .count{color:var(--gris);font-size:.85rem}
-
-/* ─── MODAL ─── */
 .overlay{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
 .overlay.open{display:flex}
 .modal-box{background:var(--card);border:1px solid var(--borde);border-radius:1.75rem;width:min(520px,100%);max-height:90vh;overflow-y:auto;padding:1.75rem;animation:slideUp .3s cubic-bezier(.16,1,.3,1);position:relative}
@@ -180,8 +132,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .success-banner{background:rgba(26,158,92,.12);border:1px solid rgba(26,158,92,.3);border-radius:.9rem;padding:1.1rem;text-align:center;display:none}
 .success-banner .icon{font-size:2.2rem;margin-bottom:.4rem}
 .success-banner p{color:var(--verde-claro);font-weight:600;font-size:.92rem}
-
-/* ─── CV PAGE ─── */
 .cv-page-hero{background:linear-gradient(135deg,#0d1f14,#111827);border:1px solid var(--borde);border-radius:1.75rem;padding:2.25rem;margin-bottom:1.5rem;color:var(--blanco);position:relative;overflow:hidden}
 .cv-page-hero::before{content:'📄';position:absolute;right:1.5rem;top:50%;transform:translateY(-50%);font-size:6rem;opacity:.06}
 .cv-page-hero h2{font-family:'Sora',sans-serif;font-size:1.6rem;font-weight:800;margin-bottom:.5rem}
@@ -211,8 +161,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .cv-job-title{font-weight:600;font-size:.87rem;color:var(--blanco)}
 .cv-job-meta{font-size:.75rem;color:var(--gris);margin-top:.15rem}
 .match-badge{padding:.25rem .65rem;border-radius:99px;font-size:.72rem;font-weight:700;white-space:nowrap}
-
-/* ─── PROFILE ─── */
 .profile-card{background:var(--card);border-radius:1.35rem;padding:1.75rem;border:1px solid var(--borde);margin-bottom:1.25rem}
 .profile-avatar{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,var(--verde),var(--verde-claro));display:flex;align-items:center;justify-content:center;font-size:1.75rem;margin-bottom:.85rem;box-shadow:0 4px 16px rgba(26,158,92,.3)}
 .profile-name{font-family:'Sora',sans-serif;font-weight:800;font-size:1.4rem;margin-bottom:.2rem;color:var(--blanco)}
@@ -222,39 +170,31 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .solicitud-row{background:var(--fondo2);border-radius:.9rem;padding:.9rem 1.1rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.45rem;border:1px solid var(--borde)}
 .sol-titulo{font-weight:600;font-size:.88rem;color:var(--blanco)}
 .sol-estado{padding:.25rem .65rem;border-radius:99px;font-size:.72rem;font-weight:700;background:rgba(245,197,24,.15);color:var(--amarillo);border:1px solid rgba(245,197,24,.25)}
-
-/* ─── REASON CARDS ─── */
 .reason-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:.85rem}
 .reason-item{display:flex;gap:.65rem;align-items:flex-start;background:var(--card2);border-radius:.9rem;padding:.85rem;border:1px solid var(--borde)}
 .reason-item strong{font-size:.9rem;color:var(--blanco);display:block;margin-bottom:.2rem}
 .reason-item p{font-size:.8rem;color:var(--gris)}
-
-/* ─── IA LOADING ─── */
 .ia-loading{display:flex;align-items:center;gap:.75rem;padding:1rem;background:rgba(26,158,92,.07);border-radius:.9rem;border:1px solid rgba(26,158,92,.2);margin-bottom:1rem;font-size:.88rem;color:var(--verde-claro)}
 .ia-spinner{width:20px;height:20px;border:2px solid rgba(26,158,92,.3);border-top-color:var(--verde);border-radius:50%;animation:spin .8s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
-
-/* ─── SECTION TITLE ─── */
 .section-title{font-family:'Sora',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:.85rem;color:var(--blanco)}
-
 @media(max-width:640px){
-  .field-row{grid-template-columns:1fr}
-  .hero-band{padding:1.75rem 1.1rem}
-  .page{padding:.85rem}
-  .jobs-grid{grid-template-columns:1fr}
-  .cats-home{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
-  .filter-bar{gap:.45rem}
-  .filter-group{min-width:100%}
-  .btn-buscar{width:100%}
-  .auth-card{padding:1.6rem}
-  .nav-inner{gap:.6rem}
-  .user-pill{display:none}
+.field-row{grid-template-columns:1fr}
+.hero-band{padding:1.75rem 1.1rem}
+.page{padding:.85rem}
+.jobs-grid{grid-template-columns:1fr}
+.cats-home{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+.filter-bar{gap:.45rem}
+.filter-group{min-width:100%}
+.btn-buscar{width:100%}
+.auth-card{padding:1.6rem}
+.nav-inner{gap:.6rem}
+.user-pill{display:none}
 }
 </style>
 </head>
 <body>
 
-<!-- ==================== AUTH SCREEN ==================== -->
 <div id="authScreen">
   <div class="auth-card">
     <div class="auth-logo">Joven<span>Laburo</span> 🇧🇴</div>
@@ -271,19 +211,10 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
       <div class="field"><label>Correo electrónico</label><input type="email" id="rCorreo" placeholder="juan@email.com"></div>
       <div class="field-row">
         <div class="field"><label>Departamento</label>
-          <select id="rCiudad">
-            <option value="">Selecciona...</option>
-            <option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option>
-            <option>Oruro</option><option>Potosí</option><option>Sucre</option>
-            <option>Tarija</option><option>Beni</option><option>Pando</option>
-          </select>
+          <select id="rCiudad"><option value="">Selecciona...</option><option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option><option>Oruro</option><option>Potosí</option><option>Sucre</option><option>Tarija</option><option>Beni</option><option>Pando</option></select>
         </div>
         <div class="field"><label>Tipo de empleo</label>
-          <select id="rInteres">
-            <option value="">Selecciona...</option>
-            <option>Tiempo completo</option><option>Medio tiempo</option>
-            <option>Prácticas / Pasantía</option><option>Remoto</option><option>Primera experiencia</option>
-          </select>
+          <select id="rInteres"><option value="">Selecciona...</option><option>Tiempo completo</option><option>Medio tiempo</option><option>Prácticas / Pasantía</option><option>Remoto</option><option>Primera experiencia</option></select>
         </div>
       </div>
       <button class="btn-auth" onclick="handleRegister()">Crear mi cuenta gratis →</button>
@@ -298,7 +229,6 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
   </div>
 </div>
 
-<!-- ==================== APP ==================== -->
 <div id="appWrapper">
   <nav class="navbar">
     <div class="nav-inner">
@@ -316,20 +246,9 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
     </div>
   </nav>
 
-  <!-- HOME -->
   <div class="page active" id="pageHome">
-    <div class="hero-band">
-      <div class="hero-tag">🇧🇴 Empleo Joven Bolivia</div>
-      <h1>Encuentra tu<br><em>primer empleo</em><br>en Bolivia</h1>
-      <p>Consolidamos ofertas reales de 4 portales bolivianos. Busca por departamento, categoría o sube tu CV para ver empleos a tu medida.</p>
-      <button class="btn-hero" onclick="showPage('pageJobs')">🔍 Ver todos los empleos</button>
-    </div>
-    <div class="stats-row">
-      <div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">Portales integrados</div></div>
-      <div class="stat-box"><div class="stat-num" id="statTotal">28</div><div class="stat-lbl">Vacantes activas</div></div>
-      <div class="stat-box"><div class="stat-num">9</div><div class="stat-lbl">Departamentos</div></div>
-      <div class="stat-box"><div class="stat-num">850+</div><div class="stat-lbl">Contrataciones exitosas</div></div>
-    </div>
+    <div class="hero-band"><div class="hero-tag">🇧🇴 Empleo Joven Bolivia</div><h1>Encuentra tu<br><em>primer empleo</em><br>en Bolivia</h1><p>Consolidamos ofertas reales de 4 portales bolivianos. Busca por departamento, categoría o sube tu CV para ver empleos a tu medida.</p><button class="btn-hero" onclick="showPage('pageJobs')">🔍 Ver todos los empleos</button></div>
+    <div class="stats-row"><div class="stat-box"><div class="stat-num">4</div><div class="stat-lbl">Portales integrados</div></div><div class="stat-box"><div class="stat-num" id="statTotal">28</div><div class="stat-lbl">Vacantes activas</div></div><div class="stat-box"><div class="stat-num">9</div><div class="stat-lbl">Departamentos</div></div><div class="stat-box"><div class="stat-num">850+</div><div class="stat-lbl">Contrataciones exitosas</div></div></div>
     <div class="section-title">📡 Portales de empleo integrados</div>
     <div class="fuentes-grid" id="fuentesGrid">
       <div class="fuente-card" onclick="filterBySource('trabajando')"><div class="fuente-name">Trabajando.com.bo</div><div class="fuente-url">trabajando.com.bo</div><div id="stats-fuente-trabajando" class="fuente-stats"></div><div class="fuente-total" id="total-trabajando"></div></div>
@@ -339,186 +258,37 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
     </div>
     <div class="section-title">📊 Empleos por categoría</div>
     <div class="cats-home" id="catsHome"></div>
-    <div style="background:var(--card);border-radius:1.1rem;padding:1.35rem;border:1px solid var(--borde)">
-      <div class="section-title" style="margin-bottom:.85rem">¿Por qué JovenLaburo?</div>
-      <div class="reason-grid">
-        <div class="reason-item"><span style="font-size:1.3rem">⚡</span><div><strong>Todo en un lugar</strong><p>4 portales bolivianos en un solo sitio</p></div></div>
-        <div class="reason-item"><span style="font-size:1.3rem">📍</span><div><strong>Por departamento</strong><p>Filtra empleos en tu ciudad de Bolivia</p></div></div>
-        <div class="reason-item"><span style="font-size:1.3rem">🤖</span><div><strong>CV con IA</strong><p>Análisis real de tu hoja de vida para sugerencias precisas</p></div></div>
-        <div class="reason-item"><span style="font-size:1.3rem">🎯</span><div><strong>Por categoría</strong><p>Tecnología, salud, gastronomía y más</p></div></div>
-      </div>
-    </div>
+    <div style="background:var(--card);border-radius:1.1rem;padding:1.35rem;border:1px solid var(--borde)"><div class="section-title" style="margin-bottom:.85rem">¿Por qué JovenLaburo?</div><div class="reason-grid"><div class="reason-item"><span style="font-size:1.3rem">⚡</span><div><strong>Todo en un lugar</strong><p>4 portales bolivianos en un solo sitio</p></div></div><div class="reason-item"><span style="font-size:1.3rem">📍</span><div><strong>Por departamento</strong><p>Filtra empleos en tu ciudad de Bolivia</p></div></div><div class="reason-item"><span style="font-size:1.3rem">🤖</span><div><strong>CV con IA</strong><p>Análisis real de tu hoja de vida para sugerencias precisas</p></div></div><div class="reason-item"><span style="font-size:1.3rem">🎯</span><div><strong>Por categoría</strong><p>Tecnología, salud, gastronomía y más</p></div></div></div></div>
   </div>
 
-  <!-- JOBS -->
   <div class="page" id="pageJobs">
-    <div class="sec-head">
-      <h2>🔍 Buscar empleos en Bolivia</h2>
-      <span class="count" id="resultCount">28 vacantes</span>
-    </div>
-    <div class="fuentes-status">
-      <span style="font-size:.78rem;font-weight:600;color:var(--blanco);margin-right:.4rem">Activo:</span>
-      <span class="source-dot"><span class="dot verde"></span>Trabajando.bo</span>
-      <span class="source-dot"><span class="dot verde"></span>Trabajópolis.bo</span>
-      <span class="source-dot"><span class="dot verde"></span>Trabajito.bo</span>
-      <span class="source-dot"><span class="dot verde"></span>El Deber</span>
-    </div>
-    <div class="filter-bar">
-      <div class="filter-group" style="flex:2;min-width:190px"><label>Buscar</label><input type="text" id="fSearch" placeholder="Puesto, empresa, habilidad..."></div>
-      <div class="filter-group"><label>Departamento</label>
-        <select id="fDepto">
-          <option value="">Nacional (todos)</option>
-          <option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option>
-          <option>Oruro</option><option>Potosí</option><option>Sucre</option>
-          <option>Tarija</option><option>Beni</option><option>Pando</option><option>Remoto</option>
-        </select>
-      </div>
-      <div class="filter-group"><label>Fuente</label>
-        <select id="fFuente">
-          <option value="">Todas las fuentes</option>
-          <option value="trabajando">Trabajando.bo</option>
-          <option value="trabajopolis">Trabajópolis.bo</option>
-          <option value="trabajito">Trabajito.bo</option>
-          <option value="eldeber">El Deber</option>
-        </select>
-      </div>
-      <div class="filter-group"><label>Modalidad</label>
-        <select id="fModalidad">
-          <option value="">Todas</option>
-          <option>Tiempo completo</option><option>Medio tiempo</option>
-          <option>Remoto</option><option>Prácticas</option>
-        </select>
-      </div>
-      <button class="btn-buscar" onclick="renderJobs()">Buscar</button>
-    </div>
-    <div class="cats-row" id="catsRow">
-      <button class="cat-chip active" onclick="filterCat(this,'')">Todas</button>
-      <button class="cat-chip" onclick="filterCat(this,'Tecnología')">💻 Tecnología</button>
-      <button class="cat-chip" onclick="filterCat(this,'Ventas')">🤝 Ventas</button>
-      <button class="cat-chip" onclick="filterCat(this,'Administración')">📋 Administración</button>
-      <button class="cat-chip" onclick="filterCat(this,'Marketing')">📣 Marketing</button>
-      <button class="cat-chip" onclick="filterCat(this,'Salud')">🏥 Salud</button>
-      <button class="cat-chip" onclick="filterCat(this,'Educación')">📚 Educación</button>
-      <button class="cat-chip" onclick="filterCat(this,'Gastronomía')">🍽 Gastronomía</button>
-      <button class="cat-chip" onclick="filterCat(this,'Logística')">🚚 Logística</button>
-      <button class="cat-chip" onclick="filterCat(this,'Diseño')">🎨 Diseño</button>
-      <button class="cat-chip" onclick="filterCat(this,'Finanzas')">💰 Finanzas</button>
-    </div>
-    <div class="jobs-grid" id="jobsGrid">
-      <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
-    </div>
+    <div class="sec-head"><h2>🔍 Buscar empleos en Bolivia</h2><span class="count" id="resultCount">28 vacantes</span></div>
+    <div class="fuentes-status"><span style="font-size:.78rem;font-weight:600;color:var(--blanco);margin-right:.4rem">Activo:</span><span class="source-dot"><span class="dot verde"></span>Trabajando.bo</span><span class="source-dot"><span class="dot verde"></span>Trabajópolis.bo</span><span class="source-dot"><span class="dot verde"></span>Trabajito.bo</span><span class="source-dot"><span class="dot verde"></span>El Deber</span></div>
+    <div class="filter-bar"><div class="filter-group" style="flex:2;min-width:190px"><label>Buscar</label><input type="text" id="fSearch" placeholder="Puesto, empresa, habilidad..."></div><div class="filter-group"><label>Departamento</label><select id="fDepto"><option value="">Nacional (todos)</option><option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option><option>Oruro</option><option>Potosí</option><option>Sucre</option><option>Tarija</option><option>Beni</option><option>Pando</option><option>Remoto</option></select></div><div class="filter-group"><label>Fuente</label><select id="fFuente"><option value="">Todas las fuentes</option><option value="trabajando">Trabajando.bo</option><option value="trabajopolis">Trabajópolis.bo</option><option value="trabajito">Trabajito.bo</option><option value="eldeber">El Deber</option></select></div><div class="filter-group"><label>Modalidad</label><select id="fModalidad"><option value="">Todas</option><option>Tiempo completo</option><option>Medio tiempo</option><option>Remoto</option><option>Prácticas</option></select></div><button class="btn-buscar" onclick="renderJobs()">Buscar</button></div>
+    <div class="cats-row" id="catsRow"><button class="cat-chip active" onclick="filterCat(this,'')">Todas</button><button class="cat-chip" onclick="filterCat(this,'Tecnología')">💻 Tecnología</button><button class="cat-chip" onclick="filterCat(this,'Ventas')">🤝 Ventas</button><button class="cat-chip" onclick="filterCat(this,'Administración')">📋 Administración</button><button class="cat-chip" onclick="filterCat(this,'Marketing')">📣 Marketing</button><button class="cat-chip" onclick="filterCat(this,'Salud')">🏥 Salud</button><button class="cat-chip" onclick="filterCat(this,'Educación')">📚 Educación</button><button class="cat-chip" onclick="filterCat(this,'Gastronomía')">🍽 Gastronomía</button><button class="cat-chip" onclick="filterCat(this,'Logística')">🚚 Logística</button><button class="cat-chip" onclick="filterCat(this,'Diseño')">🎨 Diseño</button><button class="cat-chip" onclick="filterCat(this,'Finanzas')">💰 Finanzas</button></div>
+    <div class="jobs-grid" id="jobsGrid"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div>
   </div>
 
-  <!-- CV -->
   <div class="page" id="pageCv">
-    <div class="cv-page-hero">
-      <h2>📄 Mi Hoja de Vida</h2>
-      <p>Sube tu CV y nuestra IA analizará tu perfil para recomendarte los empleos más adecuados. Funciona con PDF o Word.</p>
-    </div>
-    <div id="cvCurrentSection" style="display:none" class="cv-current">
-      <div class="cv-current-info">
-        <div class="cv-icon-big">📎</div>
-        <div>
-          <div class="cv-file-name" id="cvCurrentName">—</div>
-          <div class="cv-file-meta" id="cvCurrentMeta">Subido recientemente</div>
-        </div>
-      </div>
-      <button class="btn-cv-remove" onclick="removeCv()">🗑 Eliminar CV</button>
-    </div>
-    <div class="cv-upload-zone" id="cvZone"
-      onclick="document.getElementById('cvInput').click()"
-      ondragover="event.preventDefault();this.classList.add('drag-over')"
-      ondragleave="this.classList.remove('drag-over')"
-      ondrop="handleCvDrop(event)">
-      <div class="cv-upload-icon">☁️</div>
-      <div class="cv-upload-label">
-        <strong>Haz clic aquí o arrastra tu CV</strong><br>
-        Formatos: PDF o DOCX · Máximo 5MB<br>
-        <span style="color:var(--verde-claro);font-size:.8rem">La IA leerá tu CV y encontrará empleos afines</span>
-      </div>
-      <input type="file" id="cvInput" accept=".pdf,.doc,.docx" onchange="handleCvUpload(this)">
-    </div>
-    <div id="cvIaLoading" style="display:none" class="ia-loading">
-      <div class="ia-spinner"></div>
-      <span>Analizando tu CV con inteligencia artificial... esto toma unos segundos</span>
-    </div>
-    <div id="cvAnalysisSection" style="display:none">
-      <div class="cv-analysis-card">
-        <div class="cv-analysis-header"><div class="cv-analysis-icon">🎯</div><div class="cv-analysis-title">Empleos sugeridos según tu CV</div></div>
-        <p style="font-size:.85rem;color:var(--gris);margin-bottom:1rem">La IA detectó estas categorías en tu CV. Selecciona las que te interesan:</p>
-        <div class="cv-suggestion-chips" id="cvSuggestionChips"></div>
-        <div style="font-size:.82rem;color:var(--gris);margin-bottom:.75rem" id="cvMatchCount"></div>
-        <div class="cv-jobs-preview" id="cvJobsPreview"></div>
-        <button class="btn-hero" style="margin-top:1rem;font-size:.85rem;padding:.65rem 1.4rem" onclick="showPage('pageJobs')">Ver todos los empleos →</button>
-      </div>
-      <div class="cv-analysis-card">
-        <div class="cv-analysis-header"><div class="cv-analysis-icon">💡</div><div class="cv-analysis-title">Recomendaciones para tu búsqueda</div></div>
-        <div id="cvTips" style="display:flex;flex-direction:column;gap:.6rem"></div>
-      </div>
-    </div>
-    <div id="cvEmptyMsg" style="text-align:center;padding:2rem;color:var(--gris)">
-      <div style="font-size:3rem;margin-bottom:.75rem">📋</div>
-      <div style="font-size:.92rem">Sube tu CV para recibir sugerencias personalizadas con IA</div>
-    </div>
+    <div class="cv-page-hero"><h2>📄 Mi Hoja de Vida</h2><p>Sube tu CV y nuestra IA analizará tu perfil para recomendarte los empleos más adecuados. Funciona con PDF o Word.</p></div>
+    <div id="cvCurrentSection" style="display:none" class="cv-current"><div class="cv-current-info"><div class="cv-icon-big">📎</div><div><div class="cv-file-name" id="cvCurrentName">—</div><div class="cv-file-meta" id="cvCurrentMeta">Subido recientemente</div></div></div><button class="btn-cv-remove" onclick="removeCv()">🗑 Eliminar CV</button></div>
+    <div class="cv-upload-zone" id="cvZone" onclick="document.getElementById('cvInput').click()" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')" ondrop="handleCvDrop(event)"><div class="cv-upload-icon">☁️</div><div class="cv-upload-label"><strong>Haz clic aquí o arrastra tu CV</strong><br>Formatos: PDF o DOCX · Máximo 5MB<br><span style="color:var(--verde-claro);font-size:.8rem">La IA leerá tu CV y encontrará empleos afines</span></div><input type="file" id="cvInput" accept=".pdf,.doc,.docx" onchange="handleCvUpload(this)"></div>
+    <div id="cvIaLoading" style="display:none" class="ia-loading"><div class="ia-spinner"></div><span>Analizando tu CV con inteligencia artificial... esto toma unos segundos</span></div>
+    <div id="cvAnalysisSection" style="display:none"><div class="cv-analysis-card"><div class="cv-analysis-header"><div class="cv-analysis-icon">🎯</div><div class="cv-analysis-title">Empleos sugeridos según tu CV</div></div><p style="font-size:.85rem;color:var(--gris);margin-bottom:1rem">La IA detectó estas categorías en tu CV. Selecciona las que te interesan:</p><div class="cv-suggestion-chips" id="cvSuggestionChips"></div><div style="font-size:.82rem;color:var(--gris);margin-bottom:.75rem" id="cvMatchCount"></div><div class="cv-jobs-preview" id="cvJobsPreview"></div><button class="btn-hero" style="margin-top:1rem;font-size:.85rem;padding:.65rem 1.4rem" onclick="showPage('pageJobs')">Ver todos los empleos →</button></div><div class="cv-analysis-card"><div class="cv-analysis-header"><div class="cv-analysis-icon">💡</div><div class="cv-analysis-title">Recomendaciones para tu búsqueda</div></div><div id="cvTips" style="display:flex;flex-direction:column;gap:.6rem"></div></div></div>
+    <div id="cvEmptyMsg" style="text-align:center;padding:2rem;color:var(--gris)"><div style="font-size:3rem;margin-bottom:.75rem">📋</div><div style="font-size:.92rem">Sube tu CV para recibir sugerencias personalizadas con IA</div></div>
   </div>
 
-  <!-- PROFILE -->
   <div class="page" id="pageProfile">
-    <div class="profile-card">
-      <div class="profile-avatar">👤</div>
-      <div class="profile-name" id="profileName">—</div>
-      <div class="profile-email" id="profileEmail"></div>
-      <div id="cvStatusBadgeProfile" class="cv-status-inline" style="display:none">✅ CV: <span id="cvNameProfile"></span></div>
-      <div class="field-row" style="margin-bottom:.85rem">
-        <div class="field"><label>Departamento</label>
-          <select id="profileDepto">
-            <option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option>
-            <option>Oruro</option><option>Potosí</option><option>Sucre</option>
-            <option>Tarija</option><option>Beni</option><option>Pando</option>
-          </select>
-        </div>
-        <div class="field"><label>Tipo empleo preferido</label>
-          <select id="profileTipo">
-            <option>Tiempo completo</option><option>Medio tiempo</option>
-            <option>Prácticas / Pasantía</option><option>Remoto</option>
-          </select>
-        </div>
-      </div>
-      <button class="btn-auth" onclick="saveProfile()">Guardar cambios</button>
-    </div>
-    <div class="profile-card">
-      <div class="section-title">📋 Mis postulaciones</div>
-      <div class="mis-solicitudes-list" id="misSolicitudesList">
-        <div style="color:var(--gris);font-size:.88rem">Aún no has postulado a ninguna oferta.</div>
-      </div>
-    </div>
+    <div class="profile-card"><div class="profile-avatar">👤</div><div class="profile-name" id="profileName">—</div><div class="profile-email" id="profileEmail"></div><div id="cvStatusBadgeProfile" class="cv-status-inline" style="display:none">✅ CV: <span id="cvNameProfile"></span></div><div class="field-row" style="margin-bottom:.85rem"><div class="field"><label>Departamento</label><select id="profileDepto"><option>La Paz</option><option>Santa Cruz</option><option>Cochabamba</option><option>Oruro</option><option>Potosí</option><option>Sucre</option><option>Tarija</option><option>Beni</option><option>Pando</option></select></div><div class="field"><label>Tipo empleo preferido</label><select id="profileTipo"><option>Tiempo completo</option><option>Medio tiempo</option><option>Prácticas / Pasantía</option><option>Remoto</option></select></div></div><button class="btn-auth" onclick="saveProfile()">Guardar cambios</button></div>
+    <div class="profile-card"><div class="section-title">📋 Mis postulaciones</div><div class="mis-solicitudes-list" id="misSolicitudesList"><div style="color:var(--gris);font-size:.88rem">Aún no has postulado a ninguna oferta.</div></div></div>
   </div>
 </div>
 
-<!-- MODAL POSTULACIÓN -->
-<div class="overlay" id="modalOverlay">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div class="modal-title">📤 Postular a vacante</div>
-    <div id="modalJobInfo" style="background:var(--fondo2);border-radius:.75rem;padding:.9rem;margin-bottom:1.25rem;font-size:.88rem;border:1px solid var(--borde)"></div>
-    <div id="successBanner" class="success-banner">
-      <div class="icon">🎉</div>
-      <p>¡Solicitud enviada!<br>El empleador recibirá tu información.</p>
-    </div>
-    <div id="modalForm">
-      <div class="field"><label>Nombre completo</label><input type="text" id="mNombre" placeholder="Juan Mamani"></div>
-      <div class="field-row"><div class="field"><label>Teléfono</label><input type="tel" id="mTelefono"></div><div class="field"><label>Correo</label><input type="email" id="mCorreo"></div></div>
-      <div class="field"><label>Tipo de solicitud</label><select id="mTipo"><option value="Postulación directa">Postulación directa</option><option value="Solicitar cita">Solicitar cita</option><option value="Más información">Pedir más información</option></select></div>
-      <div class="field"><label>Carta de presentación (opcional)</label><textarea id="mDetalle" rows="3" placeholder="Breve presentación..."></textarea></div>
-      <div id="cvModalStatus" style="margin-bottom:.85rem;font-size:.82rem;color:var(--verde-claro);display:none">✅ Se adjuntará tu CV</div>
-      <button class="btn-auth" onclick="submitPostulacion()">Enviar postulación</button>
-    </div>
-  </div>
-</div>
+<div class="overlay" id="modalOverlay"><div class="modal-box"><button class="modal-close" onclick="closeModal()">✕</button><div class="modal-title">📤 Postular a vacante</div><div id="modalJobInfo" style="background:var(--fondo2);border-radius:.75rem;padding:.9rem;margin-bottom:1.25rem;font-size:.88rem;border:1px solid var(--borde)"></div><div id="successBanner" class="success-banner"><div class="icon">🎉</div><p>¡Solicitud enviada!<br>El empleador recibirá tu información.</p></div><div id="modalForm"><div class="field"><label>Nombre completo</label><input type="text" id="mNombre" placeholder="Juan Mamani"></div><div class="field-row"><div class="field"><label>Teléfono</label><input type="tel" id="mTelefono"></div><div class="field"><label>Correo</label><input type="email" id="mCorreo"></div></div><div class="field"><label>Tipo de solicitud</label><select id="mTipo"><option value="Postulación directa">Postulación directa</option><option value="Solicitar cita">Solicitar cita</option><option value="Más información">Pedir más información</option></select></div><div class="field"><label>Carta de presentación (opcional)</label><textarea id="mDetalle" rows="3" placeholder="Breve presentación..."></textarea></div><div id="cvModalStatus" style="margin-bottom:.85rem;font-size:.82rem;color:var(--verde-claro);display:none">✅ Se adjuntará tu CV</div><button class="btn-auth" onclick="submitPostulacion()">Enviar postulación</button></div></div></div>
 
 <script>
-// ==================== CONFIGURACIÓN ====================
-const GAS_URL = "https://script.google.com/macros/s/AKfycbzWFA4MdvligHgr4hSqRMqVvLcyimc-w28V2xAPoNKTQ5J0vbsmj5gbAFoXU0vpbv5khw/exec";
+// ==================== NUEVA URL DEL BACKEND (ACTUALIZADA) ====================
+const GAS_URL = "https://script.google.com/macros/s/AKfycbz-eaG6X_ToDBAFvazEryZTeAWJbF_RED5V3DZZAnE3stJb2pzo8J7IvHPl-_OdRMJHng/exec";
 
 // ==================== ESTADO EN MEMORIA ====================
 let currentUser = null;
@@ -559,21 +329,30 @@ const EMPLEOS = [
 const CAT_ICONS = {'Tecnología':'💻','Ventas':'🤝','Administración':'📋','Marketing':'📣','Salud':'🏥','Educación':'📚','Gastronomía':'🍽','Logística':'🚚','Diseño':'🎨','Finanzas':'💰'};
 const BADGE = {trabajando:{cls:'badge-trabajando',name:'Trabajando.bo'},trabajopolis:{cls:'badge-trabajopolis',name:'Trabajópolis.bo'},trabajito:{cls:'badge-trabajito',name:'Trabajito.bo'},eldeber:{cls:'badge-eldeber',name:'El Deber'}};
 
-// ==================== UTILIDADES ====================
+// ==================== FUNCIONES AUXILIARES ====================
 function v(id) { return (document.getElementById(id)?.value || '').trim(); }
 function esc(s) { if(!s) return ''; return s.replace(/[&<>"']/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])); }
 function showMsg(id, text, type='error'){ let el=document.getElementById(id); if(el){ el.textContent=text; el.className='auth-msg '+(type==='info'?'info':'error'); } }
 
-// ==================== FETCH CON SOPORTE CORS ====================
-async function fetchApi(url, options) {
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    return await response.json();
-  } catch (error) {
-    console.error('Fetch error:', error);
-    throw new Error('ERROR_CONEXION: No se pudo conectar con el servidor. Verifica tu conexión o que el backend esté activo.');
-  }
+// ==================== JSONP (SOLUCIÓN CROSS-DOMAIN SIN CORS) ====================
+function jsonpRequest(params) {
+  return new Promise((resolve, reject) => {
+    const callbackName = 'jsonp_cb_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+    const url = GAS_URL + '?' + params + '&callback=' + callbackName;
+    window[callbackName] = function(data) {
+      delete window[callbackName];
+      document.body.removeChild(script);
+      resolve(data);
+    };
+    const script = document.createElement('script');
+    script.src = url;
+    script.onerror = function() {
+      delete window[callbackName];
+      document.body.removeChild(script);
+      reject(new Error('Error de conexión con el servidor'));
+    };
+    document.body.appendChild(script);
+  });
 }
 
 // ==================== AUTH ====================
@@ -588,12 +367,9 @@ async function handleRegister() {
   const nombre = v('rNombre'), telefono = v('rTelefono'), correo = v('rCorreo'), ciudad = v('rCiudad'), interes = v('rInteres');
   if (!nombre || !telefono || !correo || !ciudad || !interes) { showMsg('rMsg', '⚠️ Completa todos los campos.'); return; }
   if (!/\S+@\S+\.\S+/.test(correo)) { showMsg('rMsg', '⚠️ Correo inválido.'); return; }
-  const formData = new FormData();
-  formData.append('destino', 'usuarios');
-  formData.append('nombre', nombre); formData.append('telefono', telefono); formData.append('correo', correo);
-  formData.append('ciudad', ciudad); formData.append('interes', interes);
+  const params = new URLSearchParams({ destino: 'usuarios', nombre, telefono, correo, ciudad, interes }).toString();
   try {
-    const data = await fetchApi(GAS_URL, { method: 'POST', body: formData });
+    const data = await jsonpRequest(params);
     if (data.status === 'ok') {
       currentUser = { nombre, telefono, correo, ciudad, interes, cvName: '', cvDate: '', cvCategories: [], cvSummary: '' };
       enterApp();
@@ -612,11 +388,9 @@ async function handleRegister() {
 async function handleLogin() {
   const correo = v('lCorreo');
   if (!correo || !/\S+@\S+\.\S+/.test(correo)) { showMsg('lMsg', '⚠️ Correo inválido.'); return; }
-  const formData = new FormData();
-  formData.append('destino', 'buscar_usuario');
-  formData.append('correo', correo);
+  const params = new URLSearchParams({ destino: 'buscar_usuario', correo }).toString();
   try {
-    const data = await fetchApi(GAS_URL, { method: 'POST', body: formData });
+    const data = await jsonpRequest(params);
     if (data.encontrado) {
       currentUser = { nombre: data.nombre || correo.split('@')[0], correo, telefono: data.telefono || '', ciudad: data.ciudad || '', interes: data.interes || '', cvName: '', cvDate: '', cvCategories: [], cvSummary: '' };
     } else {
@@ -662,13 +436,7 @@ function initHome() {
     if (totalDiv) totalDiv.textContent = total + ' vacantes en total';
   }
   const catsHome = document.getElementById('catsHome');
-  if (catsHome) catsHome.innerHTML = Object.entries(catStats).map(([cat,data])=>`
-    <div class="cat-home-card" onclick="goToCat('${esc(cat)}')">
-      <div class="cat-home-icon">${CAT_ICONS[cat]||'🗂'}</div>
-      <div class="cat-home-name">${esc(cat)}</div>
-      <div class="cat-home-count">${data.total} vacante${data.total!==1?'s':''}</div>
-      <div class="cat-home-fuentes">${Object.entries(data.fuentes).map(([f,n])=>`<span class="cat-fuente-dot badge-${f}">${BADGE[f]?.name||f}: ${n}</span>`).join('')}</div>
-    </div>`).join('');
+  if (catsHome) catsHome.innerHTML = Object.entries(catStats).map(([cat,data])=>`<div class="cat-home-card" onclick="goToCat('${esc(cat)}')"><div class="cat-home-icon">${CAT_ICONS[cat]||'🗂'}</div><div class="cat-home-name">${esc(cat)}</div><div class="cat-home-count">${data.total} vacante${data.total!==1?'s':''}</div><div class="cat-home-fuentes">${Object.entries(data.fuentes).map(([f,n])=>`<span class="cat-fuente-dot badge-${f}">${BADGE[f]?.name||f}: ${n}</span>`).join('')}</div></div>`).join('');
   document.getElementById('statTotal').textContent = EMPLEOS.length;
 }
 function goToCat(cat) { activeCat = cat; showPage('pageJobs'); document.querySelectorAll('.cat-chip').forEach(c=>c.classList.toggle('active',c.textContent.includes(cat))); renderJobs(); }
@@ -698,21 +466,7 @@ function renderJobs(){
   const grid = document.getElementById('jobsGrid');
   if (!grid) return;
   if (results.length === 0) { grid.innerHTML = '<div class="no-results"><div class="icon">🔍</div><p>No se encontraron vacantes con esos filtros.</p></div>'; return; }
-  grid.innerHTML = results.map(job => `
-    <div class="job-card" onclick="openModal('${esc(job.id)}')">
-      <span class="job-source-badge ${BADGE[job.fuente]?.cls}">${BADGE[job.fuente]?.name}</span>
-      <div class="job-title">${esc(job.titulo)}</div>
-      <div class="job-company">🏢 ${esc(job.empresa)}</div>
-      <div class="job-meta"><span class="meta-tag">📍 ${esc(job.depto)}</span><span class="meta-tag">⏱ ${esc(job.modalidad)}</span><span class="meta-tag">🗂 ${esc(job.categoria)}</span></div>
-      <div class="job-desc">${esc(job.desc)}</div>
-      <div class="job-footer">
-        <div class="job-salary">💰 ${esc(job.salario)}</div>
-        <div style="display:flex;gap:.4rem">
-          <a href="${esc(job.url)}" target="_blank" class="btn-ver" onclick="event.stopPropagation()">Ver portal</a>
-          <button class="btn-postular" onclick="event.stopPropagation();openModal('${esc(job.id)}')">Postular</button>
-        </div>
-      </div>
-    </div>`).join('');
+  grid.innerHTML = results.map(job => `<div class="job-card" onclick="openModal('${esc(job.id)}')"><span class="job-source-badge ${BADGE[job.fuente]?.cls}">${BADGE[job.fuente]?.name}</span><div class="job-title">${esc(job.titulo)}</div><div class="job-company">🏢 ${esc(job.empresa)}</div><div class="job-meta"><span class="meta-tag">📍 ${esc(job.depto)}</span><span class="meta-tag">⏱ ${esc(job.modalidad)}</span><span class="meta-tag">🗂 ${esc(job.categoria)}</span></div><div class="job-desc">${esc(job.desc)}</div><div class="job-footer"><div class="job-salary">💰 ${esc(job.salario)}</div><div style="display:flex;gap:.4rem"><a href="${esc(job.url)}" target="_blank" class="btn-ver" onclick="event.stopPropagation()">Ver portal</a><button class="btn-postular" onclick="event.stopPropagation();openModal('${esc(job.id)}')">Postular</button></div></div></div>`).join('');
 }
 ['fSearch','fDepto','fFuente','fModalidad'].forEach(id => { let el = document.getElementById(id); if(el) el.addEventListener(id==='fSearch'?'input':'change', renderJobs); });
 
@@ -744,19 +498,14 @@ async function submitPostulacion() {
   const nombre = v('mNombre'), correo = v('mCorreo'), telefono = v('mTelefono'), tipo = v('mTipo'), detalle = document.getElementById('mDetalle').value;
   if (!nombre || !correo) { alert('Nombre y correo son obligatorios'); return; }
   const job = EMPLEOS.find(j => j.id === currentJobId);
-  const formData = new FormData();
-  formData.append('destino', 'solicitudes');
-  formData.append('nombre', nombre);
-  formData.append('correo', correo);
-  formData.append('telefono', telefono);
-  formData.append('tipoSolicitud', tipo);
-  formData.append('detalle', detalle || `Me interesa: ${job?.titulo} en ${job?.empresa}`);
-  formData.append('puesto', job?.titulo || '');
-  formData.append('empresa', job?.empresa || '');
-  formData.append('fuente', job?.fuente || '');
-  formData.append('cvName', (currentUser?.cvName) || 'Sin CV');
+  const params = new URLSearchParams({
+    destino: 'solicitudes', nombre, correo, telefono,
+    tipoSolicitud: tipo, detalle: detalle || `Me interesa: ${job?.titulo} en ${job?.empresa}`,
+    puesto: job?.titulo || '', empresa: job?.empresa || '', fuente: job?.fuente || '',
+    cvName: (currentUser?.cvName) || 'Sin CV'
+  }).toString();
   try {
-    const data = await fetchApi(GAS_URL, { method: 'POST', body: formData });
+    const data = await jsonpRequest(params);
     if (data.status === 'ok') {
       misSolicitudes.push({ puesto: job?.titulo, empresa: job?.empresa, fecha: new Date().toISOString() });
       renderMisSolicitudes();
@@ -774,14 +523,10 @@ function renderMisSolicitudes() {
   const list = document.getElementById('misSolicitudesList');
   if (!list) return;
   if (misSolicitudes.length === 0) { list.innerHTML = '<div style="color:var(--gris);font-size:.88rem">Aún no has postulado en esta sesión.</div>'; return; }
-  list.innerHTML = misSolicitudes.slice().reverse().map(s => `
-    <div class="solicitud-row">
-      <div><div class="sol-titulo">${esc(s.puesto)}</div><div style="font-size:.75rem;color:var(--gris)">${esc(s.empresa)} · ${new Date(s.fecha).toLocaleDateString('es-BO')}</div></div>
-      <span class="sol-estado">Enviada ✓</span>
-    </div>`).join('');
+  list.innerHTML = misSolicitudes.slice().reverse().map(s => `<div class="solicitud-row"><div><div class="sol-titulo">${esc(s.puesto)}</div><div style="font-size:.75rem;color:var(--gris)">${esc(s.empresa)} · ${new Date(s.fecha).toLocaleDateString('es-BO')}</div></div><span class="sol-estado">Enviada ✓</span></div>`).join('');
 }
 
-// ==================== CV ====================
+// ==================== CV (ANÁLISIS LOCAL POR PALABRAS CLAVE) ====================
 function handleCvUpload(input) {
   let file = input.files[0];
   if (!file) return;
@@ -790,7 +535,7 @@ function handleCvUpload(input) {
     currentUser.cvName = file.name;
     currentUser.cvDate = new Date().toLocaleString('es-BO');
     updateCvUI();
-    analyzeCvWithBackend(file);
+    analyzeCvLocally(file);
   } else { alert('Debes iniciar sesión primero.'); }
 }
 function handleCvDrop(e) {
@@ -815,33 +560,19 @@ function updateCvUI() {
   let badge = document.getElementById('cvStatusBadgeProfile'), nameEl = document.getElementById('cvNameProfile');
   if (badge && nameEl) { badge.style.display = (currentUser && currentUser.cvName) ? 'inline-flex' : 'none'; nameEl.textContent = currentUser?.cvName || ''; }
 }
-async function readFileAsBase64(file) {
-  return new Promise((res,rej) => { let r = new FileReader(); r.onload = () => res(r.result.split(',')[1]); r.onerror = () => rej(r.error); r.readAsDataURL(file); });
-}
-async function analyzeCvWithBackend(file) {
+function analyzeCvLocally(file) {
   document.getElementById('cvIaLoading').style.display = 'flex';
   document.getElementById('cvAnalysisSection').style.display = 'none';
   document.getElementById('cvEmptyMsg').style.display = 'none';
-  try {
-    let base64 = await readFileAsBase64(file);
-    const formData = new FormData();
-    formData.append('destino', 'analizar_cv');
-    formData.append('filename', file.name);
-    formData.append('filebase64', base64);
-    const data = await fetchApi(GAS_URL, { method: 'POST', body: formData });
-    let detectedCats = [];
-    if (data.status === 'ok' && Array.isArray(data.categorias)) {
-      detectedCats = data.categorias.filter(c => Object.keys(CAT_ICONS).includes(c));
-    }
-    if (detectedCats.length === 0) detectedCats = fallbackDetect(file.name);
-    if (currentUser) { currentUser.cvCategories = detectedCats; currentUser.cvSummary = data.resumen || ''; }
-  } catch (err) {
-    console.warn('Backend no disponible, usando detección local', err);
+  setTimeout(() => {
     let detectedCats = fallbackDetect(file.name);
-    if (currentUser) currentUser.cvCategories = detectedCats;
-  }
-  document.getElementById('cvIaLoading').style.display = 'none';
-  renderCvPage();
+    if (currentUser) {
+      currentUser.cvCategories = detectedCats;
+      currentUser.cvSummary = detectedCats.length ? `Perfil orientado a ${detectedCats.join(', ')}.` : 'No se pudo detectar un área específica.';
+    }
+    document.getElementById('cvIaLoading').style.display = 'none';
+    renderCvPage();
+  }, 800);
 }
 function fallbackDetect(filename) {
   let f = filename.toLowerCase();
@@ -855,7 +586,7 @@ function fallbackDetect(filename) {
     'Logística':['logístic','transport','almacén','deliver','moto','depósit','reparto'],
     'Administración':['admin','gestión','secretari','recepcion','oficin','asistente'],
     'Marketing':['marketing','publicidad','comunity','contenido','redes','seo','sem'],
-    'Finanzas':['contab','finanz','contador','auditor','presupuest','impuesto']
+    'Finanzas':['contab','finanzas','contador','auditor','presupuest','impuesto']
   };
   for (let [cat, kws] of Object.entries(map)) if (kws.some(k => f.includes(k))) return [cat];
   return ['Administración'];
@@ -886,11 +617,7 @@ function renderCvJobSuggestions() {
   let jobs = EMPLEOS.filter(e => activeCats.length === 0 || activeCats.some(ac => e.categoria === ac));
   document.getElementById('cvMatchCount').textContent = `${jobs.length} empleo${jobs.length!==1?'s':''} encontrado${jobs.length!==1?'s':''} según tu perfil`;
   let preview = document.getElementById('cvJobsPreview');
-  if (preview) preview.innerHTML = jobs.slice(0,6).map(job => `
-    <div class="cv-job-row" onclick="openModal('${esc(job.id)}')">
-      <div><div class="cv-job-title">${esc(job.titulo)}</div><div class="cv-job-meta">🏢 ${esc(job.empresa)} · 📍 ${esc(job.depto)} · ${esc(job.salario)}</div></div>
-      <span class="match-badge ${BADGE[job.fuente]?.cls||''}">${BADGE[job.fuente]?.name||''}</span>
-    </div>`).join('') || '<div style="color:var(--gris);font-size:.88rem;padding:.5rem">Selecciona al menos una categoría.</div>';
+  if (preview) preview.innerHTML = jobs.slice(0,6).map(job => `<div class="cv-job-row" onclick="openModal('${esc(job.id)}')"><div><div class="cv-job-title">${esc(job.titulo)}</div><div class="cv-job-meta">🏢 ${esc(job.empresa)} · 📍 ${esc(job.depto)} · ${esc(job.salario)}</div></div><span class="match-badge ${BADGE[job.fuente]?.cls||''}">${BADGE[job.fuente]?.name||''}</span></div>`).join('') || '<div style="color:var(--gris);font-size:.88rem;padding:.5rem">Selecciona al menos una categoría.</div>';
 }
 function renderCvTips(cats) {
   let tips = [
@@ -913,7 +640,6 @@ function saveProfile() {
   if (btn) { btn.textContent = '✅ Guardado'; setTimeout(() => btn.textContent = 'Guardar cambios', 2000); }
 }
 
-// Inicio
 window.addEventListener('DOMContentLoaded', () => {});
 </script>
 </body>
