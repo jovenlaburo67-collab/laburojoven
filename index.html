@@ -6,6 +6,7 @@
 <title>JovenLaburo Bolivia — Tu primer empleo te espera</title>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 :root{--verde:#1a9e5c;--verde-claro:#22c46e;--verde-neon:#2dffa0;--amarillo:#f5c518;--rojo:#e05252;--fondo:#0e1117;--fondo2:#181c26;--fondo3:#1e2330;--card:#1f2537;--card2:#252c3d;--borde:#2a3145;--gris:#8899b5;--gris-claro:#2a3145;--negro:#0e1117;--blanco:#e8edf7;--texto:#c8d4ea;--sombra:0 4px 28px rgba(0,0,0,0.45);--sombra-verde:0 4px 24px rgba(26,158,92,0.22)}
@@ -325,7 +326,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
     <div class="cv-upload-label"><strong>Haz clic aquí o arrastra tu CV</strong><br>Formatos: PDF o DOCX · Máximo 5MB<br><span style="color:var(--verde-claro);font-size:.8rem">La IA leerá tu CV y encontrará empleos afines</span></div>
     <input type="file" id="cvInput" accept=".pdf,.doc,.docx" onchange="handleCvUpload(this)">
   </div>
-  <div id="cvIaLoading" style="display:none" class="ia-loading"><div class="ia-spinner"></div><span>Analizando tu CV con inteligencia artificial... esto toma unos segundos</span></div>
+  <div id="cvIaLoading" style="display:none" class="ia-loading"><div class="ia-spinner"></div><span>Leyendo tu CV con inteligencia artificial... esto toma unos segundos</span></div>
   <div id="cvAnalysisSection" style="display:none">
     <div class="cv-analysis-card">
       <div class="cv-analysis-header"><div class="cv-analysis-icon">🎯</div><div class="cv-analysis-title">Empleos sugeridos según tu CV</div></div>
@@ -728,177 +729,232 @@ function updateCvUI(){
   let badge=document.getElementById('cvStatusBadgeProfile'),nameEl=document.getElementById('cvNameProfile');
   if(badge&&nameEl){badge.style.display=(currentUser&&currentUser.cvName)?'inline-flex':'none';nameEl.textContent=currentUser?.cvName||'';}
 }
-// ===== MAPA DE PALABRAS CLAVE POR CATEGORÍA (ampliado) =====
+// ===== ANÁLISIS CV — LECTURA REAL DEL TEXTO + API CLAUDE =====
+
+const CATEGORIAS_VALIDAS = ['Gastronomía','Logística','Tecnología','Salud','Educación','Diseño','Marketing','Ventas','Administración','Finanzas'];
+
+// Mapa detallado de palabras clave por categoría (busca en el TEXTO del CV)
 const KW_MAP = {
+  'Gastronomía': [
+    'cocina','cocinero','cocinera','ayudante de cocina','lava platos','lavaplatos',
+    'chef','gastronomia','restaurant','restaurante','restoramen','pub','cafeteria',
+    'cafetería','barista','mozo','mesero','atencion al cliente en restaurante',
+    'pasteleria','panaderia','reposteria','bartender','comida','alimentos',
+    'preparacion de alimentos','steward','catering','parrilla','pizzeria',
+    'sushi','bromatologia','manipulacion de alimentos'
+  ],
   'Logística': [
-    'guard','seguridad','vigilancia','vigilante','custodi','ronda','portería','portero','conserje',
-    'albañil','construcción','obra','peón','mampostería','cemento','ladrillo','plomero','plomería',
-    'electricist','instalación eléctrica','carpinter','soldador','soldadura','pintor','pintura',
-    'mecánico','automovil','automotriz','motor','taller','chofer','conductor','camionero',
-    'logístic','transport','almacén','deliver','moto','depósit','reparto','mensajer',
-    'mudanza','carga','descarga','bodeguero','almacenero','inventario de almacén','repartidor',
-    'motorizado','flota','flotilla','estibador'
+    // Seguridad
+    'guardia','seguridad','vigilante','vigilancia','custodia','ronda','portero','porteria','conserje',
+    // Construcción y oficios
+    'albanil','albañil','albañileria','albanileria','ayudante de albanil','mamposteria',
+    'cemento','ladrillo','construccion','obra','peon','peón','techador','techado',
+    'plomero','plomeria','electricista','instalacion electrica','carpintero','carpinteria',
+    'pintor','pintura de obra','soldador','soldadura','metalurgico','mecanica','mecanico',
+    'ceramica','ceramicas','faboce','soriano','cargador',
+    // Transporte y logística
+    'transporte','logistica','almacen','bodeguero','almacenero','repartidor','mensajero',
+    'motorizado','chofer','conductor','camionero','delivery','mudanza','estibador',
+    'flota','moto','reparto','distribucion'
   ],
   'Tecnología': [
-    'softwar','program','desarrollador','desarrollo web','web developer','sistema','informátic',
-    'tech','computación','python','java','javascript','react','node','angular','vue',
-    'base de datos','sql','mysql','mongodb','php','html','css','api','backend','frontend',
-    'soporte técnico','helpdesk','redes','networking','cisco','infraestructura','devops',
-    'inteligencia artificial','machine learning','data science','ciberseguridad','cloud',
-    'refrigeración','técnico','electrónica','electrónico','mantenimiento de equipos'
+    'software','programador','desarrollador','desarrollo web','sistemas','soporte tecnico',
+    'helpdesk','redes','networking','computacion','informatica','python','java',
+    'javascript','react','node','php','html','css','base de datos','sql','mysql',
+    'mongodb','backend','frontend','devops','cloud','ciberseguridad','data science',
+    'machine learning','electronica','electronico','refrigeracion tecnico'
   ],
   'Salud': [
-    'enfermer','medic','salud','clínic','farmac','nutri','fisio','doctor','hospital',
-    'auxiliar de enfermería','auxiliar médico','camillero','laboratorio','análisis clínico',
-    'odontolog','dental','dentista','psicolog','terapia','terapeuta','optometr',
-    'paramédico','socorrista','primeros auxilios','sanitari','salud ocupacional'
-  ],
-  'Gastronomía': [
-    'cocin','chef','gastronomía','culinari','restaurant','comida','alimento','pastelería',
-    'panadería','barista','cafeter','mozo','mesero','bartender','coctelería','catering',
-    'manipulación de alimentos','bromatología','nutrición y alimentación','repostería',
-    'pizzero','sushiman','parrillero','hornero','ayudante de cocina','steward'
+    'enfermero','enfermera','enfermeria','auxiliar de enfermeria','medicina','medico',
+    'medica','salud','clinica','farmacia','nutricion','fisioterapia','odontologia',
+    'dental','dentista','psicologia','laboratorio clinico','camillero','paramédico',
+    'primeros auxilios','salud ocupacional','hospital'
   ],
   'Educación': [
-    'docente','maestro','profesor','educac','enseñanz','pedagog','tutor',
-    'capacitación','formación','instructor','facilitador','colegio','escuela','universidad',
-    'didáctica','currícul','parvularia','preescolar','jardín de infantes','biblioteca'
+    'docente','maestro','maestra','profesor','profesora','educacion','enseñanza',
+    'tutor','instructor','facilitador','colegio','escuela','academia','universidad',
+    'pedagogia','didactica','parvularia','jardin de infantes','biblioteca','capacitacion'
   ],
   'Diseño': [
-    'diseño','gráfico','visual','ilustr','multimedia','creativ','adobe','photoshop',
-    'illustrator','indesign','after effects','premiere','ux','ui','diseño web',
-    'animación','3d','modelado','fotografía','fotógrafo','edición de video','editor de video',
-    'motion','branding','identidad visual','publicidad gráfica'
+    'diseño grafico','diseñador','ilustracion','multimedia','adobe','photoshop',
+    'illustrator','indesign','after effects','premiere','ux','ui','animacion',
+    'modelado 3d','fotografia','fotografo','edicion de video','editor de video',
+    'motion','branding','identidad visual','publicidad grafica'
   ],
   'Marketing': [
-    'marketing','publicidad','community','contenido','redes sociales','seo','sem',
-    'google ads','facebook ads','meta ads','email marketing','inbound','outbound',
-    'copywriting','redacción','comunicación','relaciones públicas','prensa','periodis',
-    'e-commerce','tienda online','digital','influencer','estrategia de marca'
+    'marketing','publicidad','community manager','redes sociales','seo','sem',
+    'google ads','facebook ads','meta ads','email marketing','contenido digital',
+    'copywriting','relaciones publicas','prensa','periodismo','e-commerce',
+    'tienda online','influencer','estrategia de marca','comunicacion'
   ],
   'Ventas': [
-    'venta','comerci','ejecutiv de ventas','asesor comercial','vendedor','cliente',
-    'prospección','cartera de clientes','punto de venta','representante','promotor',
-    'televendedor','call center','atención al cliente','servicio al cliente','cajero',
-    'tienda','retail','mostrador','dependiente'
+    'vendedor','vendedora','ventas','ejecutivo de ventas','asesor comercial',
+    'representante','promotor','televendedor','call center','cajero','cajera',
+    'atención al cliente','atencion al cliente','punto de venta','retail',
+    'tienda','dependiente','mostrador','prospección','cartera de clientes'
   ],
   'Administración': [
-    'admin','gestión','secretari','recepcion','oficin','asistente administrativo',
-    'asistente','auxiliar administrativo','archivista','documentación','archivo',
-    'recursos humanos','rrhh','selección de personal','nómina','planillas',
-    'gerencia','coordinación','supervisor','jefe de área','director',
-    'compras','procurement','licitaciones','abastecimiento','logística de oficina'
+    'administracion','secretaria','secretario','asistente administrativo',
+    'auxiliar administrativo','recepcionista','archivo','documentacion',
+    'recursos humanos','rrhh','seleccion de personal','nomina','planillas',
+    'gerencia','coordinacion','supervisor','jefe de area','compras',
+    'procurement','abastecimiento','asistente de oficina'
   ],
   'Finanzas': [
-    'contab','finanzas','contador','auditor','presupuest','impuesto',
-    'tributario','declaración','facturación','tesorería','tesorero','caja',
-    'economista','economía','análisis financiero','balance','estados financieros',
-    'crédito','cobranza','inversiones','bolsa','bancario','banco','seguros','actuari'
+    'contabilidad','contador','contadora','auditoria','auditor','finanzas',
+    'presupuesto','impuesto','tributario','declaracion','facturacion',
+    'tesoreria','tesorero','caja','economista','economia','analisis financiero',
+    'balance','estados financieros','credito','cobranza','bancario','seguros'
   ]
 };
 
-function detectCategoriesFromText(text){
-  const t = text.toLowerCase()
-    .normalize('NFD').replace(/[\u0300-\u036f]/g,''); // quitar tildes para comparar
+// Normaliza texto: minúsculas, sin tildes
+function norm(s){ return s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
+
+// Detecta categorías analizando texto real del CV
+function detectarCategorias(textoCV){
+  const t = norm(textoCV);
   const scores = {};
   for(const [cat, kws] of Object.entries(KW_MAP)){
     let score = 0;
     for(const kw of kws){
-      const kwNorm = kw.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
-      // contar cuántas veces aparece la palabra clave
+      const kwn = norm(kw);
       let idx = 0;
-      while((idx = t.indexOf(kwNorm, idx)) !== -1){ score++; idx += kwNorm.length; }
+      while((idx = t.indexOf(kwn, idx)) !== -1){ score += kw.includes(' ') ? 3 : 1; idx += kwn.length; }
     }
     if(score > 0) scores[cat] = score;
   }
-  if(Object.keys(scores).length === 0) return ['Administración'];
-  // ordenar por score descendente, devolver las top 2 categorías
-  return Object.entries(scores)
-    .sort((a,b) => b[1]-a[1])
-    .slice(0,2)
-    .map(([cat]) => cat);
+  if(Object.keys(scores).length === 0) return { cats: ['Administración'], resumen: 'Perfil general.' };
+  const ordenadas = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+  // Devolver top 2 solo si el segundo tiene al menos 30% del score del primero
+  const cats = [ordenadas[0][0]];
+  if(ordenadas.length > 1 && ordenadas[1][1] >= ordenadas[0][1] * 0.3) cats.push(ordenadas[1][0]);
+  return { cats, resumen: `Perfil orientado a ${cats.join(' y ')}, con experiencia comprobada.` };
 }
 
-function analyzeCvLocally(file){
+// Extrae texto de un PDF usando PDF.js
+// IMPORTANTE: pdf.js cambió el nombre de su variable global entre versiones.
+// Versiones viejas (2.x) la exponían como window['pdfjs-dist/build/pdf'].
+// Versiones nuevas (3.x, como la que carga este sitio) usan window.pdfjsLib.
+// Por eso se revisan ambos nombres en vez de asumir uno solo.
+async function extraerTextoPDF(arrayBuffer){
+  try{
+    const pdfjsLib = window.pdfjsLib || window['pdfjs-dist/build/pdf'];
+    if(!pdfjsLib){
+      console.error('[CV] pdf.js no se cargó correctamente: no se encontró window.pdfjsLib');
+      return '';
+    }
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    const pdf = await pdfjsLib.getDocument({data: new Uint8Array(arrayBuffer)}).promise;
+    let texto = '';
+    for(let i=1; i<=Math.min(pdf.numPages,15); i++){
+      const page = await pdf.getPage(i);
+      const content = await page.getTextContent();
+      texto += content.items.map(s=>s.str).join(' ') + '\n';
+    }
+    console.log('[CV] PDF leído. Páginas:', pdf.numPages, '| Caracteres extraídos:', texto.length);
+    return texto;
+  } catch(e){
+    console.error('[CV] Error leyendo PDF:', e);
+    return '';
+  }
+}
+
+// Extrae texto de un DOCX
+// IMPORTANTE: un .docx es en realidad un archivo ZIP que contiene XML adentro
+// (word/document.xml), y ese XML está comprimido. El código anterior intentaba
+// leer los bytes crudos del archivo como si fueran texto plano y buscar ahí
+// las etiquetas <w:t>, pero como el contenido está comprimido (DEFLATE), esas
+// etiquetas casi nunca aparecen legibles — por eso el análisis de CVs en Word
+// prácticamente nunca funcionaba. Esta versión sí descomprime el .docx con
+// JSZip antes de buscar el texto.
+async function extraerTextoDocx(arrayBuffer){
+  try{
+    if(typeof JSZip === 'undefined'){
+      console.error('[CV] JSZip no se cargó, no se puede leer el .docx');
+      return '';
+    }
+    const zip = await JSZip.loadAsync(arrayBuffer);
+    const docXml = zip.file('word/document.xml');
+    if(!docXml){
+      console.error('[CV] El archivo no parece un .docx válido (falta word/document.xml)');
+      return '';
+    }
+    const xml = await docXml.async('string');
+    const texto = (xml
+      .replace(/<\/w:p>/g, '\n')
+      .replace(/<w:tab\/>/g, '\t')
+      .match(/<w:t[^>]*>([^<]*)<\/w:t>/g) || [])
+      .map(m => m.replace(/<[^>]+>/g, ''))
+      .join(' ');
+    console.log('[CV] DOCX leído. Caracteres extraídos:', texto.length);
+    return texto;
+  } catch(e){
+    console.error('[CV] Error leyendo DOCX:', e);
+    return '';
+  }
+}
+
+// Convierte ArrayBuffer a base64
+function toBase64(buffer){
+  let bin=''; const bytes=new Uint8Array(buffer);
+  for(let i=0;i<bytes.byteLength;i++) bin+=String.fromCharCode(bytes[i]);
+  return btoa(bin);
+}
+
+// Aplica el resultado al estado y renderiza
+function aplicarDeteccion(cats, resumen, nombre, manual){
+  if(!cats || cats.length===0) cats = manual ? CATEGORIAS_VALIDAS.slice() : ['Administración'];
+  if(currentUser){
+    currentUser.cvCategories = cats;
+    currentUser.cvSummary = resumen || `Perfil orientado a ${cats.join(' y ')}.`;
+    currentUser.cvManual = !!manual;
+    if(nombre && (!currentUser.nombre || currentUser.nombre==='Invitado')){
+      currentUser.nombre = nombre;
+      const nav=document.getElementById('userNameNav'); if(nav) nav.textContent=nombre;
+      const pn=document.getElementById('profileName'); if(pn) pn.textContent=nombre;
+    }
+  }
+  document.getElementById('cvIaLoading').style.display='none';
+  renderCvPage();
+}
+
+async function analyzeCvLocally(file){
   document.getElementById('cvIaLoading').style.display='flex';
   document.getElementById('cvAnalysisSection').style.display='none';
   document.getElementById('cvEmptyMsg').style.display='none';
+  const sp=document.querySelector('#cvIaLoading span');
+  if(sp) sp.textContent='Leyendo tu CV...';
 
   const ext = file.name.split('.').pop().toLowerCase();
+  const arrayBuffer = await file.arrayBuffer();
 
-  if(ext === 'pdf'){
-    // Leer PDF como ArrayBuffer y extraer texto con PDF.js
-    const reader = new FileReader();
-    reader.onload = async function(e){
-      try{
-        const typedArray = new Uint8Array(e.target.result);
-        const pdfjsLib = window['pdfjs-dist/build/pdf'];
-        if(!pdfjsLib){ fallbackByName(file.name); return; }
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        const pdf = await pdfjsLib.getDocument({data: typedArray}).promise;
-        let fullText = '';
-        for(let i=1; i<=Math.min(pdf.numPages,5); i++){
-          const page = await pdf.getPage(i);
-          const content = await page.getTextContent();
-          fullText += content.items.map(s=>s.str).join(' ') + ' ';
-        }
-        applyDetection(fullText, file.name);
-      } catch(err){ fallbackByName(file.name); }
-    };
-    reader.readAsArrayBuffer(file);
+  // Extraer el texto real del archivo (PDF.js para PDF, JSZip+XML para DOCX)
+  let textoCV = '';
+  if(sp) sp.textContent='Extrayendo el contenido del archivo...';
+  if(ext==='pdf') textoCV = await extraerTextoPDF(arrayBuffer);
+  else if(ext==='docx' || ext==='doc') textoCV = await extraerTextoDocx(arrayBuffer);
 
-  } else if(ext === 'docx'){
-    // DOCX es un ZIP — leer como texto plano buscando contenido XML legible
-    const reader = new FileReader();
-    reader.onload = function(e){
-      try{
-        // Intentar extraer texto del XML interno del DOCX
-        const arr = new Uint8Array(e.target.result);
-        // Convertir a string buscando texto legible (word/document.xml está dentro del zip)
-        let raw = '';
-        for(let i=0; i<Math.min(arr.length,200000); i++){
-          if(arr[i]>=32 && arr[i]<127) raw += String.fromCharCode(arr[i]);
-          else raw += ' ';
-        }
-        // Extraer texto entre etiquetas XML <w:t>
-        const matches = raw.match(/<w:t[^>]*>([^<]+)<\/w:t>/g) || [];
-        let docText = matches.map(m=>m.replace(/<[^>]+>/g,' ')).join(' ');
-        if(docText.length < 30) docText = raw; // fallback al raw si no se encontró XML
-        applyDetection(docText, file.name);
-      } catch(err){ fallbackByName(file.name); }
-    };
-    reader.readAsArrayBuffer(file);
+  console.log('[CV] Vista previa del texto extraído:', textoCV.slice(0,300));
 
+  if(sp) sp.textContent='Detectando tu área de experiencia...';
+
+  if(textoCV.length > 20){
+    // Hubo texto real que leer: clasificar por palabras clave del CV
+    const resultado = detectarCategorias(textoCV);
+    aplicarDeteccion(resultado.cats, resultado.resumen, '', false);
   } else {
-    // DOC u otro: intentar leer como texto
-    const reader = new FileReader();
-    reader.onload = function(e){ applyDetection(e.target.result || '', file.name); };
-    reader.onerror = function(){ fallbackByName(file.name); };
-    reader.readAsText(file, 'utf-8');
+    // No se pudo extraer texto del archivo (puede ser un PDF escaneado/imagen,
+    // un .doc antiguo, o un archivo dañado). En vez de adivinar por el nombre
+    // del archivo —que casi nunca contiene información del puesto y producía
+    // sugerencias incorrectas—, se le pide al usuario elegir su área manualmente.
+    aplicarDeteccion(
+      [],
+      'No pudimos leer automáticamente el contenido de tu archivo (puede ser un PDF escaneado como imagen). Selecciona manualmente tu área de experiencia abajo.',
+      '',
+      true
+    );
   }
-}
-
-function applyDetection(text, filename){
-  // Combinar texto del contenido + nombre del archivo para mayor precisión
-  const combined = text + ' ' + filename;
-  let detectedCats = detectCategoriesFromText(combined);
-  if(currentUser){
-    currentUser.cvCategories = detectedCats;
-    currentUser.cvSummary = `Perfil detectado: ${detectedCats.join(' y ')}.`;
-  }
-  document.getElementById('cvIaLoading').style.display='none';
-  renderCvPage();
-}
-
-function fallbackByName(filename){
-  // Solo usar nombre de archivo como último recurso
-  let detectedCats = detectCategoriesFromText(filename);
-  if(currentUser){
-    currentUser.cvCategories = detectedCats;
-    currentUser.cvSummary = `Perfil orientado a ${detectedCats.join(' y ')}.`;
-  }
-  document.getElementById('cvIaLoading').style.display='none';
-  renderCvPage();
 }
 function renderCvPage(){
   let hasCv=!!(currentUser&&currentUser.cvName);
@@ -912,8 +968,16 @@ function renderCvPage(){
     let chipsEl=document.getElementById('cvSuggestionChips');
     if(chipsEl){
       let html='';
-      if(currentUser.cvSummary) html+=`<div style="width:100%;padding:.65rem .85rem;background:rgba(26,158,92,.07);border-radius:.7rem;border:1px solid rgba(26,158,92,.2);font-size:.83rem;color:var(--texto);margin-bottom:.6rem"><strong style="color:var(--verde-claro)">🤖 Perfil detectado:</strong> ${esc(currentUser.cvSummary)}</div>`;
-      html+=cats.map((cat,i)=>`<span class="cv-chip ${i===0?'active':''}" onclick="toggleCvChip(this,'${esc(cat)}')">${CAT_ICONS[cat]||''} ${esc(cat)}</span>`).join('');
+      const esManual = !!currentUser.cvManual;
+      if(currentUser.cvSummary){
+        const colorIcono = esManual ? 'var(--amarillo)' : 'var(--verde-claro)';
+        const etiqueta = esManual ? '⚠️ Lectura automática no disponible:' : '🤖 Perfil detectado:';
+        const borde = esManual ? 'rgba(245,197,24,.3)' : 'rgba(26,158,92,.2)';
+        const fondo = esManual ? 'rgba(245,197,24,.08)' : 'rgba(26,158,92,.07)';
+        html+=`<div style="width:100%;padding:.65rem .85rem;background:${fondo};border-radius:.7rem;border:1px solid ${borde};font-size:.83rem;color:var(--texto);margin-bottom:.6rem"><strong style="color:${colorIcono}">${etiqueta}</strong> ${esc(currentUser.cvSummary)}</div>`;
+      }
+      // En modo manual no se preselecciona ninguna categoría: el usuario elige la suya.
+      html+=cats.map((cat,i)=>`<span class="cv-chip ${(!esManual && i===0)?'active':''}" onclick="toggleCvChip(this,'${esc(cat)}')">${CAT_ICONS[cat]||''} ${esc(cat)}</span>`).join('');
       chipsEl.innerHTML=html;
     }
     renderCvJobSuggestions();
