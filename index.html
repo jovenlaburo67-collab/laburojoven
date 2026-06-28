@@ -29,6 +29,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .user-pill{display:flex;align-items:center;gap:.4rem;background:rgba(26,158,92,.12);padding:.35rem .8rem;border-radius:99px;font-size:.82rem;color:var(--verde);font-weight:600;border:1px solid rgba(26,158,92,.25)}
 .btn-logout{padding:.4rem .9rem;border-radius:99px;border:1.5px solid var(--borde);background:transparent;font-size:.82rem;cursor:pointer;color:var(--gris);transition:.2s;font-family:'DM Sans',sans-serif}
 .btn-logout:hover{border-color:var(--rojo);color:var(--rojo)}
+.btn-nav-login{width:auto;padding:.4rem 1.1rem;margin:0;font-size:.82rem}
 
 /* ===== PAGES ===== */
 .page{display:none;max-width:1340px;margin:0 auto;padding:1.75rem 1.5rem}
@@ -222,7 +223,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
 .filter-group{min-width:100%}
 .btn-buscar{width:100%}
 .register-section{padding:1.4rem}
-.nav-inner{gap:.6rem}
+.nav-inner{gap:.6rem;flex-wrap:wrap;row-gap:.55rem}
+.nav-logo{font-size:1.1rem}
+.nav-tabs{order:3;flex:1 1 100%;overflow-x:visible;justify-content:space-between;gap:.15rem}
+.nav-tab{flex:1;padding:.5rem .2rem;font-size:.66rem;border-radius:.4rem}
+.btn-nav-login{padding:.35rem .75rem;font-size:.75rem}
 .user-pill{display:none}
 }
 </style>
@@ -242,7 +247,7 @@ body{font-family:'DM Sans',sans-serif;background:var(--fondo);color:var(--texto)
     <div class="nav-right">
       <div class="user-pill" id="userPill" style="display:none">👋 <span id="userNameNav">Usuario</span></div>
       <button class="btn-logout" id="btnLogout" style="display:none" onclick="logout()">Salir</button>
-      <button class="btn-auth" style="width:auto;padding:.4rem 1.1rem;margin:0;font-size:.82rem" id="btnNavLogin" onclick="showPage('pageProfile')">Iniciar sesión</button>
+      <button class="btn-auth btn-nav-login" id="btnNavLogin" onclick="showPage('pageProfile')">Iniciar sesión</button>
     </div>
   </div>
 </nav>
